@@ -1,4 +1,4 @@
-package com.example.superfit.ui.theme
+package com.example.superfit.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

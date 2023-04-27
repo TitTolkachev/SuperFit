@@ -1,4 +1,4 @@
-package com.example.superfit.ui.theme
+package com.example.superfit.presentation.theme
 
 import android.app.Activity
 import android.os.Build
