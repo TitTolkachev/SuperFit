@@ -10,6 +10,10 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
+// ---------------------------------------
+// github.com/philipplackner/AndroidCrypto
+// ---------------------------------------
+
 class CryptoManager {
 
     private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply {

@@ -1,5 +1,6 @@
 package com.example.superfit.data.remote
 
+import com.example.superfit.domain.model.LoginRequestBody
 import com.example.superfit.domain.model.Token
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.example.superfit.domain.util.Resource
@@ -25,18 +26,21 @@ class TokenAuthenticator(
                 when (val result =
                     useCases.refreshAccessTokenUseCase.execute(localToken.refreshToken)) {
                     is Resource.Success<*> ->
-                        remoteAccessToken = result.accessToken
+                        remoteAccessToken = result.data?.accessToken
 
                     else -> {
-                        val refreshResult = useCases.refreshRefreshTokenUseCase.execute()
+                        val credentials = useCases.getCredentialsFromLocalStorageUseCase.execute()
+                        val refreshResult = useCases.refreshRefreshTokenUseCase.execute(
+                            LoginRequestBody(credentials.login, credentials.password)
+                        )
                         if (refreshResult is Resource.Success<*>) {
-                            remoteRefreshToken = refreshResult.refreshToken
+                            remoteRefreshToken = refreshResult.data?.refreshToken
 
                             val newResult =
                                 useCases.refreshAccessTokenUseCase.execute(localToken.refreshToken)
 
                             remoteAccessToken = if (newResult is Resource.Success<*>)
-                                newResult.accessToken
+                                newResult.data?.accessToken
                             else
                                 ""
                         } else
