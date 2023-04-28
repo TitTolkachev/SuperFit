@@ -3,7 +3,7 @@ package com.example.superfit.data.remote.requests.auth
 import com.example.superfit.data.remote.RefreshNetwork
 import com.example.superfit.domain.model.LoginRequestBody
 import com.example.superfit.domain.model.LoginResponseBody
-import com.example.superfit.domain.repository.AuthLoginRepository
+import com.example.superfit.domain.repository.remote.AuthLoginRepository
 import com.example.superfit.domain.util.Resource
 
 class AuthLoginRepositoryImpl: AuthLoginRepository {

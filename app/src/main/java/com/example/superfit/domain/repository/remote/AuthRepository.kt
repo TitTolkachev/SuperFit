@@ -1,4 +1,4 @@
-package com.example.superfit.domain.repository
+package com.example.superfit.domain.repository.remote
 
 import com.example.superfit.domain.model.RegisterRequestBody
 import com.example.superfit.domain.model.RegisterResponseBody
