@@ -1,16 +1,12 @@
 package com.example.superfit.data.remote.requests.auth
 
-import com.example.superfit.data.remote.Network
 import com.example.superfit.data.remote.dto.RegisterRequestDto
 import com.example.superfit.domain.model.RegisterRequestBody
 import com.example.superfit.domain.model.RegisterResponseBody
 import com.example.superfit.domain.repository.remote.AuthRepository
-import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.example.superfit.domain.util.Resource
 
-class AuthRepositoryImpl(useCases: NetworkAuthUseCases) : AuthRepository {
-
-    private val api = Network.getAuthApi(useCases)
+class AuthRepositoryImpl(private val api: AuthApi) : AuthRepository {
 
     override suspend fun register(registerRequestBody: RegisterRequestBody): Resource<RegisterResponseBody> {
         return try {

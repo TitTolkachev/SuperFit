@@ -1,6 +1,7 @@
 package com.example.superfit.data.remote
 
-import com.example.superfit.data.remote.requests.auth.AuthApi
+import com.example.superfit.data.remote.requests.auth.AuthLoginApi
+import com.example.superfit.data.remote.requests.auth.AuthRefreshApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -49,6 +50,9 @@ object RefreshNetwork {
 
     private var retrofit: Retrofit? = null
 
-    fun getAuthApi(): AuthApi =
-        getRetrofit().create(AuthApi::class.java)
+    fun getAuthLoginApi(): AuthLoginApi =
+        getRetrofit().create(AuthLoginApi::class.java)
+
+    fun getAuthRefreshApi(): AuthRefreshApi =
+        getRetrofit().create(AuthRefreshApi::class.java)
 }
