@@ -1,6 +1,7 @@
 package com.example.superfit.data.remote
 
 import com.example.superfit.data.remote.requests.auth.AuthApi
+import com.example.superfit.data.remote.requests.profile.ProfileApi
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -12,7 +13,7 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 object Network {
-    private const val BASE_URL = "http://107684.web.hosting-russia.ru:8000/"
+    private const val BASE_URL = "http://fitness.wsmob.xyz:22169"
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -58,4 +59,7 @@ object Network {
 
     fun getAuthApi(useCases: NetworkAuthUseCases): AuthApi =
         getAuthRetrofit(useCases).create(AuthApi::class.java)
+
+    fun getProfileApi(useCases: NetworkAuthUseCases): ProfileApi =
+        getAuthRetrofit(useCases).create(ProfileApi::class.java)
 }

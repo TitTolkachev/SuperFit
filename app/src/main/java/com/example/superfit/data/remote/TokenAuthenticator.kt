@@ -10,7 +10,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 
-class TokenAuthenticator(
+class TokenAuthenticator constructor(
     private val useCases: NetworkAuthUseCases
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -37,7 +37,7 @@ class TokenAuthenticator(
                             remoteRefreshToken = refreshResult.data?.refreshToken
 
                             val newResult =
-                                useCases.refreshAccessTokenUseCase.execute(localToken.refreshToken)
+                                useCases.refreshAccessTokenUseCase.execute(remoteRefreshToken ?: "")
 
                             remoteAccessToken = if (newResult is Resource.Success<*>)
                                 newResult.data?.accessToken
@@ -60,7 +60,7 @@ class TokenAuthenticator(
                 null
             } else {
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer ${remoteAccessToken ?: ""}")
+                    .header("Authorization", " Bearer ${remoteAccessToken ?: ""}")
                     .build()
             }
         }

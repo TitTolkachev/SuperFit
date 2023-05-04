@@ -5,8 +5,9 @@ import com.example.superfit.domain.model.RegisterRequestBody
 import com.example.superfit.domain.model.RegisterResponseBody
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.util.Resource
+import javax.inject.Inject
 
-class AuthRepositoryImpl(private val api: AuthApi) : AuthRepository {
+class AuthRepositoryImpl @Inject constructor(private val api: AuthApi) : AuthRepository {
 
     override suspend fun register(registerRequestBody: RegisterRequestBody): Resource<RegisterResponseBody> {
         return try {

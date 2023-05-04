@@ -12,7 +12,7 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 object RefreshNetwork {
-    private const val BASE_URL = "http://fitness.wsmob.xyz:22169/"
+    private const val BASE_URL = "http://fitness.wsmob.xyz:22169"
 
     private val json = Json {
         ignoreUnknownKeys = true

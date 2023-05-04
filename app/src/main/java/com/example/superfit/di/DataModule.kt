@@ -15,9 +15,14 @@ import com.example.superfit.data.remote.requests.auth.AuthLoginRepositoryImpl
 import com.example.superfit.data.remote.requests.auth.AuthRefreshApi
 import com.example.superfit.data.remote.requests.auth.AuthRefreshRepositoryImpl
 import com.example.superfit.data.remote.requests.auth.AuthRepositoryImpl
+import com.example.superfit.data.remote.requests.profile.ProfileApi
+import com.example.superfit.data.remote.requests.profile.ProfileRepositoryImpl
 import com.example.superfit.domain.repository.local.CredentialsRepository
 import com.example.superfit.domain.repository.local.TokenRepository
+import com.example.superfit.domain.repository.remote.AuthLoginRepository
 import com.example.superfit.domain.repository.remote.AuthRefreshRepository
+import com.example.superfit.domain.repository.remote.AuthRepository
+import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
@@ -47,7 +52,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(api: AuthApi): AuthRepositoryImpl {
+    fun provideAuthRepository(api: AuthApi): AuthRepository {
         return AuthRepositoryImpl(api = api)
     }
 
@@ -59,7 +64,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthLoginRepository(api: AuthLoginApi): AuthLoginRepositoryImpl {
+    fun provideAuthLoginRepository(api: AuthLoginApi): AuthLoginRepository {
         return AuthLoginRepositoryImpl(api = api)
     }
 
@@ -73,6 +78,18 @@ class DataModule {
     @Singleton
     fun provideAuthRefreshRepository(api: AuthRefreshApi): AuthRefreshRepository {
         return AuthRefreshRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(useCases: NetworkAuthUseCases): ProfileApi {
+        return Network.getProfileApi(useCases = useCases)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(api: ProfileApi): ProfileRepository {
+        return ProfileRepositoryImpl(api = api)
     }
 
 

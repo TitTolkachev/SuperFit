@@ -4,8 +4,9 @@ import com.example.superfit.data.remote.dto.RefreshRequestDto
 import com.example.superfit.domain.model.RefreshResponseBody
 import com.example.superfit.domain.repository.remote.AuthRefreshRepository
 import com.example.superfit.domain.util.Resource
+import javax.inject.Inject
 
-class AuthRefreshRepositoryImpl(private val api: AuthRefreshApi) : AuthRefreshRepository {
+class AuthRefreshRepositoryImpl @Inject constructor(private val api: AuthRefreshApi) : AuthRefreshRepository {
 
     override suspend fun refresh(refreshToken: String): Resource<RefreshResponseBody> {
         return try {
