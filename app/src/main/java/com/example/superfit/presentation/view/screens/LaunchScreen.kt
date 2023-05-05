@@ -1,13 +1,35 @@
 package com.example.superfit.presentation.view.screens
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.superfit.R
+import com.example.superfit.presentation.view.shared.AuthBrandText
 import com.example.superfit.presentation.viewmodel.LaunchViewModel
 
 @Composable
 fun LaunchScreen(navController: NavController, viewModel: LaunchViewModel = hiltViewModel()) {
 
-    Text(text = "Launch")
+    LaunchScreenContent()
+}
+
+@Composable
+fun LaunchScreenContent() {
+
+    Image(
+        painter = painterResource(id = R.drawable.auth_background_image),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxSize()
+    )
+
+    AuthBrandText(padding = PaddingValues(38.dp, 139.dp))
 }

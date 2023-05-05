@@ -34,7 +34,7 @@ class LaunchViewModel @Inject constructor(
 
             val data = getProfileUseCase.execute()
             if (data is Resource.Success) {
-                Log.e("SUCCESS", data.message.toString())
+                Log.e("SUCCESS", data.data?.login ?: "")
             } else {
                 Log.e("ERROR", data.message.toString())
             }
