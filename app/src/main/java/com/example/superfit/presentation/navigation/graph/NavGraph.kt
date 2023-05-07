@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.superfit.presentation.navigation.ROOT_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.screens.LaunchScreen
+import com.example.superfit.presentation.view.screens.launch.LaunchScreen
 
 @Composable
 fun SetUpNavGraph(

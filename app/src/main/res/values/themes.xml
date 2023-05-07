@@ -3,6 +3,6 @@
     <style name="Theme.SuperFit" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:colorBackground">@color/pink_background</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 </resources>

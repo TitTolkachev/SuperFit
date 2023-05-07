@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.superfit.R
+import com.example.superfit.presentation.theme.montserratFamily
 
 @Composable
 fun AuthBrandText(padding: PaddingValues) {
@@ -21,6 +23,8 @@ fun AuthBrandText(padding: PaddingValues) {
             .padding(padding),
         fontSize = 64.sp,
         textAlign = TextAlign.Center,
-        color = Color.White
+        color = Color.White,
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold
     )
 }

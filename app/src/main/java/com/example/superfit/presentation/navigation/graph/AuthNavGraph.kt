@@ -1,13 +1,14 @@
 package com.example.superfit.presentation.navigation.graph
 
+import android.util.Log
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.AUTH_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.screens.SignInScreen
-import com.example.superfit.presentation.view.screens.SignUpScreen
+import com.example.superfit.presentation.view.screens.signin.SignInScreen
+import com.example.superfit.presentation.view.screens.signup.SignUpScreen
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
@@ -19,6 +20,7 @@ fun NavGraphBuilder.authNavGraph(
         composable(
             route = Screen.SignIn.route,
         ){
+            Log.e("Navigated", "Navigated!!!")
             SignInScreen(navController)
         }
         composable(

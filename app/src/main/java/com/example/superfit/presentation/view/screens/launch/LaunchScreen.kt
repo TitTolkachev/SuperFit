@@ -1,9 +1,10 @@
-package com.example.superfit.presentation.view.screens
+package com.example.superfit.presentation.view.screens.launch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -11,11 +12,33 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
+import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.shared.AuthBrandText
-import com.example.superfit.presentation.viewmodel.LaunchViewModel
 
 @Composable
 fun LaunchScreen(navController: NavController, viewModel: LaunchViewModel = hiltViewModel()) {
+
+    val state = viewModel.state
+
+    LaunchedEffect(key1 = state) {
+
+        if (state.isFirstEnter == true) {
+            navController.popBackStack()
+            navController.navigate(Screen.SignUp.route)
+        }
+
+        if (state.isAuthorized != null) {
+            if (state.isAuthorized == true) {
+
+                //TODO()
+                navController.popBackStack()
+                navController.navigate(Screen.SignIn.route)
+            } else {
+                navController.popBackStack()
+                navController.navigate(Screen.SignIn.route)
+            }
+        }
+    }
 
     LaunchScreenContent()
 }

@@ -4,6 +4,9 @@ import android.content.Context
 import com.example.superfit.data.local.prefs.creds.CredentialsRepositoryImpl
 import com.example.superfit.data.local.prefs.creds.CredentialsStorage
 import com.example.superfit.data.local.prefs.creds.CredentialsStorageImpl
+import com.example.superfit.data.local.prefs.entrance.FirstEnterRepositoryImpl
+import com.example.superfit.data.local.prefs.entrance.FirstEnterStorage
+import com.example.superfit.data.local.prefs.entrance.FirstEnterStorageImpl
 import com.example.superfit.data.local.prefs.token.TokenRepositoryImpl
 import com.example.superfit.data.local.prefs.token.TokenStorage
 import com.example.superfit.data.local.prefs.token.TokenStorageImpl
@@ -18,6 +21,7 @@ import com.example.superfit.data.remote.requests.auth.AuthRepositoryImpl
 import com.example.superfit.data.remote.requests.profile.ProfileApi
 import com.example.superfit.data.remote.requests.profile.ProfileRepositoryImpl
 import com.example.superfit.domain.repository.local.CredentialsRepository
+import com.example.superfit.domain.repository.local.FirstEnterRepository
 import com.example.superfit.domain.repository.local.TokenRepository
 import com.example.superfit.domain.repository.remote.AuthLoginRepository
 import com.example.superfit.domain.repository.remote.AuthRefreshRepository
@@ -119,6 +123,18 @@ class DataModule {
     @Singleton
     fun provideTokenRepository(storage: TokenStorage): TokenRepository {
         return TokenRepositoryImpl(tokenStorage = storage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEntranceStorage(@ApplicationContext context: Context): FirstEnterStorage {
+        return FirstEnterStorageImpl(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEntranceRepository(storage: FirstEnterStorage): FirstEnterRepository {
+        return FirstEnterRepositoryImpl(storage = storage)
     }
 
 
