@@ -29,5 +29,5 @@ fun SignInScreenContent() {
             .fillMaxSize()
     )
 
-    AuthBrandText(padding = PaddingValues(38.dp, 68.dp))
+    AuthBrandText(padding = PaddingValues(top = 68.dp))
 }

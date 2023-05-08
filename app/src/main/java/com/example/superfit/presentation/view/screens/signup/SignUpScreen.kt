@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -78,7 +79,7 @@ fun SingUpScreenContent(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        AuthBrandText(padding = PaddingValues(start = 38.dp, end = 38.dp, top = 68.dp))
+        AuthBrandText(padding = PaddingValues(top = 68.dp))
 
         Column(
             modifier = Modifier
@@ -151,6 +152,8 @@ private fun SignUpButton(
     onClick: () -> Unit
 ) {
     Button(
+        modifier = Modifier
+            .offset(x = 5.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
         onClick = onClick
     ) {

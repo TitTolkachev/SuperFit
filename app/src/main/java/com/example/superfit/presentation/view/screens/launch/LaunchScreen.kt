@@ -54,5 +54,5 @@ fun LaunchScreenContent() {
             .fillMaxSize()
     )
 
-    AuthBrandText(padding = PaddingValues(38.dp, 139.dp))
+    AuthBrandText(padding = PaddingValues(top = 139.dp))
 }
