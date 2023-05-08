@@ -1,6 +1,7 @@
 package com.example.superfit.presentation.navigation.graph
 
 import android.util.Log
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -10,6 +11,7 @@ import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.screens.signin.SignInScreen
 import com.example.superfit.presentation.view.screens.signup.SignUpScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController
 ){

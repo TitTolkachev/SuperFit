@@ -32,10 +32,10 @@ fun LaunchScreen(navController: NavController, viewModel: LaunchViewModel = hilt
 
                 //TODO()
                 navController.popBackStack()
-                navController.navigate(Screen.SignIn.route)
+                navController.navigate(Screen.SignUp.route)
             } else {
                 navController.popBackStack()
-                navController.navigate(Screen.SignIn.route)
+                navController.navigate(Screen.SignUp.route)
             }
         }
     }
