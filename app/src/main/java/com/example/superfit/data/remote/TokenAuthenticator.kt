@@ -56,6 +56,7 @@ class TokenAuthenticator constructor(
                 )
             )
 
+            // TODO(Поменять на >= 1)
             return if (response.responseCount > 1) {
                 null
             } else {

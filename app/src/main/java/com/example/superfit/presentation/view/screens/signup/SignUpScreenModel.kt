@@ -16,9 +16,10 @@ sealed class SignUpScreenUiEvent {
 
 @Immutable
 data class SignUpScreenState(
-    val emailValue: String,
-    val codeValue: String,
-    val repeatCodeValue: String,
-    val isLoading: Boolean?,
-    val showMainScreen: Boolean?
+    val emailValue: String = "",
+    val codeValue: String = "",
+    val repeatCodeValue: String = "",
+    val isLoading: Boolean? = null,
+    val showMainScreen: Boolean? = null,
+    val showSignInScreen: Boolean? = null
 )

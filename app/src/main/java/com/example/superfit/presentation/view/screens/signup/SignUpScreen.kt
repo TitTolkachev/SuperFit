@@ -3,41 +3,46 @@
 package com.example.superfit.presentation.view.screens.signup
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
-import com.example.superfit.presentation.theme.SemiTransparentWhite
+import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.theme.montserratFamily
 import com.example.superfit.presentation.view.shared.AuthBrandText
+import com.example.superfit.presentation.view.shared.AuthEditText
 
 @ExperimentalMaterial3Api
 @Composable
 fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hiltViewModel()) {
 
     val state = viewModel.state
+
+    LaunchedEffect(key1 = state.showMainScreen) {
+        if (state.showMainScreen == true) {
+            // TODO()
+            navController.popBackStack()
+            navController.navigate(Screen.SignIn.route)
+        }
+    }
 
     SingUpScreenContent(state) { event: SignUpScreenUiEvent -> viewModel.accept(event) }
 }
@@ -59,90 +64,94 @@ fun SingUpScreenContent(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        AuthBrandText(padding = PaddingValues(38.dp, 68.dp))
+        AuthBrandText(padding = PaddingValues(start = 38.dp, end = 38.dp, top = 68.dp))
 
-        EditText(isEmail = true, placeholderText = "Email", text = { state.emailValue }) { text ->
-            sendEvent(SignUpScreenUiEvent.NewEmailText(text))
-        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AuthEditText(
+                isEmail = true,
+                placeholderText = "Email",
+                text = { state.emailValue }) { text ->
+                sendEvent(SignUpScreenUiEvent.NewEmailText(text))
+            }
 
-        EditText(isPassword = true, placeholderText = "Code", text = { state.codeValue }) { text ->
-            sendEvent(SignUpScreenUiEvent.NewPasswordText(text))
-        }
+            AuthEditText(
+                isPassword = true,
+                placeholderText = "Code",
+                text = { state.codeValue }) { text ->
+                sendEvent(SignUpScreenUiEvent.NewPasswordText(text))
+            }
 
-        EditText(
-            isPassword = true,
-            placeholderText = "RepeatCode",
-            text = { state.repeatCodeValue }) { text ->
-            sendEvent(SignUpScreenUiEvent.NewRepeatPasswordText(text))
-        }
+            AuthEditText(
+                isPassword = true,
+                placeholderText = "RepeatCode",
+                text = { state.repeatCodeValue }) { text ->
+                sendEvent(SignUpScreenUiEvent.NewRepeatPasswordText(text))
+            }
 
-        Button(onClick = {
-            sendEvent(
-                SignUpScreenUiEvent.SignUp(
-                    state.emailValue,
-                    state.codeValue,
-                    state.repeatCodeValue
+            SignUpButton {
+                sendEvent(
+                    SignUpScreenUiEvent.SignUp(
+                        state.emailValue,
+                        state.codeValue,
+                        state.repeatCodeValue
+                    )
                 )
-            )
-        }) {
-            Text(text = "Sign Up")
+            }
         }
+
+        ToSignInButton {}
     }
 }
 
 @Composable
-fun EditText(
-    isEmail: Boolean = false,
-    isPassword: Boolean = false,
-    placeholderText: String,
-    text: () -> String,
-    onValueChanged: (String) -> Unit
+private fun ToSignInButton(
+    onClick: () -> Unit
 ) {
+    Button(
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        onClick = onClick
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.white_left_arrow),
+            contentDescription = null
+        )
+        Text(
+            text = "Sign In",
+            color = Color.White,
+            fontSize = 24.sp,
+            fontFamily = montserratFamily,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
 
-    TextField(
-        value = text.invoke(),
-        onValueChange = onValueChanged,
-        placeholder = {
-            Text(text = placeholderText)
-        },
-        modifier = Modifier
-            .padding(start = 54.dp, end = 50.dp)
-            .drawBehind {
-                val strokeWidth = 2 * density
-                val y = size.height - strokeWidth / 2
-
-                drawLine(
-                    SemiTransparentWhite,
-                    Offset(0f, y),
-                    Offset(size.width, y),
-                    strokeWidth
-                )
-            }
-            .fillMaxWidth(),
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.White,
-            placeholderColor = Color.White,
-            cursorColor = MaterialTheme.colorScheme.primary,
-            containerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
-        singleLine = true,
-        visualTransformation =
-        if (isPassword)
-            PasswordVisualTransformation()
-        else
-            VisualTransformation.None,
-        keyboardOptions =
-        if (isPassword)
-            KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
-        else if (isEmail)
-            KeyboardOptions(keyboardType = KeyboardType.Email)
-        else
-            KeyboardOptions.Default
-    )
+@Composable
+private fun SignUpButton(
+    onClick: () -> Unit
+) {
+    Button(
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        onClick = onClick
+    ) {
+        Text(
+            text = "Sign Up",
+            color = Color.White,
+            fontSize = 24.sp,
+            fontFamily = montserratFamily,
+            fontWeight = FontWeight.Bold
+        )
+        Image(
+            painter = painterResource(id = R.drawable.white_right_arrow),
+            contentDescription = null
+        )
+    }
 }
