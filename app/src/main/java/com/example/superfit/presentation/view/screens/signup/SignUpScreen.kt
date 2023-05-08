@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,8 +28,8 @@ import androidx.navigation.NavController
 import com.example.superfit.R
 import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.theme.montserratFamily
-import com.example.superfit.presentation.view.shared.AuthBrandText
-import com.example.superfit.presentation.view.shared.AuthEditText
+import com.example.superfit.presentation.view.shared.auth.AuthBrandText
+import com.example.superfit.presentation.view.shared.auth.AuthEditText
 
 @ExperimentalMaterial3Api
 @Composable
@@ -39,6 +40,13 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
     LaunchedEffect(key1 = state.showMainScreen) {
         if (state.showMainScreen == true) {
             // TODO()
+            navController.popBackStack()
+            navController.navigate(Screen.SignIn.route)
+        }
+    }
+
+    LaunchedEffect(key1 = state.showSignInScreen) {
+        if (state.showSignInScreen == true) {
             navController.popBackStack()
             navController.navigate(Screen.SignIn.route)
         }
@@ -108,7 +116,7 @@ fun SingUpScreenContent(
             }
         }
 
-        ToSignInButton {}
+        ToSignInButton { sendEvent(SignUpScreenUiEvent.NavigateToSignIn) }
     }
 }
 
@@ -122,7 +130,9 @@ private fun ToSignInButton(
     ) {
         Image(
             painter = painterResource(id = R.drawable.white_left_arrow),
-            contentDescription = null
+            contentDescription = null,
+            modifier = Modifier
+                .padding(end = 4.dp)
         )
         Text(
             text = "Sign In",

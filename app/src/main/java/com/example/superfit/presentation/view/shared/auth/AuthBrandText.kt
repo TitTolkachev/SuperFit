@@ -1,4 +1,4 @@
-package com.example.superfit.presentation.view.shared
+package com.example.superfit.presentation.view.shared.auth
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth

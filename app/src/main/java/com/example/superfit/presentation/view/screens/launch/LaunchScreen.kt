@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.shared.AuthBrandText
+import com.example.superfit.presentation.view.shared.auth.AuthBrandText
 
 @Composable
 fun LaunchScreen(navController: NavController, viewModel: LaunchViewModel = hiltViewModel()) {

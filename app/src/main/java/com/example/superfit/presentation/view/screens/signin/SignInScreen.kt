@@ -10,7 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.superfit.R
-import com.example.superfit.presentation.view.shared.AuthBrandText
+import com.example.superfit.presentation.view.shared.auth.AuthBrandText
 
 @Composable
 fun SignInScreen(navController: NavController) {

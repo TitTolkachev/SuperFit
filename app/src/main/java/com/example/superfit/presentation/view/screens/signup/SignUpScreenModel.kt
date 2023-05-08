@@ -12,6 +12,8 @@ sealed class SignUpScreenUiEvent {
     data class NewPasswordText(val newText: String) : SignUpScreenUiEvent()
 
     data class NewRepeatPasswordText(val newText: String) : SignUpScreenUiEvent()
+
+    object NavigateToSignIn : SignUpScreenUiEvent()
 }
 
 @Immutable

@@ -62,6 +62,10 @@ class SignUpViewModel @Inject constructor(
             is SignUpScreenUiEvent.NewRepeatPasswordText -> {
                 state = state.copy(repeatCodeValue = event.newText)
             }
+
+            is SignUpScreenUiEvent.NavigateToSignIn -> {
+                state = state.copy(showSignInScreen = true)
+            }
         }
     }
 }

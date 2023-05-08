@@ -1,4 +1,4 @@
-package com.example.superfit.presentation.view.shared
+package com.example.superfit.presentation.view.shared.auth
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.superfit.presentation.theme.SemiTransparentWhite
 import com.example.superfit.presentation.theme.montserratFamily
+import com.example.superfit.presentation.view.shared.MyTextField
 
 @ExperimentalMaterial3Api
 @Composable
