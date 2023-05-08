@@ -25,6 +25,7 @@ fun AuthBrandText(padding: PaddingValues) {
         textAlign = TextAlign.Center,
         color = Color.White,
         fontFamily = montserratFamily,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        maxLines = 1
     )
 }

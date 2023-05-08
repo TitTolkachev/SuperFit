@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -86,21 +87,21 @@ fun SingUpScreenContent(
         ) {
             AuthEditText(
                 isEmail = true,
-                placeholderText = "Email",
+                placeholderText = LocalContext.current.getString(R.string.auth_user_name),
                 text = { state.emailValue }) { text ->
                 sendEvent(SignUpScreenUiEvent.NewEmailText(text))
             }
 
             AuthEditText(
                 isPassword = true,
-                placeholderText = "Code",
+                placeholderText = LocalContext.current.getString(R.string.auth_code),
                 text = { state.codeValue }) { text ->
                 sendEvent(SignUpScreenUiEvent.NewPasswordText(text))
             }
 
             AuthEditText(
                 isPassword = true,
-                placeholderText = "RepeatCode",
+                placeholderText = LocalContext.current.getString(R.string.auth_repeat_code),
                 text = { state.repeatCodeValue }) { text ->
                 sendEvent(SignUpScreenUiEvent.NewRepeatPasswordText(text))
             }
@@ -125,6 +126,7 @@ private fun ToSignInButton(
     onClick: () -> Unit
 ) {
     Button(
+        modifier = Modifier.padding(bottom = 26.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
         onClick = onClick
     ) {
@@ -135,7 +137,7 @@ private fun ToSignInButton(
                 .padding(end = 4.dp)
         )
         Text(
-            text = "Sign In",
+            text = LocalContext.current.getString(R.string.auth_sign_in),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,
@@ -153,7 +155,7 @@ private fun SignUpButton(
         onClick = onClick
     ) {
         Text(
-            text = "Sign Up",
+            text = LocalContext.current.getString(R.string.auth_sign_up),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,
