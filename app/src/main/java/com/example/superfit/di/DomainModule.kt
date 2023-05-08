@@ -3,7 +3,8 @@ package com.example.superfit.di
 import com.example.superfit.domain.repository.local.CredentialsRepository
 import com.example.superfit.domain.repository.local.FirstEnterRepository
 import com.example.superfit.domain.repository.local.TokenRepository
-import com.example.superfit.domain.repository.remote.AuthRefreshRepository
+import com.example.superfit.domain.repository.remote.AnotherAuthRepository
+import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetEntranceInfoUseCase
@@ -13,6 +14,7 @@ import com.example.superfit.domain.usecase.local.SaveEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.SaveTokenToLocalStorageUseCase
 import com.example.superfit.domain.usecase.remote.GetProfileUseCase
 import com.example.superfit.domain.usecase.remote.RefreshAccessTokenUseCase
+import com.example.superfit.domain.usecase.remote.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,18 +29,23 @@ class DomainModule {
     // Remote
 
     @Provides
-    fun provideRefreshAccessTokenUseCase(repository: AuthRefreshRepository): RefreshAccessTokenUseCase {
+    fun provideRefreshAccessTokenUseCase(repository: AnotherAuthRepository): RefreshAccessTokenUseCase {
         return RefreshAccessTokenUseCase(repository)
     }
 
     @Provides
-    fun provideRefreshRefreshTokenUseCase(repository: AuthRefreshRepository): RefreshAccessTokenUseCase {
+    fun provideRefreshRefreshTokenUseCase(repository: AnotherAuthRepository): RefreshAccessTokenUseCase {
         return RefreshAccessTokenUseCase(repository)
     }
 
     @Provides
     fun provideGetProfileUseCase(repository: ProfileRepository): GetProfileUseCase {
         return GetProfileUseCase(repository)
+    }
+
+    @Provides
+    fun provideRegisterUseCase(repository: AuthRepository): RegisterUseCase {
+        return RegisterUseCase(repository)
     }
 
 

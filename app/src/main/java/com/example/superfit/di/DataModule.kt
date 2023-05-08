@@ -13,18 +13,15 @@ import com.example.superfit.data.local.prefs.token.TokenStorageImpl
 import com.example.superfit.data.remote.Network
 import com.example.superfit.data.remote.RefreshNetwork
 import com.example.superfit.data.remote.requests.auth.AuthApi
-import com.example.superfit.data.remote.requests.auth.AuthLoginApi
-import com.example.superfit.data.remote.requests.auth.AuthLoginRepositoryImpl
-import com.example.superfit.data.remote.requests.auth.AuthRefreshApi
-import com.example.superfit.data.remote.requests.auth.AuthRefreshRepositoryImpl
+import com.example.superfit.data.remote.requests.auth.AnotherAuthApi
+import com.example.superfit.data.remote.requests.auth.AnotherAuthRepositoryImpl
 import com.example.superfit.data.remote.requests.auth.AuthRepositoryImpl
 import com.example.superfit.data.remote.requests.profile.ProfileApi
 import com.example.superfit.data.remote.requests.profile.ProfileRepositoryImpl
 import com.example.superfit.domain.repository.local.CredentialsRepository
 import com.example.superfit.domain.repository.local.FirstEnterRepository
 import com.example.superfit.domain.repository.local.TokenRepository
-import com.example.superfit.domain.repository.remote.AuthLoginRepository
-import com.example.superfit.domain.repository.remote.AuthRefreshRepository
+import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
@@ -62,26 +59,14 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthLoginApi(): AuthLoginApi {
-        return RefreshNetwork.getAuthLoginApi()
+    fun provideAuthLoginApi(): AnotherAuthApi {
+        return RefreshNetwork.getAuthApi()
     }
 
     @Provides
     @Singleton
-    fun provideAuthLoginRepository(api: AuthLoginApi): AuthLoginRepository {
-        return AuthLoginRepositoryImpl(api = api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRefreshApi(): AuthRefreshApi {
-        return RefreshNetwork.getAuthRefreshApi()
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRefreshRepository(api: AuthRefreshApi): AuthRefreshRepository {
-        return AuthRefreshRepositoryImpl(api = api)
+    fun provideAuthLoginRepository(api: AnotherAuthApi): AnotherAuthRepository {
+        return AnotherAuthRepositoryImpl(api = api)
     }
 
     @Provides
