@@ -41,16 +41,21 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
 
     LaunchedEffect(key1 = state.showMainScreen) {
         if (state.showMainScreen == true) {
-            // TODO()
-            navController.popBackStack()
-            navController.navigate(Screen.SignIn.route)
+            navController.navigate(Screen.Main.route) {
+                popUpTo(Screen.SignUp.route) {
+                    inclusive = true
+                }
+            }
         }
     }
 
     LaunchedEffect(key1 = state.showSignInScreen) {
         if (state.showSignInScreen == true) {
-            navController.popBackStack()
-            navController.navigate(Screen.SignIn.route)
+            navController.navigate(Screen.SignIn.route) {
+                popUpTo(Screen.SignUp.route) {
+                    inclusive = true
+                }
+            }
         }
     }
 

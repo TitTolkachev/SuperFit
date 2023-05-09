@@ -1,6 +1,5 @@
 package com.example.superfit.presentation.navigation.graph
 
-import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -22,7 +21,6 @@ fun NavGraphBuilder.authNavGraph(
         composable(
             route = Screen.SignIn.route,
         ){
-            Log.e("Navigated", "Navigated!!!")
             SignInScreen(navController)
         }
         composable(

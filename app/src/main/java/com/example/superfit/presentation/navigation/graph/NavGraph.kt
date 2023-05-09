@@ -22,8 +22,7 @@ fun SetUpNavGraph(
         ) {
             LaunchScreen(navController = navController)
         }
-        // TODO(Добавить остальные нав графы)
-        //homeNavGraph(navController = navController)
         authNavGraph(navController = navController)
+        mainNavGraph(navController = navController)
     }
 }
