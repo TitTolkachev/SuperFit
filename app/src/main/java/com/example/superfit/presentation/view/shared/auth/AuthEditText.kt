@@ -30,6 +30,7 @@ fun AuthEditText(
     isEmail: Boolean = false,
     isPassword: Boolean = false,
     placeholderText: String,
+    paddingValues: PaddingValues? = PaddingValues(start = 54.dp, end = 50.dp, bottom = 37.dp),
     text: () -> String,
     onValueChanged: (String) -> Unit
 ) {
@@ -43,10 +44,16 @@ fun AuthEditText(
             fontWeight = FontWeight.W400
         ),
         placeholder = {
-            Text(text = placeholderText)
+            Text(
+                text = placeholderText,
+                color = Color.White,
+                fontSize = 18.sp,
+                fontFamily = montserratFamily,
+                fontWeight = FontWeight.W400
+            )
         },
         modifier = Modifier
-            .padding(start = 54.dp, end = 50.dp, bottom = 37.dp)
+            .padding(paddingValues!!)
             .drawBehind {
                 val strokeWidth = 2 * density
                 val y = size.height - strokeWidth / 2

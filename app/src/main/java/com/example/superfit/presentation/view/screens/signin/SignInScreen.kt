@@ -1,40 +1,46 @@
 package com.example.superfit.presentation.view.screens.signin
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.superfit.R
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.shared.auth.AuthBrandText
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(navController: NavController, viewModel: SignInViewModel = hiltViewModel()) {
 
-    // TODO()
-    LaunchedEffect(key1 = true) {
-        navController.navigate(Screen.Main.route)
+    val state = viewModel.state
+
+    LaunchedEffect(key1 = state.showMainScreen) {
+        if (state.showMainScreen == true) {
+            navController.navigate(Screen.Main.route) {
+                popUpTo(Screen.SignIn.route) {
+                    inclusive = true
+                }
+            }
+        }
     }
 
-    SignInScreenContent()
+    LaunchedEffect(key1 = state.showSignUpScreen) {
+        if (state.showSignUpScreen == true) {
+            navController.navigate(Screen.SignUp.route) {
+                popUpTo(Screen.SignIn.route) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
+    SignInScreenContent(state) { event: SignInScreenUiEvent -> viewModel.accept(event) }
 }
 
 @Composable
-fun SignInScreenContent() {
+fun SignInScreenContent(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -> Unit) {
 
-    Image(
-        painter = painterResource(id = R.drawable.auth_background_image),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxSize()
-    )
-
-    AuthBrandText(padding = PaddingValues(top = 68.dp))
+    if (state.currentPage == 1) {
+        SignInFirstPage(state = state, sendEvent = sendEvent)
+    } else if (state.currentPage == 2) {
+        SignInSecondPage(state = state, sendEvent = sendEvent)
+    }
 }
+

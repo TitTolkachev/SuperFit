@@ -5,15 +5,18 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 sealed class SignInScreenUiEvent {
-    data class SignIn(val emailValue: String, val codeValue: String, val repeatCodeValue: String) :
-        SignInScreenUiEvent()
+    object SignIn : SignInScreenUiEvent()
+    object NextPage : SignInScreenUiEvent()
+    object PrevPage : SignInScreenUiEvent()
+    object SignUp : SignInScreenUiEvent()
+    data class NewUserNameText(val newText: String) : SignInScreenUiEvent()
 }
 
 @Immutable
 data class SignInScreenState(
-    val emailValue: String,
-    val codeValue: String,
-    val repeatCodeValue: String,
-    val isLoading: Boolean?,
-    val showMainScreen: Boolean?
+    val userName: String = "",
+    val currentPage: Int = 1,
+    val isLoading: Boolean? = null,
+    val showMainScreen: Boolean? = null,
+    val showSignUpScreen: Boolean? = null
 )

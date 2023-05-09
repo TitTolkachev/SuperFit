@@ -76,7 +76,7 @@ fun MyBodyCard(onClick: () -> Unit) {
             .fillMaxWidth()
             .height(114.dp)
             .clip(RoundedCornerShape(8.dp))
-//            .clickable(onClick = onClick)
+            .clickable(onClick = onClick)
     ) {
         Row(Modifier.background(DarkBackground)) {
             Image(
@@ -127,7 +127,7 @@ fun MyBodyCard(onClick: () -> Unit) {
                         )
                     }
                 }
-                DetailsButton(onClick)
+                DetailsButton {}// (onClick)
             }
         }
     }
