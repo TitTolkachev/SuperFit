@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SuperFit</string>
 
-    <!-- Launch Screen -->
+    <!-- Launch -->
     <string name="launch_screen_text">SuperFit</string>
 
     <!-- Auth -->
@@ -10,5 +10,18 @@
     <string name="auth_user_name">UserName</string>
     <string name="auth_code">Code</string>
     <string name="auth_repeat_code">RepeatCode</string>
+
+    <!-- Main -->
+    <string name="main_my_body_text">My Body</string>
+    <string name="main_my_body_details">Details</string>
+    <string name="main_my_body_weight">kg</string>
+    <string name="main_my_body_height">cm</string>
+    <string name="main_last_exercises_text">Last exercises</string>
+    <string name="main_see_all_text">See all</string>
+    <string name="main_sign_out_text">Sign out</string>
+    <string name="main_push_ups_title">Push-Ups</string>
+    <string name="main_push_ups_text">Push-ups exercise the pectoral muscles, triceps, and anterior deltoids.</string>
+    <string name="main_plank_title">Plank</string>
+    <string name="main_plank_text">The plank strengthens the abdominals, back and shoulders. </string>
 
 </resources>
