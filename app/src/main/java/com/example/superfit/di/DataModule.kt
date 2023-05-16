@@ -12,18 +12,21 @@ import com.example.superfit.data.local.prefs.token.TokenStorage
 import com.example.superfit.data.local.prefs.token.TokenStorageImpl
 import com.example.superfit.data.remote.Network
 import com.example.superfit.data.remote.RefreshNetwork
-import com.example.superfit.data.remote.requests.auth.AuthApi
 import com.example.superfit.data.remote.requests.auth.AnotherAuthApi
 import com.example.superfit.data.remote.requests.auth.AnotherAuthRepositoryImpl
+import com.example.superfit.data.remote.requests.auth.AuthApi
 import com.example.superfit.data.remote.requests.auth.AuthRepositoryImpl
 import com.example.superfit.data.remote.requests.profile.ProfileApi
 import com.example.superfit.data.remote.requests.profile.ProfileRepositoryImpl
+import com.example.superfit.data.remote.requests.training.TrainingApi
+import com.example.superfit.data.remote.requests.training.TrainingRepositoryImpl
 import com.example.superfit.domain.repository.local.CredentialsRepository
 import com.example.superfit.domain.repository.local.FirstEnterRepository
 import com.example.superfit.domain.repository.local.TokenRepository
 import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
+import com.example.superfit.domain.repository.remote.TrainingRepository
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
@@ -79,6 +82,18 @@ class DataModule {
     @Singleton
     fun provideProfileRepository(api: ProfileApi): ProfileRepository {
         return ProfileRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrainingApi(useCases: NetworkAuthUseCases): TrainingApi {
+        return Network.getTrainingApi(useCases = useCases)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrainingRepository(api: TrainingApi): TrainingRepository {
+        return TrainingRepositoryImpl(api = api)
     }
 
 

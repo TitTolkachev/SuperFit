@@ -2,6 +2,7 @@ package com.example.superfit.data.remote
 
 import com.example.superfit.data.remote.requests.auth.AuthApi
 import com.example.superfit.data.remote.requests.profile.ProfileApi
+import com.example.superfit.data.remote.requests.training.TrainingApi
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -62,4 +63,7 @@ object Network {
 
     fun getProfileApi(useCases: NetworkAuthUseCases): ProfileApi =
         getAuthRetrofit(useCases).create(ProfileApi::class.java)
+
+    fun getTrainingApi(useCases: NetworkAuthUseCases): TrainingApi =
+        getAuthRetrofit(useCases).create(TrainingApi::class.java)
 }
