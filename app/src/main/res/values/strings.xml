@@ -14,11 +14,12 @@
     <!-- Main -->
     <string name="main_my_body_text">My Body</string>
     <string name="main_my_body_details">Details</string>
-    <string name="main_my_body_weight">kg</string>
-    <string name="main_my_body_height">cm</string>
+    <string name="main_my_body_weight">&#160;kg</string>
+    <string name="main_my_body_height">&#160;cm</string>
     <string name="main_last_exercises_text">Last exercises</string>
     <string name="main_see_all_text">See all</string>
     <string name="main_sign_out_text">Sign out</string>
+    <string name="main_default_body_value">Undefined</string>
 
     <!-- Exercises -->
     <string name="exercises_exercises_text">Exercises</string>

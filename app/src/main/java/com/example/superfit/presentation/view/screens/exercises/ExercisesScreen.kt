@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import com.example.superfit.R
 import com.example.superfit.presentation.view.model.Exercise
 import com.example.superfit.presentation.view.screens.exercises.components.ExercisesText
-import com.example.superfit.presentation.view.screens.main.MainViewModel
 import com.example.superfit.presentation.view.screens.main.components.ExerciseCard
 import com.example.superfit.presentation.view.screens.main.components.Poster
 
@@ -34,7 +33,7 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun ExercisesScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
+fun ExercisesScreen(navController: NavController, viewModel: ExercisesViewModel = hiltViewModel()) {
 
     ExercisesScreenContent()
 }

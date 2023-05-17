@@ -2,7 +2,6 @@ package com.example.superfit.presentation.view.screens.signin
 
 import androidx.compose.runtime.Immutable
 
-
 @Immutable
 sealed class SignInScreenUiEvent {
     object SignIn : SignInScreenUiEvent()

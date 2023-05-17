@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -27,19 +29,40 @@ import com.example.superfit.presentation.view.screens.main.components.SignOut
 @Preview
 @Composable
 fun DefaultPreview() {
-    MainScreenContent {}
+    MainScreenContent(MainScreenState()) {}
 }
 
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
 
-    // TODO()
-    MainScreenContent { navController.navigate(Screen.Exercises.route) }
+    val state = viewModel.state
+
+    LaunchedEffect(key1 = state.showAllExercises) {
+        if (state.showAllExercises == true) {
+            navController.navigate(Screen.Exercises.route)
+            viewModel.accept(MainScreenUiEvent.Navigated)
+        }
+    }
+
+    LaunchedEffect(key1 = state.signOut) {
+        if (state.signOut == true) {
+            navController.navigate(Screen.SignIn.route) {
+                popUpTo(Screen.Main.route) {
+                    inclusive = true
+                }
+            }
+            viewModel.accept(MainScreenUiEvent.Navigated)
+        }
+    }
+
+    MainScreenContent(state) { event: MainScreenUiEvent -> viewModel.accept(event) }
 }
 
 @Composable
-fun MainScreenContent(onSeeAllButtonClick: () -> Unit) {
-
+fun MainScreenContent(
+    state: MainScreenState,
+    sendEvent: (MainScreenUiEvent) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +73,14 @@ fun MainScreenContent(onSeeAllButtonClick: () -> Unit) {
         }
         item {
             MyBodyText()
-            MyBodyCard {}
+            MyBodyCard(
+                weight = (state.bodyWeight
+                    ?: LocalContext.current.getString(R.string.main_default_body_value)).toString(),
+                height = (state.bodyHeight
+                    ?: LocalContext.current.getString(R.string.main_default_body_value)).toString()
+            ) {
+                sendEvent(MainScreenUiEvent.ShowBodyScreen)
+            }
         }
         item {
             Row(
@@ -59,12 +89,12 @@ fun MainScreenContent(onSeeAllButtonClick: () -> Unit) {
                 verticalAlignment = Alignment.Bottom
             ) {
                 LastExercisesText()
-                SeeAllButton { onSeeAllButtonClick() }
+                SeeAllButton { sendEvent(MainScreenUiEvent.ShowAllExercisesScreen) }
             }
             LastExercises()
         }
         item {
-            SignOut {}
+            SignOut { sendEvent(MainScreenUiEvent.SignOut) }
         }
     }
 }

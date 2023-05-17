@@ -74,7 +74,11 @@ fun Poster() {
 }
 
 @Composable
-fun MyBodyCard(onClick: () -> Unit) {
+fun MyBodyCard(
+    weight: String,
+    height: String,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
@@ -126,7 +130,7 @@ fun MyBodyCard(onClick: () -> Unit) {
                         Text(
                             modifier = Modifier
                                 .padding(start = 8.dp),
-                            text = "76" + LocalContext.current.getString(R.string.main_my_body_weight),
+                            text = weight + LocalContext.current.getString(R.string.main_my_body_weight),
                             fontSize = 14.sp,
                             color = Color.White,
                             fontFamily = montserratFamily,
@@ -141,7 +145,7 @@ fun MyBodyCard(onClick: () -> Unit) {
                         Text(
                             modifier = Modifier
                                 .padding(start = 8.dp),
-                            text = "178" + LocalContext.current.getString(R.string.main_my_body_height),
+                            text = height + LocalContext.current.getString(R.string.main_my_body_height),
                             fontSize = 14.sp,
                             color = Color.White,
                             fontFamily = montserratFamily,
