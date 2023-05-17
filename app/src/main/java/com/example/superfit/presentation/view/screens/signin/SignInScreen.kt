@@ -43,4 +43,3 @@ fun SignInScreenContent(state: SignInScreenState, sendEvent: (SignInScreenUiEven
         SignInSecondPage(state = state, sendEvent = sendEvent)
     }
 }
-

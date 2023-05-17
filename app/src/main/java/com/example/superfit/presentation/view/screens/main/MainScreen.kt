@@ -14,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
+import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.model.Exercise
 import com.example.superfit.presentation.view.screens.main.components.ExerciseCard
 import com.example.superfit.presentation.view.screens.main.components.LastExercisesText
 import com.example.superfit.presentation.view.screens.main.components.MyBodyCard
@@ -25,17 +27,18 @@ import com.example.superfit.presentation.view.screens.main.components.SignOut
 @Preview
 @Composable
 fun DefaultPreview() {
-    MainScreenContent()
+    MainScreenContent {}
 }
 
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
 
-    MainScreenContent()
+    // TODO()
+    MainScreenContent { navController.navigate(Screen.Exercises.route) }
 }
 
 @Composable
-fun MainScreenContent() {
+fun MainScreenContent(onSeeAllButtonClick: () -> Unit) {
 
     LazyColumn(
         modifier = Modifier
@@ -56,7 +59,7 @@ fun MainScreenContent() {
                 verticalAlignment = Alignment.Bottom
             ) {
                 LastExercisesText()
-                SeeAllButton {}
+                SeeAllButton { onSeeAllButtonClick() }
             }
             LastExercises()
         }
@@ -69,13 +72,17 @@ fun MainScreenContent() {
 @Composable
 private fun LastExercises() {
     ExerciseCard(
-        R.drawable.main_screen_push_ups_image,
-        R.string.main_push_ups_title,
-        R.string.main_push_ups_text
+        Exercise(
+            R.drawable.exercise_push_ups_image,
+            R.string.exercises_push_ups_title,
+            R.string.exercises_push_ups_text
+        )
     ) {}
     ExerciseCard(
-        R.drawable.main_screen_plank_image,
-        R.string.main_plank_title,
-        R.string.main_plank_text
+        Exercise(
+            R.drawable.exercise_plank_image,
+            R.string.exercises_plank_title,
+            R.string.exercises_plank_text
+        )
     ) {}
 }

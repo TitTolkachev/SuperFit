@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,8 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.superfit.R
 import com.example.superfit.presentation.theme.DarkBackground
+import com.example.superfit.presentation.theme.DarkGray28
+import com.example.superfit.presentation.theme.DarkGray28Transparent
 import com.example.superfit.presentation.theme.WhiteC6
 import com.example.superfit.presentation.theme.montserratFamily
+import com.example.superfit.presentation.view.model.Exercise
 
 @Composable
 fun Poster() {
@@ -79,13 +84,30 @@ fun MyBodyCard(onClick: () -> Unit) {
             .clickable(onClick = onClick)
     ) {
         Row(Modifier.background(DarkBackground)) {
-            Image(
-                painter = painterResource(id = R.drawable.main_screen_body_image),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
+            Box(
                 modifier = Modifier
-                    .weight(0.5f),
-            )
+                    .weight(0.5f)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.main_screen_body_image),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .width(24.dp)
+                        .fillMaxHeight()
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    DarkGray28Transparent,
+                                    DarkGray28
+                                )
+                            )
+                        )
+                )
+            }
             Column(
                 modifier = Modifier
                     .weight(0.5f)
@@ -135,9 +157,7 @@ fun MyBodyCard(onClick: () -> Unit) {
 
 @Composable
 fun ExerciseCard(
-    drawableId: Int,
-    titleId: Int,
-    textId: Int,
+    exercise: Exercise,
     onClick: () -> Unit
 ) {
     Box(
@@ -149,13 +169,30 @@ fun ExerciseCard(
             .clickable(onClick = onClick),
     ) {
         Row(Modifier.background(DarkBackground)) {
-            Image(
-                painter = painterResource(id = drawableId),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
+            Box(
                 modifier = Modifier
-                    .weight(0.5f),
-            )
+                    .weight(0.5f)
+            ) {
+                Image(
+                    painter = painterResource(id = exercise.image),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .width(24.dp)
+                        .fillMaxHeight()
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    DarkGray28Transparent,
+                                    DarkGray28
+                                )
+                            )
+                        )
+                )
+            }
             Column(
                 modifier = Modifier
                     .weight(0.5f)
@@ -163,7 +200,7 @@ fun ExerciseCard(
                 Text(
                     modifier = Modifier
                         .padding(start = 16.dp, top = 8.dp, end = 16.dp),
-                    text = LocalContext.current.getString(titleId),
+                    text = LocalContext.current.getString(exercise.title),
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = montserratFamily,
@@ -172,7 +209,7 @@ fun ExerciseCard(
                 Text(
                     modifier = Modifier
                         .padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 8.dp),
-                    text = LocalContext.current.getString(textId),
+                    text = LocalContext.current.getString(exercise.text),
                     fontSize = 12.sp,
                     color = WhiteC6,
                     lineHeight = 15.sp,
