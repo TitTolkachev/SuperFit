@@ -35,6 +35,7 @@ import com.example.superfit.presentation.theme.DarkGray28Transparent
 import com.example.superfit.presentation.theme.WhiteC6
 import com.example.superfit.presentation.theme.montserratFamily
 import com.example.superfit.presentation.view.model.Exercise
+import com.example.superfit.presentation.view.model.Exercises
 
 @Composable
 fun Poster() {
@@ -162,7 +163,7 @@ fun MyBodyCard(
 @Composable
 fun ExerciseCard(
     exercise: Exercise,
-    onClick: () -> Unit
+    onClick: (Exercises) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -170,7 +171,7 @@ fun ExerciseCard(
             .fillMaxWidth()
             .height(114.dp)
             .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick),
+            .clickable(onClick = { onClick(exercise.exercise) }),
     ) {
         Row(Modifier.background(DarkBackground)) {
             Box(

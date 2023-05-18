@@ -44,7 +44,7 @@ fun ExercisesScreen(navController: NavController, viewModel: ExercisesViewModel 
     }
 
     LaunchedEffect(key1 = viewModel.state.showExercise) {
-//        TODO()
+//        TODO
 //        if (viewModel.state.showExercise != null) {
 //            navController.navigate()
 //        }
@@ -86,7 +86,11 @@ fun ExercisesScreenContent(
             }
         }
         items(state.exercises.size) {
-            ExerciseCard(state.exercises[it]) {}
+            ExerciseCard(state.exercises[it]) { exercise ->
+                sendEvent(
+                    ExercisesScreenUiEvent.ShowExerciseScreen(exercise)
+                )
+            }
         }
     }
 }

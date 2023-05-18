@@ -17,7 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
 import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.model.EXERCISES
 import com.example.superfit.presentation.view.model.Exercise
+import com.example.superfit.presentation.view.model.Exercises
 import com.example.superfit.presentation.view.screens.main.components.ExerciseCard
 import com.example.superfit.presentation.view.screens.main.components.LastExercisesText
 import com.example.superfit.presentation.view.screens.main.components.MyBodyCard
@@ -53,6 +55,38 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
             }
             viewModel.accept(MainScreenUiEvent.Navigated)
         }
+    }
+
+    LaunchedEffect(key1 = state.showExercise) {
+//        TODO
+//        when (state.showExercise) {
+//            Exercises.PUSH_UPS -> {
+//                navController.navigate(Screen.SignIn.route)
+//                viewModel.accept(MainScreenUiEvent.Navigated)
+//            }
+//
+//            Exercises.PLANK -> {
+//                navController.navigate(Screen.SignIn.route)
+//                viewModel.accept(MainScreenUiEvent.Navigated)
+//            }
+//
+//            Exercises.SQUATS -> {
+//                navController.navigate(Screen.SignIn.route)
+//                viewModel.accept(MainScreenUiEvent.Navigated)
+//            }
+//
+//            Exercises.CRUNCH -> {
+//                navController.navigate(Screen.SignIn.route)
+//                viewModel.accept(MainScreenUiEvent.Navigated)
+//            }
+//
+//            Exercises.RUNNING -> {
+//                navController.navigate(Screen.SignIn.route)
+//                viewModel.accept(MainScreenUiEvent.Navigated)
+//            }
+//
+//            else -> {}
+//        }
     }
 
     MainScreenContent(state) { event: MainScreenUiEvent -> viewModel.accept(event) }
@@ -91,7 +125,7 @@ fun MainScreenContent(
                 LastExercisesText()
                 SeeAllButton { sendEvent(MainScreenUiEvent.ShowAllExercisesScreen) }
             }
-            LastExercises()
+            LastExercises(state.lastExercises, sendEvent)
         }
         item {
             SignOut { sendEvent(MainScreenUiEvent.SignOut) }
@@ -100,19 +134,55 @@ fun MainScreenContent(
 }
 
 @Composable
-private fun LastExercises() {
-    ExerciseCard(
-        Exercise(
-            R.drawable.exercise_push_ups_image,
-            R.string.exercises_push_ups_title,
-            R.string.exercises_push_ups_text
-        )
-    ) {}
-    ExerciseCard(
-        Exercise(
-            R.drawable.exercise_plank_image,
-            R.string.exercises_plank_title,
-            R.string.exercises_plank_text
-        )
-    ) {}
+private fun LastExercises(
+    lastExercises: List<Exercise>?,
+    sendEvent: (MainScreenUiEvent) -> Unit
+) {
+    if (lastExercises.isNullOrEmpty()) {
+        ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
+            sendEvent(
+                MainScreenUiEvent.ShowExerciseScreen(exercise)
+            )
+        }
+        ExerciseCard(EXERCISES[Exercises.PLANK.ordinal]) { exercise ->
+            sendEvent(
+                MainScreenUiEvent.ShowExerciseScreen(exercise)
+            )
+        }
+    } else if (lastExercises.size == 1) {
+        if (lastExercises[0].exercise == Exercises.PUSH_UPS) {
+            ExerciseCard(lastExercises[0]) { exercise ->
+                sendEvent(
+                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                )
+            }
+            ExerciseCard(EXERCISES[Exercises.PLANK.ordinal]) { exercise ->
+                sendEvent(
+                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                )
+            }
+        } else {
+            ExerciseCard(lastExercises[0]) { exercise ->
+                sendEvent(
+                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                )
+            }
+            ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
+                sendEvent(
+                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                )
+            }
+        }
+    } else {
+        ExerciseCard(lastExercises[0]) { exercise ->
+            sendEvent(
+                MainScreenUiEvent.ShowExerciseScreen(exercise)
+            )
+        }
+        ExerciseCard(lastExercises[1]) { exercise ->
+            sendEvent(
+                MainScreenUiEvent.ShowExerciseScreen(exercise)
+            )
+        }
+    }
 }

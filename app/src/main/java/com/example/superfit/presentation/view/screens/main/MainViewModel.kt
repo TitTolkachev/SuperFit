@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
     fun accept(event: MainScreenUiEvent) {
         when (event) {
             is MainScreenUiEvent.ShowExerciseScreen -> {
-                state = state.copy(showExercise = event.exerciseIndex)
+                state = state.copy(showExercise = event.exercise)
             }
 
             is MainScreenUiEvent.ShowAllExercisesScreen -> {
