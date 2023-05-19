@@ -34,4 +34,12 @@
     <string name="exercises_running_title">Running</string>
     <string name="exercises_running_text">It develops endurance, strengthens the legs and the cardiovascular system.</string>
 
+    <!-- Body -->
+    <string name="body_my_body_text">My Body</string>
+    <string name="body_my_progress_text">My progress</string>
+    <string name="body_train_progress_text">Train progress</string>
+    <string name="body_statistics_text">Statistics</string>
+    <string name="body_edit_text">Edit</string>
+    <string name="body_see_all_text">See all</string>
+
 </resources>

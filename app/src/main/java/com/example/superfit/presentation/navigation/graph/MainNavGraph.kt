@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.MAIN_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.screens.body.BodyScreen
 import com.example.superfit.presentation.view.screens.exercises.ExercisesScreen
 import com.example.superfit.presentation.view.screens.main.MainScreen
 
@@ -25,6 +26,11 @@ fun NavGraphBuilder.mainNavGraph(
             route = Screen.Exercises.route,
         ) {
             ExercisesScreen(navController)
+        }
+        composable(
+            route = Screen.Body.route,
+        ) {
+            BodyScreen(navController)
         }
     }
 }

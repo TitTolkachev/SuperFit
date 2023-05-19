@@ -57,6 +57,13 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
         }
     }
 
+    LaunchedEffect(key1 = state.showBodyScreen) {
+        if (state.showBodyScreen == true) {
+            navController.navigate(Screen.Body.route)
+            viewModel.accept(MainScreenUiEvent.Navigated)
+        }
+    }
+
     LaunchedEffect(key1 = state.showExercise) {
 //        TODO
 //        when (state.showExercise) {
