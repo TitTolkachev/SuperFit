@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.superfit.R
+import com.example.superfit.presentation.theme.WhiteC6
 import com.example.superfit.presentation.theme.montserratFamily
 
 @Composable
@@ -24,6 +25,45 @@ fun MyBodyText() {
         color = Color.White,
         fontFamily = montserratFamily,
         fontWeight = FontWeight.Bold,
+        maxLines = 1
+    )
+}
+
+@Composable
+fun MyWeightText(value: String) {
+    Text(
+        text = value + LocalContext.current.getString(R.string.body_my_body_weight_text),
+        fontSize = 36.sp,
+        textAlign = TextAlign.Start,
+        color = Color.White,
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1
+    )
+}
+
+@Composable
+fun MyHeightText(value: String) {
+    Text(
+        text = value + LocalContext.current.getString(R.string.body_my_body_height_text),
+        fontSize = 36.sp,
+        textAlign = TextAlign.Start,
+        color = Color.White,
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1
+    )
+}
+
+@Composable
+fun EditButtonText() {
+    Text(
+        text = LocalContext.current.getString(R.string.body_edit_text),
+        fontSize = 12.sp,
+        textAlign = TextAlign.Start,
+        color = WhiteC6,
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.W400,
         maxLines = 1
     )
 }

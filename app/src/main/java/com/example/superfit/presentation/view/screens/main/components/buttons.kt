@@ -51,18 +51,22 @@ fun SignOut(
 
 @Composable
 fun SeeAllButton(onClick: () -> Unit) {
-    Text(
+    Button(
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .padding(end = 16.dp)
-            .offset(y = (-3).dp)
-            .clickable(onClick = onClick),
-        text = LocalContext.current.getString(R.string.main_see_all_text),
-        fontSize = 12.sp,
-        color = Gray66,
-        fontFamily = montserratFamily,
-        fontWeight = FontWeight.W400,
-        maxLines = 1
-    )
+            .offset(y = 12.dp), onClick = onClick
+    ) {
+        Text(
+            text = LocalContext.current.getString(R.string.main_see_all_text),
+            fontSize = 12.sp,
+            color = Gray66,
+            fontFamily = montserratFamily,
+            fontWeight = FontWeight.W400,
+            maxLines = 1
+        )
+    }
 }
 
 @Composable

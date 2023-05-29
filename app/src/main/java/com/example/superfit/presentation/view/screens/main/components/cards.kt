@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -173,12 +174,13 @@ fun ExerciseCard(
             .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = { onClick(exercise.exercise) }),
     ) {
-        Row(Modifier.background(DarkBackground)) {
+        Row(Modifier.background(DarkBackground).fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .weight(0.5f)
             ) {
                 Image(
+                    modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = exercise.image),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

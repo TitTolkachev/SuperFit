@@ -36,6 +36,8 @@
 
     <!-- Body -->
     <string name="body_my_body_text">My Body</string>
+    <string name="body_my_body_weight_text">&#160;kg</string>
+    <string name="body_my_body_height_text">&#160;cm</string>
     <string name="body_my_progress_text">My progress</string>
     <string name="body_train_progress_text">Train progress</string>
     <string name="body_statistics_text">Statistics</string>
