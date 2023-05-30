@@ -15,6 +15,7 @@ import com.example.superfit.di.DomainModule
 import com.example.superfit.presentation.MainActivity
 import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.theme.SuperFitTheme
+import com.example.superfit.presentation.view.screens.auth.signup.SignUpScreen
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

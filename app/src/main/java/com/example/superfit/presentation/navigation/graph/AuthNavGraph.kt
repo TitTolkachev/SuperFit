@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.AUTH_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.screens.signin.SignInScreen
-import com.example.superfit.presentation.view.screens.signup.SignUpScreen
+import com.example.superfit.presentation.view.screens.auth.signin.SignInScreen
+import com.example.superfit.presentation.view.screens.auth.signup.SignUpScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.authNavGraph(

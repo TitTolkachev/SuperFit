@@ -6,9 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.MAIN_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
-import com.example.superfit.presentation.view.screens.body.BodyScreen
-import com.example.superfit.presentation.view.screens.exercises.ExercisesScreen
-import com.example.superfit.presentation.view.screens.main.MainScreen
+import com.example.superfit.presentation.view.screens.main.body.BodyScreen
+import com.example.superfit.presentation.view.screens.main.exercises.ExercisesScreen
+import com.example.superfit.presentation.view.screens.main.main.MainScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
