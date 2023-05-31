@@ -15,14 +15,12 @@ class SignInViewModel @Inject constructor(
     var state by mutableStateOf(SignInScreenState())
         private set
 
+    init {
+        state = state.copy(numbers = state.numbers.shuffled())
+    }
+
     fun accept(event: SignInScreenUiEvent) {
         when (event) {
-            is SignInScreenUiEvent.SignIn -> {
-
-                // TODO()
-                state = state.copy(showMainScreen = true)
-            }
-
             is SignInScreenUiEvent.SignUp -> {
 
                 state = state.copy(showSignUpScreen = true)
@@ -39,6 +37,21 @@ class SignInViewModel @Inject constructor(
             is SignInScreenUiEvent.NewUserNameText -> {
                 state = state.copy(userName = event.newText)
             }
+
+            is SignInScreenUiEvent.ButtonClicked -> {
+                state = if (state.password.length >= PASSWORD_MAX_LENGTH - 1) {
+                    state.copy(showMainScreen = true, password = "")
+                } else {
+                    state.copy(
+                        numbers = state.numbers.shuffled(),
+                        password = state.password + event.value.toString()
+                    )
+                }
+            }
         }
+    }
+
+    companion object {
+        private const val PASSWORD_MAX_LENGTH = 4
     }
 }

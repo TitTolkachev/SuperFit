@@ -1,13 +1,19 @@
 package com.example.superfit.presentation.view.screens.auth.signin
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,6 +67,7 @@ fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -> Unit) {
 
@@ -97,8 +104,29 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) 
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.W400
             )
-            Button(onClick = { sendEvent(SignInScreenUiEvent.SignIn) }) {
-                Text(text = "SignIn")
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 24.dp, top = 40.dp, end = 24.dp),
+                columns = GridCells.Fixed(3)
+            ) {
+                items(count = state.numbers.size, key = { state.numbers[it].toString() }) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp, vertical = 10.dp)
+                            .border(2.dp, Color.White, RoundedCornerShape(10.dp))
+                            .animateItemPlacement(),
+                        onClick = { sendEvent(SignInScreenUiEvent.ButtonClicked(it)) }) {
+                        Text(
+                            text = state.numbers[it].toString(),
+                            color = Color.White,
+                            fontSize = 64.sp,
+                            fontFamily = montserratFamily,
+                            fontWeight = FontWeight.W400
+                        )
+                    }
+                }
             }
         }
 
