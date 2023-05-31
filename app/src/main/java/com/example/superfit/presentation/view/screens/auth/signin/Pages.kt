@@ -117,7 +117,7 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) 
                             .padding(horizontal = 12.dp, vertical = 10.dp)
                             .border(2.dp, Color.White, RoundedCornerShape(10.dp))
                             .animateItemPlacement(),
-                        onClick = { sendEvent(SignInScreenUiEvent.ButtonClicked(it)) }) {
+                        onClick = { sendEvent(SignInScreenUiEvent.ButtonClicked(state.numbers[it])) }) {
                         Text(
                             text = state.numbers[it].toString(),
                             color = Color.White,

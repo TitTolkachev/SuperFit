@@ -4,12 +4,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.superfit.domain.model.Credentials
+import com.example.superfit.domain.model.LoginRequestBody
+import com.example.superfit.domain.usecase.local.SaveCredentialsToLocalStorageUseCase
+import com.example.superfit.domain.usecase.local.SaveEntranceInfoUseCase
+import com.example.superfit.domain.usecase.remote.RefreshRefreshTokenUseCase
+import com.example.superfit.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-
+    private val refreshRefreshTokenUseCase: RefreshRefreshTokenUseCase,
+    private val saveEntranceInfoUseCase: SaveEntranceInfoUseCase,
+    private val saveCredentialsToLocalStorageUseCase: SaveCredentialsToLocalStorageUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(SignInScreenState())
@@ -39,16 +49,40 @@ class SignInViewModel @Inject constructor(
             }
 
             is SignInScreenUiEvent.ButtonClicked -> {
-                state = if (state.password.length >= PASSWORD_MAX_LENGTH - 1) {
-                    state.copy(showMainScreen = true, password = "")
+                if (state.password.length >= PASSWORD_MAX_LENGTH - 1) {
+                    viewModelScope.launch {
+                        state = if (login(state.userName, state.password + event.value.toString()))
+                            state.copy(
+                                showMainScreen = true,
+                                password = ""
+                            )
+                        else
+                            state.copy(numbers = state.numbers.shuffled(), password = "")
+                    }
                 } else {
-                    state.copy(
+                    state = state.copy(
                         numbers = state.numbers.shuffled(),
                         password = state.password + event.value.toString()
                     )
                 }
             }
         }
+    }
+
+    private suspend fun login(userName: String, password: String): Boolean {
+        val request = refreshRefreshTokenUseCase.execute(
+            LoginRequestBody(
+                login = userName,
+                password = password
+            )
+        )
+
+        if (request is Resource.Success) {
+            saveCredentialsToLocalStorageUseCase.execute(Credentials(userName, password))
+            saveEntranceInfoUseCase.execute(true)
+            return true
+        }
+        return false
     }
 
     companion object {
