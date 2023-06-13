@@ -50,13 +50,13 @@ fun ExercisesScreen(navController: NavController, viewModel: ExercisesViewModel 
 //        }
     }
 
-    ExercisesScreenContent(state) { event: ExercisesScreenUiEvent -> viewModel.accept(event) }
+    ExercisesScreenContent(state) { event: ExercisesScreenIntent -> viewModel.accept(event) }
 }
 
 @Composable
 fun ExercisesScreenContent(
     state: ExercisesScreenState,
-    sendEvent: (ExercisesScreenUiEvent) -> Unit
+    sendEvent: (ExercisesScreenIntent) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -72,7 +72,7 @@ fun ExercisesScreenContent(
                     contentDescription = null,
                     modifier = Modifier
                         .padding(top = 60.dp, start = 16.dp)
-                        .clickable { sendEvent(ExercisesScreenUiEvent.NavigateBack) }
+                        .clickable { sendEvent(ExercisesScreenIntent.NavigateBack) }
                 )
             }
         }
@@ -88,7 +88,7 @@ fun ExercisesScreenContent(
         items(state.exercises.size) {
             ExerciseCard(state.exercises[it]) { exercise ->
                 sendEvent(
-                    ExercisesScreenUiEvent.ShowExerciseScreen(exercise)
+                    ExercisesScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
         }

@@ -35,7 +35,7 @@ import com.example.superfit.presentation.view.shared.auth.AuthEditText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -> Unit) {
+fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) -> Unit) {
 
     Image(
         painter = painterResource(id = R.drawable.auth_background_image),
@@ -58,18 +58,18 @@ fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -
                 placeholderText = LocalContext.current.getString(R.string.auth_user_name),
                 paddingValues = PaddingValues(start = 54.dp, end = 50.dp, bottom = 12.dp),
                 text = { state.userName }) { text ->
-                sendEvent(SignInScreenUiEvent.NewUserNameText(text))
+                sendEvent(SignInScreenIntent.NewUserNameText(text))
             }
-            SignInButton { sendEvent(SignInScreenUiEvent.NextPage) }
+            SignInButton { sendEvent(SignInScreenIntent.NextPage) }
         }
 
-        ToSignUpButton { sendEvent(SignInScreenUiEvent.SignUp) }
+        ToSignUpButton { sendEvent(SignInScreenIntent.SignUp) }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -> Unit) {
+fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) -> Unit) {
 
     Image(
         painter = painterResource(id = R.drawable.auth_background_image),
@@ -84,7 +84,7 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) 
         contentDescription = null,
         modifier = Modifier
             .padding(top = 60.dp, start = 16.dp)
-            .clickable { sendEvent(SignInScreenUiEvent.PrevPage) }
+            .clickable { sendEvent(SignInScreenIntent.PrevPage) }
     )
 
     Column(
@@ -117,7 +117,7 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) 
                             .padding(horizontal = 12.dp, vertical = 10.dp)
                             .border(2.dp, Color.White, RoundedCornerShape(10.dp))
                             .animateItemPlacement(),
-                        onClick = { sendEvent(SignInScreenUiEvent.ButtonClicked(state.numbers[it])) }) {
+                        onClick = { sendEvent(SignInScreenIntent.ButtonClicked(state.numbers[it])) }) {
                         Text(
                             text = state.numbers[it].toString(),
                             color = Color.White,

@@ -42,7 +42,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
     LaunchedEffect(key1 = state.showAllExercises) {
         if (state.showAllExercises == true) {
             navController.navigate(Screen.Exercises.route)
-            viewModel.accept(MainScreenUiEvent.Navigated)
+            viewModel.accept(MainScreenIntent.Navigated)
         }
     }
 
@@ -53,14 +53,14 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
                     inclusive = true
                 }
             }
-            viewModel.accept(MainScreenUiEvent.Navigated)
+            viewModel.accept(MainScreenIntent.Navigated)
         }
     }
 
     LaunchedEffect(key1 = state.showBodyScreen) {
         if (state.showBodyScreen == true) {
             navController.navigate(Screen.Body.route)
-            viewModel.accept(MainScreenUiEvent.Navigated)
+            viewModel.accept(MainScreenIntent.Navigated)
         }
     }
 
@@ -69,40 +69,40 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
 //        when (state.showExercise) {
 //            Exercises.PUSH_UPS -> {
 //                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenUiEvent.Navigated)
+//                viewModel.accept(MainScreenIntent.Navigated)
 //            }
 //
 //            Exercises.PLANK -> {
 //                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenUiEvent.Navigated)
+//                viewModel.accept(MainScreenIntent.Navigated)
 //            }
 //
 //            Exercises.SQUATS -> {
 //                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenUiEvent.Navigated)
+//                viewModel.accept(MainScreenIntent.Navigated)
 //            }
 //
 //            Exercises.CRUNCH -> {
 //                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenUiEvent.Navigated)
+//                viewModel.accept(MainScreenIntent.Navigated)
 //            }
 //
 //            Exercises.RUNNING -> {
 //                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenUiEvent.Navigated)
+//                viewModel.accept(MainScreenIntent.Navigated)
 //            }
 //
 //            else -> {}
 //        }
     }
 
-    MainScreenContent(state) { event: MainScreenUiEvent -> viewModel.accept(event) }
+    MainScreenContent(state) { event: MainScreenIntent -> viewModel.accept(event) }
 }
 
 @Composable
 fun MainScreenContent(
     state: MainScreenState,
-    sendEvent: (MainScreenUiEvent) -> Unit
+    sendEvent: (MainScreenIntent) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -120,7 +120,7 @@ fun MainScreenContent(
                 height = (state.bodyHeight
                     ?: LocalContext.current.getString(R.string.main_default_body_value)).toString()
             ) {
-                sendEvent(MainScreenUiEvent.ShowBodyScreen)
+                sendEvent(MainScreenIntent.ShowBodyScreen)
             }
         }
         item {
@@ -130,12 +130,12 @@ fun MainScreenContent(
                 verticalAlignment = Alignment.Bottom
             ) {
                 LastExercisesText()
-                SeeAllButton { sendEvent(MainScreenUiEvent.ShowAllExercisesScreen) }
+                SeeAllButton { sendEvent(MainScreenIntent.ShowAllExercisesScreen) }
             }
             LastExercises(state.lastExercises, sendEvent)
         }
         item {
-            SignOut { sendEvent(MainScreenUiEvent.SignOut) }
+            SignOut { sendEvent(MainScreenIntent.SignOut) }
         }
     }
 }
@@ -143,52 +143,52 @@ fun MainScreenContent(
 @Composable
 private fun LastExercises(
     lastExercises: List<Exercise>?,
-    sendEvent: (MainScreenUiEvent) -> Unit
+    sendEvent: (MainScreenIntent) -> Unit
 ) {
     if (lastExercises.isNullOrEmpty()) {
         ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
             sendEvent(
-                MainScreenUiEvent.ShowExerciseScreen(exercise)
+                MainScreenIntent.ShowExerciseScreen(exercise)
             )
         }
         ExerciseCard(EXERCISES[Exercises.PLANK.ordinal]) { exercise ->
             sendEvent(
-                MainScreenUiEvent.ShowExerciseScreen(exercise)
+                MainScreenIntent.ShowExerciseScreen(exercise)
             )
         }
     } else if (lastExercises.size == 1) {
         if (lastExercises[0].exercise == Exercises.PUSH_UPS) {
             ExerciseCard(lastExercises[0]) { exercise ->
                 sendEvent(
-                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                    MainScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
             ExerciseCard(EXERCISES[Exercises.PLANK.ordinal]) { exercise ->
                 sendEvent(
-                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                    MainScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
         } else {
             ExerciseCard(lastExercises[0]) { exercise ->
                 sendEvent(
-                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                    MainScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
             ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
                 sendEvent(
-                    MainScreenUiEvent.ShowExerciseScreen(exercise)
+                    MainScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
         }
     } else {
         ExerciseCard(lastExercises[0]) { exercise ->
             sendEvent(
-                MainScreenUiEvent.ShowExerciseScreen(exercise)
+                MainScreenIntent.ShowExerciseScreen(exercise)
             )
         }
         ExerciseCard(lastExercises[1]) { exercise ->
             sendEvent(
-                MainScreenUiEvent.ShowExerciseScreen(exercise)
+                MainScreenIntent.ShowExerciseScreen(exercise)
             )
         }
     }

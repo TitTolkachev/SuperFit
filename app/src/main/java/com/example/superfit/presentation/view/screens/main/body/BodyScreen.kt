@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.screens.main.body.components.EditButton
 import com.example.superfit.presentation.view.screens.main.body.components.MyBodyText
 import com.example.superfit.presentation.view.screens.main.body.components.MyHeightText
@@ -26,13 +28,20 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
 
     val state = viewModel.state
 
+    LaunchedEffect(key1 = state.showImage) {
+        if (state.showImage != null) {
+            navController.navigate(Screen.Image.route)
+            viewModel.accept(BodyScreenIntent.Navigated)
+        }
+    }
+
     BodyScreenContent(state) { event -> viewModel.accept(event) }
 }
 
 @Composable
 fun BodyScreenContent(
     state: BodyScreenState,
-    sendEvent: (BodyScreenUiEvent) -> Unit
+    sendEvent: (BodyScreenIntent) -> Unit
 ) {
     Column {
         MyBodyText()
@@ -44,11 +53,11 @@ fun BodyScreenContent(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MyWeightText(state.weight.toString())
-                EditButton { sendEvent(BodyScreenUiEvent.EditWeight) }
+                EditButton { sendEvent(BodyScreenIntent.EditWeight) }
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MyHeightText(state.height.toString())
-                EditButton { sendEvent(BodyScreenUiEvent.EditHeight) }
+                EditButton { sendEvent(BodyScreenIntent.EditHeight) }
             }
         }
         Row(
@@ -57,10 +66,15 @@ fun BodyScreenContent(
             modifier = Modifier.fillMaxWidth()
         ) {
             MyProgressText()
-            SeeAllButton { sendEvent(BodyScreenUiEvent.ShowImages) }
+            SeeAllButton { sendEvent(BodyScreenIntent.ShowImages) }
         }
-        ProgressPhotosCard { sendEvent(BodyScreenUiEvent.TakePicture) }
-        TrainProgressButton { sendEvent(BodyScreenUiEvent.ShowTrainProgress) }
-        StatisticsButton { sendEvent(BodyScreenUiEvent.ShowStatistics) }
+        ProgressPhotosCard(
+            { image: Int ->
+                sendEvent(BodyScreenIntent.ShowImage(image))
+            }) {
+            sendEvent(BodyScreenIntent.TakePicture)
+        }
+        TrainProgressButton { sendEvent(BodyScreenIntent.ShowTrainProgress) }
+        StatisticsButton { sendEvent(BodyScreenIntent.ShowStatistics) }
     }
 }

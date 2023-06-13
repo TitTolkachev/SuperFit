@@ -15,30 +15,43 @@ class BodyViewModel @Inject constructor(
     var state by mutableStateOf(BodyScreenState(1, 1))
         private set
 
-    fun accept(event: BodyScreenUiEvent) {
+    fun accept(event: BodyScreenIntent) {
         when (event) {
-            BodyScreenUiEvent.EditHeight -> {
+            BodyScreenIntent.Navigated -> {
+                state = state.copy(
+                    showImage = null,
+                    showImages = null,
+                    showStatistics = null,
+                    showTrainProgress = null
+                )
+            }
+
+            BodyScreenIntent.EditHeight -> {
 
             }
 
-            BodyScreenUiEvent.EditWeight -> {
+            BodyScreenIntent.EditWeight -> {
 
             }
 
-            BodyScreenUiEvent.ShowImages -> {
+            BodyScreenIntent.ShowImages -> {
 
             }
 
-            BodyScreenUiEvent.ShowStatistics -> {
+            BodyScreenIntent.ShowStatistics -> {
 
             }
 
-            BodyScreenUiEvent.ShowTrainProgress -> {
+            BodyScreenIntent.ShowTrainProgress -> {
 
             }
 
-            BodyScreenUiEvent.TakePicture -> {
+            BodyScreenIntent.TakePicture -> {
 
+            }
+
+            is BodyScreenIntent.ShowImage -> {
+                state = state.copy(showImage = event.image)
             }
         }
     }

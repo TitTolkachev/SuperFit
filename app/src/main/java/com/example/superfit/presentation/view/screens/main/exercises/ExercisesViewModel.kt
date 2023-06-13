@@ -14,17 +14,17 @@ class ExercisesViewModel @Inject constructor(
     var state by mutableStateOf(ExercisesScreenState(exercises = EXERCISES))
         private set
 
-    fun accept(event: ExercisesScreenUiEvent) {
+    fun accept(event: ExercisesScreenIntent) {
         when (event) {
-            is ExercisesScreenUiEvent.ShowExerciseScreen -> {
+            is ExercisesScreenIntent.ShowExerciseScreen -> {
                 state = state.copy(showExercise = event.exercise)
             }
 
-            is ExercisesScreenUiEvent.NavigateBack -> {
+            is ExercisesScreenIntent.NavigateBack -> {
                 state = state.copy(navigateBack = true)
             }
 
-            is ExercisesScreenUiEvent.Navigated -> {
+            is ExercisesScreenIntent.Navigated -> {
                 state = state.copy(
                     showExercise = null,
                     navigateBack = null

@@ -23,9 +23,9 @@ class SignUpViewModel @Inject constructor(
     var state by mutableStateOf(SignUpScreenState())
         private set
 
-    fun accept(event: SignUpScreenUiEvent) {
+    fun accept(event: SignUpScreenIntent) {
         when (event) {
-            is SignUpScreenUiEvent.SignUp -> {
+            is SignUpScreenIntent.SignUp -> {
 
                 val code = state.codeValue
                 val repeatCode = state.repeatCodeValue
@@ -60,19 +60,19 @@ class SignUpViewModel @Inject constructor(
                 }
             }
 
-            is SignUpScreenUiEvent.NewEmailText -> {
+            is SignUpScreenIntent.NewEmailText -> {
                 state = state.copy(emailValue = event.newText)
             }
 
-            is SignUpScreenUiEvent.NewPasswordText -> {
+            is SignUpScreenIntent.NewPasswordText -> {
                 state = state.copy(codeValue = event.newText)
             }
 
-            is SignUpScreenUiEvent.NewRepeatPasswordText -> {
+            is SignUpScreenIntent.NewRepeatPasswordText -> {
                 state = state.copy(repeatCodeValue = event.newText)
             }
 
-            is SignUpScreenUiEvent.NavigateToSignIn -> {
+            is SignUpScreenIntent.NavigateToSignIn -> {
                 state = state.copy(showSignInScreen = true)
             }
         }

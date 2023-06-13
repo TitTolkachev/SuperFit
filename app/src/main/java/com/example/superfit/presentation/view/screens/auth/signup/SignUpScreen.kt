@@ -61,14 +61,14 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         }
     }
 
-    SingUpScreenContent(state) { event: SignUpScreenUiEvent -> viewModel.accept(event) }
+    SingUpScreenContent(state) { event: SignUpScreenIntent -> viewModel.accept(event) }
 }
 
 @ExperimentalMaterial3Api
 @Composable
 fun SingUpScreenContent(
     state: SignUpScreenState,
-    sendEvent: (SignUpScreenUiEvent) -> Unit
+    sendEvent: (SignUpScreenIntent) -> Unit
 ) {
 
     Image(
@@ -97,26 +97,26 @@ fun SingUpScreenContent(
                 isEmail = true,
                 placeholderText = LocalContext.current.getString(R.string.auth_user_name),
                 text = { state.emailValue }) { text ->
-                sendEvent(SignUpScreenUiEvent.NewEmailText(text))
+                sendEvent(SignUpScreenIntent.NewEmailText(text))
             }
 
             AuthEditText(
                 isPassword = true,
                 placeholderText = LocalContext.current.getString(R.string.auth_code),
                 text = { state.codeValue }) { text ->
-                sendEvent(SignUpScreenUiEvent.NewPasswordText(text))
+                sendEvent(SignUpScreenIntent.NewPasswordText(text))
             }
 
             AuthEditText(
                 isPassword = true,
                 placeholderText = LocalContext.current.getString(R.string.auth_repeat_code),
                 text = { state.repeatCodeValue }) { text ->
-                sendEvent(SignUpScreenUiEvent.NewRepeatPasswordText(text))
+                sendEvent(SignUpScreenIntent.NewRepeatPasswordText(text))
             }
 
             SignUpButton {
                 sendEvent(
-                    SignUpScreenUiEvent.SignUp(
+                    SignUpScreenIntent.SignUp(
                         state.emailValue,
                         state.codeValue,
                         state.repeatCodeValue
@@ -125,7 +125,7 @@ fun SingUpScreenContent(
             }
         }
 
-        ToSignInButton { sendEvent(SignUpScreenUiEvent.NavigateToSignIn) }
+        ToSignInButton { sendEvent(SignUpScreenIntent.NavigateToSignIn) }
     }
 }
 

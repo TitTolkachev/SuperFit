@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.superfit.R
 
 @Composable
-fun ProgressPhotosCard(onClick: () -> Unit) {
+fun ProgressPhotosCard(onImageClick: (image: Int) -> Unit, onClick: () -> Unit) {
 
     Box(
         modifier = Modifier
@@ -44,8 +44,10 @@ fun ProgressPhotosCard(onClick: () -> Unit) {
                 contentAlignment = Alignment.BottomStart
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = R.drawable.main_screen_poster),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable { onImageClick(R.drawable.main_screen_body_image) },
+                    painter = painterResource(id = R.drawable.main_screen_body_image),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
@@ -59,7 +61,9 @@ fun ProgressPhotosCard(onClick: () -> Unit) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable { onImageClick(R.drawable.main_screen_poster) },
                     painter = painterResource(id = R.drawable.main_screen_poster),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

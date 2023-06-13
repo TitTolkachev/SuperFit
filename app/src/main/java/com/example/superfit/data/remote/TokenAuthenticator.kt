@@ -17,55 +17,50 @@ class TokenAuthenticator constructor(
 
         val localToken = useCases.getTokenFromLocalStorageUseCase.execute()
 
-        if (localToken != null) {
+        var remoteAccessToken: String? = null
+        var remoteRefreshToken: String? = null
 
-            var remoteAccessToken: String? = null
-            var remoteRefreshToken: String? = null
+        runBlocking {
+            when (val result =
+                useCases.refreshAccessTokenUseCase.execute(localToken?.refreshToken ?: "")) {
+                is Resource.Success<*> ->
+                    remoteAccessToken = result.data?.accessToken
 
-            runBlocking {
-                when (val result =
-                    useCases.refreshAccessTokenUseCase.execute(localToken.refreshToken)) {
-                    is Resource.Success<*> ->
-                        remoteAccessToken = result.data?.accessToken
+                else -> {
+                    val credentials = useCases.getCredentialsFromLocalStorageUseCase.execute()
+                    val refreshResult = useCases.refreshRefreshTokenUseCase.execute(
+                        LoginRequestBody(credentials.login, credentials.password)
+                    )
+                    if (refreshResult is Resource.Success<*>) {
+                        remoteRefreshToken = refreshResult.data?.refreshToken
 
-                    else -> {
-                        val credentials = useCases.getCredentialsFromLocalStorageUseCase.execute()
-                        val refreshResult = useCases.refreshRefreshTokenUseCase.execute(
-                            LoginRequestBody(credentials.login, credentials.password)
-                        )
-                        if (refreshResult is Resource.Success<*>) {
-                            remoteRefreshToken = refreshResult.data?.refreshToken
+                        val newResult =
+                            useCases.refreshAccessTokenUseCase.execute(remoteRefreshToken ?: "")
 
-                            val newResult =
-                                useCases.refreshAccessTokenUseCase.execute(remoteRefreshToken ?: "")
-
-                            remoteAccessToken = if (newResult is Resource.Success<*>)
-                                newResult.data?.accessToken
-                            else
-                                ""
-                        } else
-                            remoteRefreshToken = ""
-                    }
+                        remoteAccessToken = if (newResult is Resource.Success<*>)
+                            newResult.data?.accessToken
+                        else
+                            ""
+                    } else
+                        remoteRefreshToken = ""
                 }
             }
-
-            useCases.saveTokenToLocalStorageUseCase.execute(
-                Token(
-                    remoteAccessToken ?: "",
-                    remoteRefreshToken ?: localToken.refreshToken
-                )
-            )
-
-            // TODO(Поменять на >= 1)
-            return if (response.responseCount > 1) {
-                null
-            } else {
-                response.request.newBuilder()
-                    .header("Authorization", " Bearer ${remoteAccessToken ?: ""}")
-                    .build()
-            }
         }
-        return null
+
+        useCases.saveTokenToLocalStorageUseCase.execute(
+            Token(
+                remoteAccessToken ?: "",
+                remoteRefreshToken ?: localToken?.refreshToken ?: ""
+            )
+        )
+
+        return if (response.responseCount > 1) {
+            null
+        } else {
+            response.request.newBuilder()
+                .header("Authorization", " Bearer ${remoteAccessToken ?: ""}")
+                .build()
+        }
     }
 
     private val Response.responseCount: Int

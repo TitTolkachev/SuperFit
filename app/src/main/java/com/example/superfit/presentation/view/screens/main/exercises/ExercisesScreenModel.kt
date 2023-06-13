@@ -5,10 +5,10 @@ import com.example.superfit.presentation.view.model.Exercise
 import com.example.superfit.presentation.view.model.Exercises
 
 @Immutable
-sealed class ExercisesScreenUiEvent {
-    data class ShowExerciseScreen(val exercise: Exercises) : ExercisesScreenUiEvent()
-    object NavigateBack : ExercisesScreenUiEvent()
-    object Navigated : ExercisesScreenUiEvent()
+sealed class ExercisesScreenIntent {
+    data class ShowExerciseScreen(val exercise: Exercises) : ExercisesScreenIntent()
+    object NavigateBack : ExercisesScreenIntent()
+    object Navigated : ExercisesScreenIntent()
 }
 
 @Immutable

@@ -29,26 +29,26 @@ class SignInViewModel @Inject constructor(
         state = state.copy(numbers = state.numbers.shuffled())
     }
 
-    fun accept(event: SignInScreenUiEvent) {
+    fun accept(event: SignInScreenIntent) {
         when (event) {
-            is SignInScreenUiEvent.SignUp -> {
+            is SignInScreenIntent.SignUp -> {
 
                 state = state.copy(showSignUpScreen = true)
             }
 
-            is SignInScreenUiEvent.NextPage -> {
+            is SignInScreenIntent.NextPage -> {
                 state = state.copy(currentPage = 2)
             }
 
-            is SignInScreenUiEvent.PrevPage -> {
+            is SignInScreenIntent.PrevPage -> {
                 state = state.copy(currentPage = 1)
             }
 
-            is SignInScreenUiEvent.NewUserNameText -> {
+            is SignInScreenIntent.NewUserNameText -> {
                 state = state.copy(userName = event.newText)
             }
 
-            is SignInScreenUiEvent.ButtonClicked -> {
+            is SignInScreenIntent.ButtonClicked -> {
                 if (state.password.length >= PASSWORD_MAX_LENGTH - 1) {
                     viewModelScope.launch {
                         state = if (login(state.userName, state.password + event.value.toString()))

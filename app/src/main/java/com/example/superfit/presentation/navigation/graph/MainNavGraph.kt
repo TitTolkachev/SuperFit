@@ -9,6 +9,7 @@ import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.screens.exercises.crunch.CrunchScreen
 import com.example.superfit.presentation.view.screens.main.body.BodyScreen
 import com.example.superfit.presentation.view.screens.main.exercises.ExercisesScreen
+import com.example.superfit.presentation.view.screens.main.image.ImageScreen
 import com.example.superfit.presentation.view.screens.main.main.MainScreen
 
 fun NavGraphBuilder.mainNavGraph(
@@ -32,6 +33,16 @@ fun NavGraphBuilder.mainNavGraph(
             route = Screen.Body.route,
         ) {
             BodyScreen(navController)
+        }
+        composable(
+            route = Screen.Image.route,
+        ) {
+            ImageScreen(navController)
+        }
+        composable(
+            route = Screen.ImageList.route,
+        ) {
+
         }
 
         // EXERCISES

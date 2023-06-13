@@ -34,21 +34,21 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun accept(event: MainScreenUiEvent) {
+    fun accept(event: MainScreenIntent) {
         when (event) {
-            is MainScreenUiEvent.ShowExerciseScreen -> {
+            is MainScreenIntent.ShowExerciseScreen -> {
                 state = state.copy(showExercise = event.exercise)
             }
 
-            is MainScreenUiEvent.ShowAllExercisesScreen -> {
+            is MainScreenIntent.ShowAllExercisesScreen -> {
                 state = state.copy(showAllExercises = true)
             }
 
-            is MainScreenUiEvent.ShowBodyScreen -> {
+            is MainScreenIntent.ShowBodyScreen -> {
                 state = state.copy(showBodyScreen = true)
             }
 
-            is MainScreenUiEvent.SignOut -> {
+            is MainScreenIntent.SignOut -> {
                 viewModelScope.launch {
                     saveTokenToLocalStorageUseCase.execute(Token("", ""))
                     saveCredentialsToLocalStorageUseCase.execute(Credentials("", ""))
@@ -56,7 +56,7 @@ class MainViewModel @Inject constructor(
                 }
             }
 
-            is MainScreenUiEvent.Navigated -> {
+            is MainScreenIntent.Navigated -> {
                 state = state.copy(
                     showExercise = null,
                     showAllExercises = null,

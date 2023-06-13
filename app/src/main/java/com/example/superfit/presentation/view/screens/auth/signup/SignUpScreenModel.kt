@@ -3,17 +3,17 @@ package com.example.superfit.presentation.view.screens.auth.signup
 import androidx.compose.runtime.Immutable
 
 @Immutable
-sealed class SignUpScreenUiEvent {
+sealed class SignUpScreenIntent {
     data class SignUp(val emailValue: String, val codeValue: String, val repeatCodeValue: String) :
-        SignUpScreenUiEvent()
+        SignUpScreenIntent()
 
-    data class NewEmailText(val newText: String) : SignUpScreenUiEvent()
+    data class NewEmailText(val newText: String) : SignUpScreenIntent()
 
-    data class NewPasswordText(val newText: String) : SignUpScreenUiEvent()
+    data class NewPasswordText(val newText: String) : SignUpScreenIntent()
 
-    data class NewRepeatPasswordText(val newText: String) : SignUpScreenUiEvent()
+    data class NewRepeatPasswordText(val newText: String) : SignUpScreenIntent()
 
-    object NavigateToSignIn : SignUpScreenUiEvent()
+    object NavigateToSignIn : SignUpScreenIntent()
 }
 
 @Immutable

@@ -31,11 +31,11 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = hilt
         }
     }
 
-    SignInScreenContent(state) { event: SignInScreenUiEvent -> viewModel.accept(event) }
+    SignInScreenContent(state) { event: SignInScreenIntent -> viewModel.accept(event) }
 }
 
 @Composable
-fun SignInScreenContent(state: SignInScreenState, sendEvent: (SignInScreenUiEvent) -> Unit) {
+fun SignInScreenContent(state: SignInScreenState, sendEvent: (SignInScreenIntent) -> Unit) {
 
     if (state.currentPage == 1) {
         SignInFirstPage(state = state, sendEvent = sendEvent)
