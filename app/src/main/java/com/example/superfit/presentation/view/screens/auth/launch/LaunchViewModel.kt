@@ -23,7 +23,7 @@ class LaunchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val isFirstEnter = getEntranceInfoUseCase.execute()
+            val isFirstEnter = !getEntranceInfoUseCase.execute()
 
             state = if (isFirstEnter) {
                 state.copy(isFirstEnter = true)

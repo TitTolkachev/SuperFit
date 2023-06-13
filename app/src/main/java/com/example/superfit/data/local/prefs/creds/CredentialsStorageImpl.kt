@@ -1,33 +1,42 @@
 package com.example.superfit.data.local.prefs.creds
 
 import android.content.Context
-import androidx.datastore.dataStore
+import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.superfit.data.local.prefs.dto.CredentialsDto
-import com.example.superfit.data.util.CryptoManager
-import kotlinx.coroutines.flow.first
-
-private const val FILE_NAME = "credentials.json"
-
-private val Context.dataStore by dataStore(
-    fileName = FILE_NAME,
-    serializer = CredentialsSerializer(CryptoManager())
-)
 
 class CredentialsStorageImpl(context: Context) : CredentialsStorage {
 
-    private val dataStore = context.dataStore
+    companion object {
+        private const val FILE_NAME = "credentials"
+        private const val LOGIN_NAME = "login_name"
+        private const val PASSWORD_NAME = "password_name"
+    }
+
+    private var masterKey: MasterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private var sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+        context,
+        FILE_NAME,
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    private var editor = sharedPreferences.edit()
 
     override suspend fun getCredentials(): CredentialsDto {
-        val data = dataStore.data.first()
-
-        val login = data.login
-        val password = data.password
-        return CredentialsDto(login, password)
+        val login = sharedPreferences.getString(LOGIN_NAME, "")
+        val password = sharedPreferences.getString(PASSWORD_NAME, "")
+        return CredentialsDto(login ?: "", password ?: "")
     }
 
     override suspend fun saveCredentials(credentials: CredentialsDto) {
-        dataStore.updateData {
-            CredentialsDto(credentials.login, credentials.password)
-        }
+        editor.putString(LOGIN_NAME, credentials.login)
+        editor.putString(PASSWORD_NAME, credentials.password)
+        editor.apply()
     }
 }

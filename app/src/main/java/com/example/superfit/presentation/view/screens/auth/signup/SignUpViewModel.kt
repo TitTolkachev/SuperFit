@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.superfit.domain.model.Credentials
 import com.example.superfit.domain.model.RegisterRequestBody
+import com.example.superfit.domain.usecase.local.SaveCredentialsToLocalStorageUseCase
 import com.example.superfit.domain.usecase.remote.RegisterUseCase
 import com.example.superfit.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val saveCredentialsToLocalStorageUseCase: SaveCredentialsToLocalStorageUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(SignUpScreenState())
@@ -40,6 +43,12 @@ class SignUpViewModel @Inject constructor(
 
                         state = when (request) {
                             is Resource.Success -> {
+                                saveCredentialsToLocalStorageUseCase.execute(
+                                    Credentials(
+                                        event.emailValue,
+                                        code
+                                    )
+                                )
                                 state.copy(isLoading = false, showMainScreen = true)
                             }
 

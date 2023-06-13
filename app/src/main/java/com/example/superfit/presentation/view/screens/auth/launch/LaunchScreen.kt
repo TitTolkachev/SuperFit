@@ -29,13 +29,11 @@ fun LaunchScreen(navController: NavController, viewModel: LaunchViewModel = hilt
 
         if (state.isAuthorized != null) {
             if (state.isAuthorized == true) {
-
-                //TODO()
                 navController.popBackStack()
-                navController.navigate(Screen.SignUp.route)
+                navController.navigate(Screen.Main.route)
             } else {
                 navController.popBackStack()
-                navController.navigate(Screen.SignUp.route)
+                navController.navigate(Screen.SignIn.route)
             }
         }
     }
