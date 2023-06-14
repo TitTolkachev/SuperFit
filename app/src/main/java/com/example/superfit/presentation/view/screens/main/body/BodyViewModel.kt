@@ -103,7 +103,7 @@ class BodyViewModel @Inject constructor(
             }
 
             BodyScreenIntent.ShowImages -> {
-
+                state = state.copy(showImages = true)
             }
 
             BodyScreenIntent.ShowStatistics -> {

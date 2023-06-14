@@ -60,6 +60,10 @@ class SignUpViewModel @Inject constructor(
                 }
             }
 
+            is SignUpScreenIntent.NewUsernameText -> {
+                state = state.copy(usernameValue = event.newText)
+            }
+
             is SignUpScreenIntent.NewEmailText -> {
                 state = state.copy(emailValue = event.newText)
             }

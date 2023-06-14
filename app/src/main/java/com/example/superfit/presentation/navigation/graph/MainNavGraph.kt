@@ -14,6 +14,7 @@ import com.example.superfit.presentation.view.screens.exercises.crunch.CrunchScr
 import com.example.superfit.presentation.view.screens.main.body.BodyScreen
 import com.example.superfit.presentation.view.screens.main.exercises.ExercisesScreen
 import com.example.superfit.presentation.view.screens.main.image.ImageScreen
+import com.example.superfit.presentation.view.screens.main.imagelist.ImageListScreen
 import com.example.superfit.presentation.view.screens.main.main.MainScreen
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -54,7 +55,7 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = Screen.ImageList.route,
         ) {
-
+            ImageListScreen(navController)
         }
 
         // EXERCISES

@@ -39,6 +39,13 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
         }
     }
 
+    LaunchedEffect(key1 = state.showImages) {
+        if (state.showImages != null) {
+            navController.navigate(Screen.ImageList.route)
+            viewModel.accept(BodyScreenIntent.Navigated)
+        }
+    }
+
     if (state.takePicture == true) {
         NewImageDialog(state) { event -> viewModel.accept(event) }
     }

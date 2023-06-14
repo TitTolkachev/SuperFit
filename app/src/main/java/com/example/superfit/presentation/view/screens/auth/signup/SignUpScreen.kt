@@ -96,6 +96,13 @@ fun SingUpScreenContent(
             AuthEditText(
                 isEmail = true,
                 placeholderText = LocalContext.current.getString(R.string.auth_user_name),
+                text = { state.usernameValue }) { text ->
+                sendEvent(SignUpScreenIntent.NewUsernameText(text))
+            }
+
+            AuthEditText(
+                isEmail = true,
+                placeholderText = LocalContext.current.getString(R.string.auth_email),
                 text = { state.emailValue }) { text ->
                 sendEvent(SignUpScreenIntent.NewEmailText(text))
             }

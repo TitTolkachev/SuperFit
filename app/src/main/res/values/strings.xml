@@ -8,6 +8,7 @@
     <string name="auth_sign_up">Sign Up</string>
     <string name="auth_sign_in">Sign In</string>
     <string name="auth_user_name">UserName</string>
+    <string name="auth_email">Email</string>
     <string name="auth_code">Code</string>
     <string name="auth_repeat_code">RepeatCode</string>
 

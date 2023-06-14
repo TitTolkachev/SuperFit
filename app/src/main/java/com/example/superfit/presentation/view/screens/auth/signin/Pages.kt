@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.superfit.R
@@ -55,7 +56,7 @@ fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) ->
         Column {
             AuthEditText(
                 isEmail = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_user_name),
+                placeholderText = LocalContext.current.getString(R.string.auth_email),
                 paddingValues = PaddingValues(start = 54.dp, end = 50.dp, bottom = 12.dp),
                 text = { state.userName }) { text ->
                 sendEvent(SignInScreenIntent.NewUserNameText(text))
@@ -96,7 +97,6 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) -
         AuthBrandText(padding = PaddingValues(top = 68.dp))
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            //TODO(Сделать правильно)
             Text(
                 text = state.userName,
                 color = Color.White,
@@ -123,7 +123,8 @@ fun SignInSecondPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) -
                             color = Color.White,
                             fontSize = 64.sp,
                             fontFamily = montserratFamily,
-                            fontWeight = FontWeight.W400
+                            fontWeight = FontWeight.W400,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
