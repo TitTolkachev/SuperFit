@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
+import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import com.example.superfit.domain.util.Resource
 import com.example.superfit.presentation.helper.PhotoDateMapper
@@ -20,11 +21,63 @@ import javax.inject.Inject
 @HiltViewModel
 class BodyViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
-    private val downloadPhotoUseCase: DownloadPhotoUseCase
+    downloadPhotoUseCase: DownloadPhotoUseCase,
+    getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(BodyScreenState(1, 1))
         private set
+
+    init {
+        viewModelScope.launch {
+            when (val photosRequest = getPhotosUseCase.execute()) {
+                is Resource.Success -> {
+                    val photos = photosRequest.data!!
+                    var first: Photo? = null
+                    var last: Photo? = null
+                    if (photos.isNotEmpty()) {
+                        val lastPhotoRequest = photos.lastOrNull()
+                            ?.let { downloadPhotoUseCase.execute(it.id) }
+                        when (lastPhotoRequest) {
+                            is Resource.Success -> {
+                                last = lastPhotoRequest.data?.let {
+                                    Photo(
+                                        photos.first().id,
+                                        PhotoDateMapper.mapUploadedDateToString(photos.first().uploaded),
+                                        it
+                                    )
+                                }
+                            }
+
+                            else -> {}
+                        }
+                    }
+                    if (photos.size > 1) {
+                        val firstPhotoRequest = photos.firstOrNull()
+                            ?.let { downloadPhotoUseCase.execute(it.id) }
+                        when (firstPhotoRequest) {
+                            is Resource.Success -> {
+                                first = firstPhotoRequest.data?.let {
+                                    Photo(
+                                        photos.last().id,
+                                        PhotoDateMapper.mapUploadedDateToString(photos.last().uploaded),
+                                        it
+                                    )
+                                }
+                            }
+
+                            else -> {}
+                        }
+                    }
+                    withContext(Dispatchers.Main) {
+                        state = state.copy(firstPhoto = first, lastPhoto = last)
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    }
 
     fun accept(event: BodyScreenIntent) {
         when (event) {
@@ -66,7 +119,6 @@ class BodyViewModel @Inject constructor(
             }
 
             BodyScreenIntent.CloseDialog -> {
-                // TODO
                 state = state.copy(takePicture = null, imageUri = null)
             }
 
@@ -90,14 +142,24 @@ class BodyViewModel @Inject constructor(
                                     val date = PhotoDateMapper.mapUploadedDateToString(
                                         request.data?.uploaded ?: 0
                                     )
-                                    state = state.copy(firstPhoto = Photo(id, date, bitmap))
+                                    state = if (state.lastPhoto == null)
+                                        state.copy(lastPhoto = Photo(id, date, bitmap))
+                                    else if (state.firstPhoto == null)
+                                        state.copy(firstPhoto = Photo(id, date, bitmap))
+                                    else
+                                        state.copy(
+                                            firstPhoto = state.lastPhoto!!.copy(),
+                                            lastPhoto = Photo(id, date, bitmap)
+                                        )
                                 }
                             }
 
                             else -> {}
                         }
 
-                        state = state.copy(takePicture = null, imageUri = null)
+                        withContext(Dispatchers.Main) {
+                            state = state.copy(takePicture = null, imageUri = null)
+                        }
                     }
                 }
             }

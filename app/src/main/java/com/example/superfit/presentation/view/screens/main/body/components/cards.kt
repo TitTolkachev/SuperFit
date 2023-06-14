@@ -49,22 +49,22 @@ fun ProgressPhotosCard(
                     .padding(end = 2.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                if (lastPhoto != null) {
+                if (firstPhoto != null) {
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
                             //TODO
                             .clickable { onImageClick(R.drawable.main_screen_body_image) },
-                        bitmap = lastPhoto.bitmap.asImageBitmap(),
+                        bitmap = firstPhoto.bitmap.asImageBitmap(),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
-                    ImageDateText(lastPhoto.date)
+                    ImageDateText(firstPhoto.date)
                 } else {
                     Image(
                         modifier = Modifier
                             .fillMaxSize(),
-                        painter = painterResource(id = R.drawable.main_screen_body_image),
+                        painter = painterResource(id = R.drawable.image_weak_man_placeholder),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
@@ -77,13 +77,13 @@ fun ProgressPhotosCard(
                     .padding(start = 2.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                if (firstPhoto != null) {
+                if (lastPhoto != null) {
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
                             //TODO
                             .clickable { onImageClick(R.drawable.main_screen_poster) },
-                        bitmap = firstPhoto.bitmap.asImageBitmap(),
+                        bitmap = lastPhoto.bitmap.asImageBitmap(),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
@@ -91,7 +91,7 @@ fun ProgressPhotosCard(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        ImageDateText(text = firstPhoto.date)
+                        ImageDateText(text = lastPhoto.date)
                         Image(
                             modifier = Modifier
                                 .padding(bottom = 8.dp, end = 8.dp)
@@ -104,7 +104,7 @@ fun ProgressPhotosCard(
                     Image(
                         modifier = Modifier
                             .fillMaxSize(),
-                        painter = painterResource(id = R.drawable.main_screen_body_image),
+                        painter = painterResource(id = R.drawable.image_strong_man_placeholder),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
