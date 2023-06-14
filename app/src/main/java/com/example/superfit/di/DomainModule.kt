@@ -12,9 +12,15 @@ import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.SaveCredentialsToLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.SaveEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.SaveTokenToLocalStorageUseCase
+import com.example.superfit.domain.usecase.remote.DeletePhotoUseCase
+import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
+import com.example.superfit.domain.usecase.remote.GetHistoryUseCase
+import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.GetProfileUseCase
 import com.example.superfit.domain.usecase.remote.RefreshAccessTokenUseCase
 import com.example.superfit.domain.usecase.remote.RegisterUseCase
+import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
+import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +52,36 @@ class DomainModule {
     @Provides
     fun provideRegisterUseCase(repository: AuthRepository): RegisterUseCase {
         return RegisterUseCase(repository)
+    }
+
+    @Provides
+    fun provideDeletePhotoUseCase(repository: ProfileRepository): DeletePhotoUseCase {
+        return DeletePhotoUseCase(repository)
+    }
+
+    @Provides
+    fun provideDownloadPhotoUseCase(repository: ProfileRepository): DownloadPhotoUseCase {
+        return DownloadPhotoUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetHistoryUseCase(repository: ProfileRepository): GetHistoryUseCase {
+        return GetHistoryUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetPhotosUseCase(repository: ProfileRepository): GetPhotosUseCase {
+        return GetPhotosUseCase(repository)
+    }
+
+    @Provides
+    fun provideUpdateBodyParamsUseCase(repository: ProfileRepository): UpdateBodyParamsUseCase {
+        return UpdateBodyParamsUseCase(repository)
+    }
+
+    @Provides
+    fun provideUploadImageUseCase(repository: ProfileRepository): UploadImageUseCase {
+        return UploadImageUseCase(repository)
     }
 
 

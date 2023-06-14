@@ -137,7 +137,7 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
         return MultipartBody.Part.createFormData(
-            "file", "photo.png",
+            "file", "image.png",
             byteArray.toRequestBody("image/png".toMediaTypeOrNull(), 0, byteArray.size)
         )
     }

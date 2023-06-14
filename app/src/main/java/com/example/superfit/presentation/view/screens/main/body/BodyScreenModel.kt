@@ -3,6 +3,7 @@ package com.example.superfit.presentation.view.screens.main.body
 import android.content.ContentResolver
 import android.net.Uri
 import androidx.compose.runtime.Immutable
+import com.example.superfit.presentation.view.model.Photo
 
 @Immutable
 sealed class BodyScreenIntent {
@@ -30,5 +31,7 @@ data class BodyScreenState(
     val showImages: Boolean? = null,
     val showImage: Int? = null,
     val takePicture: Boolean? = null,
-    val imageUri: Uri? = null
+    val imageUri: Uri? = null,
+    val firstPhoto: Photo? = null,
+    val lastPhoto: Photo? = null
 )

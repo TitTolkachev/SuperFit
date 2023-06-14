@@ -16,14 +16,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.superfit.R
+import com.example.superfit.presentation.view.model.Photo
 
 @Composable
-fun ProgressPhotosCard(onImageClick: (image: Int) -> Unit, onClick: () -> Unit) {
-
+fun ProgressPhotosCard(
+    firstPhoto: Photo?,
+    lastPhoto: Photo?,
+    onImageClick: (image: Int) -> Unit,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(top = 14.dp, start = 16.dp, end = 16.dp)
@@ -43,15 +49,26 @@ fun ProgressPhotosCard(onImageClick: (image: Int) -> Unit, onClick: () -> Unit) 
                     .padding(end = 2.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Image(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { onImageClick(R.drawable.main_screen_body_image) },
-                    painter = painterResource(id = R.drawable.main_screen_body_image),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
-                ImageDateText("21.04.2019")
+                if (lastPhoto != null) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            //TODO
+                            .clickable { onImageClick(R.drawable.main_screen_body_image) },
+                        bitmap = lastPhoto.bitmap.asImageBitmap(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
+                    ImageDateText(lastPhoto.date)
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        painter = painterResource(id = R.drawable.main_screen_body_image),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
+                }
             }
             Box(
                 modifier = Modifier
@@ -60,26 +77,50 @@ fun ProgressPhotosCard(onImageClick: (image: Int) -> Unit, onClick: () -> Unit) 
                     .padding(start = 2.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                Image(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { onImageClick(R.drawable.main_screen_poster) },
-                    painter = painterResource(id = R.drawable.main_screen_poster),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    ImageDateText(text = "22.02.2020")
+                if (firstPhoto != null) {
                     Image(
                         modifier = Modifier
-                            .padding(bottom = 8.dp, end = 8.dp)
-                            .clickable(onClick = onClick),
-                        painter = painterResource(id = R.drawable.body_add_image_icon),
-                        contentDescription = null
+                            .fillMaxSize()
+                            //TODO
+                            .clickable { onImageClick(R.drawable.main_screen_poster) },
+                        bitmap = firstPhoto.bitmap.asImageBitmap(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
                     )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ImageDateText(text = firstPhoto.date)
+                        Image(
+                            modifier = Modifier
+                                .padding(bottom = 8.dp, end = 8.dp)
+                                .clickable(onClick = onClick),
+                            painter = painterResource(id = R.drawable.body_add_image_icon),
+                            contentDescription = null
+                        )
+                    }
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        painter = painterResource(id = R.drawable.main_screen_body_image),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Box {}
+                        Image(
+                            modifier = Modifier
+                                .padding(bottom = 8.dp, end = 8.dp)
+                                .clickable(onClick = onClick),
+                            painter = painterResource(id = R.drawable.body_add_image_icon),
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }

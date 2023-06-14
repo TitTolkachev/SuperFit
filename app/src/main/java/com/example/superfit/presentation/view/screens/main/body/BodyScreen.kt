@@ -76,6 +76,8 @@ fun BodyScreenContent(
             SeeAllButton { sendEvent(BodyScreenIntent.ShowImages) }
         }
         ProgressPhotosCard(
+            state.firstPhoto,
+            state.lastPhoto,
             { image: Int ->
                 sendEvent(BodyScreenIntent.ShowImage(image))
             }) {
