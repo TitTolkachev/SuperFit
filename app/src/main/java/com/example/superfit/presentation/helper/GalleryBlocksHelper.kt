@@ -11,29 +11,41 @@ private data class MutableGalleryBlock(
 
 object GalleryBlocksHelper {
 
+    private const val GALLERY_DISPLAY_MODE = 2
+
     fun mapPhotosToGalleryBlocks(photos: List<Pair<Long, Photo>>): List<GalleryBlock> {
 
-        val formatter = DateTimeFormatter.ofPattern("MMMM")
+        // TODO(Выбрать нужный формат даты в галерее)
+        val formatter1 = DateTimeFormatter.ofPattern("MMMM")
+        val formatter2 = DateTimeFormatter.ofPattern("dd MMMM")
         val res = mutableListOf<MutableGalleryBlock>()
 
         photos.sortedBy { it.first }
 
+        var day = 0
         var month = 0
         var year = 0
         photos.forEach {
             val photoDateTime = PhotoDateMapper.convertSecondsToLocalDateTime(it.first)
 
-            if (photoDateTime.year == year && photoDateTime.monthValue == month) {
+            if (photoDateTime.year == year &&
+                photoDateTime.monthValue == month &&
+                (GALLERY_DISPLAY_MODE == 1 || photoDateTime.dayOfMonth == day)
+            ) {
                 res.last().images.add(it.second)
             } else {
                 res.add(
                     MutableGalleryBlock(
                         mutableListOf(it.second),
-                        "${formatter.format(photoDateTime)}, $year"
+                        if (GALLERY_DISPLAY_MODE == 1)
+                            "${formatter1.format(photoDateTime)}, ${photoDateTime.year}"
+                        else
+                            "${formatter2.format(photoDateTime)}, ${photoDateTime.year}"
                     )
                 )
             }
 
+            day = photoDateTime.dayOfMonth
             year = photoDateTime.year
             month = photoDateTime.monthValue
         }
