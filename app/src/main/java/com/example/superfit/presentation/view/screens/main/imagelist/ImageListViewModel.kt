@@ -71,7 +71,7 @@ class ImageListViewModel @Inject constructor(
             }
 
             ImageListScreenIntent.Navigated -> {
-                state.copy(navigateBack = null)
+                state.copy(navigateBack = null, showImage = null)
             }
         }
     }

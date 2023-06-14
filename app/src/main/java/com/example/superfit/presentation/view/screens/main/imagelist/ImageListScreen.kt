@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
+import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.theme.montserratFamily
 
 @Composable
@@ -33,6 +34,13 @@ fun ImageListScreen(
     viewModel: ImageListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
+
+    LaunchedEffect(key1 = state.showImage) {
+        if (state.showImage != null) {
+            navController.navigate(Screen.Image.route + "/${state.showImage.id}/${state.showImage.date}")
+            viewModel.accept(ImageListScreenIntent.Navigated)
+        }
+    }
 
     LaunchedEffect(key1 = state.navigateBack) {
         if (state.navigateBack == true) {
@@ -59,12 +67,12 @@ fun ImageListScreenContent(
                 .clickable { sendEvent(ImageListScreenIntent.NavigateBack) }
         )
         LazyVerticalGrid(
-            modifier = Modifier.padding(top = 96.dp, start = 12.dp, end = 12.dp),
+            modifier = Modifier.padding(top = 86.dp, start = 12.dp, end = 12.dp).fillMaxSize(),
             columns = GridCells.Fixed(3)
         ) {
             state.galleryBlocks.forEach {
                 item(span = { GridItemSpan(this.maxLineSpan) }) {
-                    Box(modifier = Modifier.padding(start = 4.dp)) {
+                    Box(modifier = Modifier.padding(start = 4.dp, top = 24.dp, bottom = 8.dp)) {
                         Text(
                             text = it.title,
                             fontSize = 24.sp,
