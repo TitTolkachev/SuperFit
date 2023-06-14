@@ -1,11 +1,17 @@
 package com.example.superfit.data.remote.requests.profile
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.example.superfit.data.remote.dto.BodyParamsDto
 import com.example.superfit.domain.model.BodyParamsBody
 import com.example.superfit.domain.model.PhotoInfoBody
 import com.example.superfit.domain.model.ProfileResponseBody
 import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.util.Resource
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : ProfileRepository {
@@ -73,6 +79,44 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
         }
     }
 
+    override suspend fun uploadPhoto(image: Bitmap): Resource<PhotoInfoBody> {
+        return try {
+            val imageMultipartBody = convertBitmapToMultipartBody(image)
+            val request = api.uploadPhoto(imageMultipartBody)
+
+            if (request.isSuccessful) {
+                Resource.Success(
+                    PhotoInfoBody(request.body()?.id ?: "", request.body()?.uploaded ?: 0)
+                )
+            } else {
+                Resource.NetworkError(request.message())
+            }
+
+        } catch (e: Exception) {
+            Resource.Exception(e)
+        }
+    }
+
+    override suspend fun downloadPhoto(id: String): Resource<Bitmap> {
+        return try {
+            val request = api.downloadPhoto(id)
+
+            if (request.isSuccessful) {
+                val bitmap = BitmapFactory.decodeByteArray(
+                    request.body()?.bytes(),
+                    0,
+                    request.body()?.contentLength()?.toInt() ?: 0
+                )
+                Resource.Success(bitmap)
+            } else {
+                Resource.NetworkError(request.message())
+            }
+
+        } catch (e: Exception) {
+            Resource.Exception(e)
+        }
+    }
+
     override suspend fun deletePhoto(id: String): Resource<String> {
         return try {
             val request = api.deletePhoto(id)
@@ -86,5 +130,15 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
         } catch (e: Exception) {
             Resource.Exception(e)
         }
+    }
+
+    private fun convertBitmapToMultipartBody(bitmap: Bitmap): MultipartBody.Part {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+        return MultipartBody.Part.createFormData(
+            "file", "photo.png",
+            byteArray.toRequestBody("image/png".toMediaTypeOrNull(), 0, byteArray.size)
+        )
     }
 }

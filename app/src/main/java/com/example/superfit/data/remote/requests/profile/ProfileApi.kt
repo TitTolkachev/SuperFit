@@ -5,6 +5,7 @@ import com.example.superfit.data.remote.dto.PhotoInfoDto
 import com.example.superfit.data.remote.dto.ProfileResponseDto
 import com.example.superfit.data.remote.dto.SimpleMessageResponseDto
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -32,9 +33,8 @@ interface ProfileApi {
     @POST("/api/profile/photos")
     suspend fun uploadPhoto(@Part file: MultipartBody.Part): Response<PhotoInfoDto>
 
-    // TODO
     @GET("/api/profile/photos/{id}")
-    suspend fun downloadPhoto(@Path("id") id: String): Response<String>
+    suspend fun downloadPhoto(@Path("id") id: String): Response<ResponseBody>
 
     @DELETE("/api/profile/photos/{id}")
     suspend fun deletePhoto(@Path("id") id: String): Response<SimpleMessageResponseDto>

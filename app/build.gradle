@@ -102,6 +102,12 @@ dependencies {
     // ImageView
     implementation "com.github.SmartToolFactory:Compose-Image:1.2.2"
 
+//    // Glide
+//    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+
+    // Coil
+    implementation "io.coil-kt:coil-compose:2.1.0"
+
     // Local Tests
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.mockito:mockito-core:5.3.1"

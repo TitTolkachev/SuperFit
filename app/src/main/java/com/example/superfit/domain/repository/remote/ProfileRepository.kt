@@ -1,5 +1,6 @@
 package com.example.superfit.domain.repository.remote
 
+import android.graphics.Bitmap
 import com.example.superfit.domain.model.BodyParamsBody
 import com.example.superfit.domain.model.PhotoInfoBody
 import com.example.superfit.domain.model.ProfileResponseBody
@@ -11,9 +12,7 @@ interface ProfileRepository {
     suspend fun updateBodyParameters(params: BodyParamsBody): Resource<String>
     suspend fun getHistory(): Resource<List<BodyParamsBody>>
     suspend fun getPhotos(): Resource<List<PhotoInfoBody>>
-
-    // TODO------------------------------------------------
-//    suspend fun uploadPhoto(@Part file: MultipartBody.Part): Resource<PhotoInfoBody>
-//    suspend fun downloadPhoto(id: String): Resource<String>
+    suspend fun uploadPhoto(image: Bitmap): Resource<PhotoInfoBody>
+    suspend fun downloadPhoto(id: String): Resource<Bitmap>
     suspend fun deletePhoto(id: String): Resource<String>
 }

@@ -1,5 +1,7 @@
 package com.example.superfit.presentation.view.screens.main.body
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +25,7 @@ import com.example.superfit.presentation.view.screens.main.body.components.SeeAl
 import com.example.superfit.presentation.view.screens.main.body.components.StatisticsButton
 import com.example.superfit.presentation.view.screens.main.body.components.TrainProgressButton
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltViewModel()) {
 
@@ -33,6 +36,10 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
             navController.navigate(Screen.Image.route)
             viewModel.accept(BodyScreenIntent.Navigated)
         }
+    }
+
+    if (state.takePicture == true) {
+        NewImageDialog(state) { event -> viewModel.accept(event) }
     }
 
     BodyScreenContent(state) { event -> viewModel.accept(event) }
