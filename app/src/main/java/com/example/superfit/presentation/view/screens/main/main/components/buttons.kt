@@ -1,7 +1,6 @@
 package com.example.superfit.presentation.view.screens.main.main.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -70,12 +69,12 @@ fun SeeAllButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun DetailsButton(onClick: () -> Unit) {
+fun DetailsButton() {//onClick: () -> Unit) {
     Row(
         verticalAlignment = Alignment.Top,
         modifier = Modifier
             .padding(start = 12.dp, bottom = 8.dp)
-            .clickable(onClick = onClick)
+        //.clickable(onClick = onClick)
     ) {
         Text(
             text = LocalContext.current.getString(R.string.main_my_body_details),

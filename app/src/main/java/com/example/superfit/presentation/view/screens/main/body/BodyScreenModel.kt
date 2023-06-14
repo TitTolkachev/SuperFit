@@ -1,6 +1,6 @@
 package com.example.superfit.presentation.view.screens.main.body
 
-import android.content.ContentResolver
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.runtime.Immutable
 import com.example.superfit.presentation.view.model.Photo
@@ -15,7 +15,7 @@ sealed class BodyScreenIntent {
     object ShowImages : BodyScreenIntent()
     object TakePicture : BodyScreenIntent()
     object CloseDialog : BodyScreenIntent()
-    data class SaveImage(val contentResolver: ContentResolver) : BodyScreenIntent()
+    data class SaveImage(val image: Bitmap) : BodyScreenIntent()
     data class ShowImage(val image: Int) : BodyScreenIntent()
     data class ImageSelected(val image: Uri?) : BodyScreenIntent()
 }

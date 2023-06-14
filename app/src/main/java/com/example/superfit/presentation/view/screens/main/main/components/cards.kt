@@ -155,7 +155,7 @@ fun MyBodyCard(
                         )
                     }
                 }
-                DetailsButton {}// (onClick)
+                DetailsButton() //{}// (onClick)
             }
         }
     }

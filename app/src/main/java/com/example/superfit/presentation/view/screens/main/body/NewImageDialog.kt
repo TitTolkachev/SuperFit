@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.example.superfit.R
+import com.example.superfit.presentation.helper.ImagesHelper
 import java.io.ByteArrayOutputStream
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -119,7 +120,16 @@ fun NewImageDialog(
                     }
                     Button(
                         modifier = Modifier.width(120.dp),
-                        onClick = { sendEvent(BodyScreenIntent.SaveImage(context.contentResolver)) }
+                        onClick = {
+                            sendEvent(
+                                BodyScreenIntent.SaveImage(
+                                    ImagesHelper.getCapturedImage(
+                                        context.contentResolver,
+                                        state.imageUri ?: Uri.EMPTY
+                                    )
+                                )
+                            )
+                        }
                     ) {
                         Text(text = context.getString(R.string.save_button_text))
                     }

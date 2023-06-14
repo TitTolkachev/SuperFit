@@ -1,6 +1,5 @@
 package com.example.superfit.presentation.view.screens.main.body
 
-import android.provider.MediaStore
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +9,7 @@ import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
 import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import com.example.superfit.domain.util.Resource
+import com.example.superfit.presentation.helper.ImagesHelper
 import com.example.superfit.presentation.helper.PhotoDateMapper
 import com.example.superfit.presentation.view.model.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,7 +70,10 @@ class BodyViewModel @Inject constructor(
                         }
                     }
                     withContext(Dispatchers.Main) {
-                        state = state.copy(firstPhoto = first, lastPhoto = last)
+                        state = if (first == null)
+                            state.copy(firstPhoto = last)
+                        else
+                            state.copy(firstPhoto = first, lastPhoto = last)
                     }
                 }
 
@@ -130,9 +133,7 @@ class BodyViewModel @Inject constructor(
                 // TODO
                 if (state.imageUri != null) {
 
-                    val bitmap = MediaStore.Images.Media.getBitmap(
-                        event.contentResolver, state.imageUri
-                    )
+                    val bitmap = ImagesHelper.getResizedBitmap(event.image) ?: return
 
                     viewModelScope.launch {
                         when (val request = uploadImageUseCase.execute(bitmap)) {
@@ -142,10 +143,10 @@ class BodyViewModel @Inject constructor(
                                     val date = PhotoDateMapper.mapUploadedDateToString(
                                         request.data?.uploaded ?: 0
                                     )
-                                    state = if (state.lastPhoto == null)
-                                        state.copy(lastPhoto = Photo(id, date, bitmap))
-                                    else if (state.firstPhoto == null)
+                                    state = if (state.firstPhoto == null)
                                         state.copy(firstPhoto = Photo(id, date, bitmap))
+                                    else if (state.lastPhoto == null)
+                                        state.copy(lastPhoto = Photo(id, date, bitmap))
                                     else
                                         state.copy(
                                             firstPhoto = state.lastPhoto!!.copy(),

@@ -104,7 +104,7 @@ fun ProgressPhotosCard(
                     Image(
                         modifier = Modifier
                             .fillMaxSize(),
-                        painter = painterResource(id = R.drawable.image_strong_man_placeholder),
+                        painter = painterResource(id = R.drawable.image_dialog_placeholder),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
