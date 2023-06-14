@@ -1,5 +1,7 @@
 package com.example.superfit.presentation.navigation.graph
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -8,6 +10,7 @@ import com.example.superfit.presentation.navigation.ROOT_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.screens.auth.launch.LaunchScreen
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun SetUpNavGraph(
     navController: NavHostController

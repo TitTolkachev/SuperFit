@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.model.Photo
 import com.example.superfit.presentation.view.screens.main.body.components.EditButton
 import com.example.superfit.presentation.view.screens.main.body.components.MyBodyText
 import com.example.superfit.presentation.view.screens.main.body.components.MyHeightText
@@ -33,7 +34,7 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
 
     LaunchedEffect(key1 = state.showImage) {
         if (state.showImage != null) {
-            navController.navigate(Screen.Image.route)
+            navController.navigate(Screen.Image.route + "/${state.showImage.id}/${state.showImage.date}")
             viewModel.accept(BodyScreenIntent.Navigated)
         }
     }
@@ -78,7 +79,7 @@ fun BodyScreenContent(
         ProgressPhotosCard(
             state.firstPhoto,
             state.lastPhoto,
-            { image: Int ->
+            { image: Photo ->
                 sendEvent(BodyScreenIntent.ShowImage(image))
             }) {
             sendEvent(BodyScreenIntent.TakePicture)

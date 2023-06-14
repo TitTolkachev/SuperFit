@@ -1,8 +1,12 @@
 package com.example.superfit.presentation.navigation.graph
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.MAIN_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
@@ -12,6 +16,7 @@ import com.example.superfit.presentation.view.screens.main.exercises.ExercisesSc
 import com.example.superfit.presentation.view.screens.main.image.ImageScreen
 import com.example.superfit.presentation.view.screens.main.main.MainScreen
 
+@RequiresApi(Build.VERSION_CODES.P)
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController
 ) {
@@ -35,9 +40,16 @@ fun NavGraphBuilder.mainNavGraph(
             BodyScreen(navController)
         }
         composable(
-            route = Screen.Image.route,
+            route = Screen.Image.route + "/{imageId}/{imageDate}",
+            arguments = listOf(navArgument("imageId") {
+                type = NavType.StringType
+            }, navArgument("imageDate") {
+                type = NavType.StringType
+            })
         ) {
-            ImageScreen(navController)
+            val imageId = it.arguments?.getString("imageId") ?: ""
+            val imageDate = it.arguments?.getString("imageDate") ?: ""
+            ImageScreen(navController, imageId = imageId, imageDate = imageDate)
         }
         composable(
             route = Screen.ImageList.route,

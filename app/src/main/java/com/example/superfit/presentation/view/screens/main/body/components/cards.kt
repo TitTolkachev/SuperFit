@@ -27,7 +27,7 @@ import com.example.superfit.presentation.view.model.Photo
 fun ProgressPhotosCard(
     firstPhoto: Photo?,
     lastPhoto: Photo?,
-    onImageClick: (image: Int) -> Unit,
+    onImageClick: (Photo) -> Unit,
     onClick: () -> Unit
 ) {
     Box(
@@ -53,8 +53,7 @@ fun ProgressPhotosCard(
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
-                            //TODO
-                            .clickable { onImageClick(R.drawable.main_screen_body_image) },
+                            .clickable { onImageClick(firstPhoto) },
                         bitmap = firstPhoto.bitmap.asImageBitmap(),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
@@ -81,8 +80,7 @@ fun ProgressPhotosCard(
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
-                            //TODO
-                            .clickable { onImageClick(R.drawable.main_screen_poster) },
+                            .clickable { onImageClick(lastPhoto) },
                         bitmap = lastPhoto.bitmap.asImageBitmap(),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,

@@ -26,8 +26,8 @@ object ImagesHelper {
     }
 
     fun getResizedBitmap(bm: Bitmap): Bitmap? {
-        val maxHeight = 1000
-        val maxWidth = 1000
+        val maxHeight = 512
+        val maxWidth = 512
         val scale: Float =
             (maxHeight.toFloat() / bm.width).coerceAtMost(maxWidth.toFloat() / bm.height)
 

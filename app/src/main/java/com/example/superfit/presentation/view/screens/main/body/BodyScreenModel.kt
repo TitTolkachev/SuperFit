@@ -16,7 +16,7 @@ sealed class BodyScreenIntent {
     object TakePicture : BodyScreenIntent()
     object CloseDialog : BodyScreenIntent()
     data class SaveImage(val image: Bitmap) : BodyScreenIntent()
-    data class ShowImage(val image: Int) : BodyScreenIntent()
+    data class ShowImage(val image: Photo) : BodyScreenIntent()
     data class ImageSelected(val image: Uri?) : BodyScreenIntent()
 }
 
@@ -29,7 +29,7 @@ data class BodyScreenState(
     val showTrainProgress: Boolean? = null,
     val showStatistics: Boolean? = null,
     val showImages: Boolean? = null,
-    val showImage: Int? = null,
+    val showImage: Photo? = null,
     val takePicture: Boolean? = null,
     val imageUri: Uri? = null,
     val firstPhoto: Photo? = null,

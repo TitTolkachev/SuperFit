@@ -1,5 +1,6 @@
 package com.example.superfit.presentation.view.screens.main.body
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -42,8 +43,8 @@ class BodyViewModel @Inject constructor(
                             is Resource.Success -> {
                                 last = lastPhotoRequest.data?.let {
                                     Photo(
-                                        photos.first().id,
-                                        PhotoDateMapper.mapUploadedDateToString(photos.first().uploaded),
+                                        photos.last().id,
+                                        PhotoDateMapper.mapUploadedDateToString(photos.last().uploaded),
                                         it
                                     )
                                 }
@@ -59,8 +60,8 @@ class BodyViewModel @Inject constructor(
                             is Resource.Success -> {
                                 first = firstPhotoRequest.data?.let {
                                     Photo(
-                                        photos.last().id,
-                                        PhotoDateMapper.mapUploadedDateToString(photos.last().uploaded),
+                                        photos.first().id,
+                                        PhotoDateMapper.mapUploadedDateToString(photos.first().uploaded),
                                         it
                                     )
                                 }
@@ -118,7 +119,7 @@ class BodyViewModel @Inject constructor(
             }
 
             is BodyScreenIntent.ShowImage -> {
-                state = state.copy(showImage = event.image)
+                state = state.copy(showImage = event.image.copy())
             }
 
             BodyScreenIntent.CloseDialog -> {
@@ -130,11 +131,8 @@ class BodyViewModel @Inject constructor(
             }
 
             is BodyScreenIntent.SaveImage -> {
-                // TODO
-                if (state.imageUri != null) {
-
+                if (state.imageUri != null && state.imageUri != Uri.EMPTY) {
                     val bitmap = ImagesHelper.getResizedBitmap(event.image) ?: return
-
                     viewModelScope.launch {
                         when (val request = uploadImageUseCase.execute(bitmap)) {
                             is Resource.Success -> {
@@ -148,10 +146,7 @@ class BodyViewModel @Inject constructor(
                                     else if (state.lastPhoto == null)
                                         state.copy(lastPhoto = Photo(id, date, bitmap))
                                     else
-                                        state.copy(
-                                            firstPhoto = state.lastPhoto!!.copy(),
-                                            lastPhoto = Photo(id, date, bitmap)
-                                        )
+                                        state.copy(lastPhoto = Photo(id, date, bitmap))
                                 }
                             }
 
