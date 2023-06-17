@@ -1,4 +1,4 @@
-package com.example.superfit.presentation.view.screens.main.body
+package com.example.superfit.presentation.view.screens.main.body.dialogs
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -34,6 +34,8 @@ import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.example.superfit.R
 import com.example.superfit.presentation.helper.ImagesHelper
+import com.example.superfit.presentation.view.screens.main.body.BodyScreenIntent
+import com.example.superfit.presentation.view.screens.main.body.BodyScreenState
 import java.io.ByteArrayOutputStream
 
 @RequiresApi(Build.VERSION_CODES.P)

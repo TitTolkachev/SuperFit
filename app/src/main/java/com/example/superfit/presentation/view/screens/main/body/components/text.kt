@@ -9,8 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.superfit.R
@@ -34,28 +36,32 @@ fun MyBodyText() {
 }
 
 @Composable
-fun MyWeightText(value: String) {
+fun MyWeightText(value: Int?) {
     Text(
-        text = value + LocalContext.current.getString(R.string.body_my_body_weight_text),
+        text = value?.let { it.toString() + LocalContext.current.getString(R.string.body_my_body_weight_text) }
+            ?: stringResource(id = R.string.body_params_default_text),
         fontSize = 36.sp,
         textAlign = TextAlign.Start,
         color = Color.White,
         fontFamily = montserratFamily,
         fontWeight = FontWeight.Bold,
-        maxLines = 1
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
 @Composable
-fun MyHeightText(value: String) {
+fun MyHeightText(value: Int?) {
     Text(
-        text = value + LocalContext.current.getString(R.string.body_my_body_height_text),
+        text = value?.let { it.toString() + LocalContext.current.getString(R.string.body_my_body_height_text) }
+            ?: stringResource(id = R.string.body_params_default_text),
         fontSize = 36.sp,
         textAlign = TextAlign.Start,
         color = Color.White,
         fontFamily = montserratFamily,
         fontWeight = FontWeight.Bold,
-        maxLines = 1
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 

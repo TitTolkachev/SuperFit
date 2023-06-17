@@ -22,8 +22,8 @@ sealed class BodyScreenIntent {
 
 @Immutable
 data class BodyScreenState(
-    val weight: Int,
-    val height: Int,
+    val weight: Int? = null,
+    val height: Int? = null,
     val editWeight: Boolean? = null,
     val editHeight: Boolean? = null,
     val showTrainProgress: Boolean? = null,

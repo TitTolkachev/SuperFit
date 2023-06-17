@@ -25,12 +25,15 @@ import com.example.superfit.presentation.view.screens.main.body.components.Progr
 import com.example.superfit.presentation.view.screens.main.body.components.SeeAllButton
 import com.example.superfit.presentation.view.screens.main.body.components.StatisticsButton
 import com.example.superfit.presentation.view.screens.main.body.components.TrainProgressButton
+import com.example.superfit.presentation.view.screens.main.body.dialogs.BodyInputDialog
+import com.example.superfit.presentation.view.screens.main.body.dialogs.NewImageDialog
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltViewModel()) {
 
     val state = viewModel.state
+    val inputDialogState = viewModel.inputDialogState
 
     LaunchedEffect(key1 = state.showImage) {
         if (state.showImage != null) {
@@ -50,6 +53,14 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
         NewImageDialog(state) { event -> viewModel.accept(event) }
     }
 
+    if (inputDialogState.editWeight == true || inputDialogState.editHeight == true) {
+        BodyInputDialog(
+            state = inputDialogState,
+            onChange = { text: String -> viewModel.accept(BodyInputDialogIntent.NewText(text)) },
+            onSaveChanges = { viewModel.accept(BodyInputDialogIntent.SaveChanges) },
+            onCloseDialog = { viewModel.accept(BodyInputDialogIntent.CloseDialog) })
+    }
+
     BodyScreenContent(state) { event -> viewModel.accept(event) }
 }
 
@@ -67,11 +78,11 @@ fun BodyScreenContent(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                MyWeightText(state.weight.toString())
+                MyWeightText(state.weight)
                 EditButton { sendEvent(BodyScreenIntent.EditWeight) }
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                MyHeightText(state.height.toString())
+                MyHeightText(state.height)
                 EditButton { sendEvent(BodyScreenIntent.EditHeight) }
             }
         }

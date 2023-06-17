@@ -37,6 +37,7 @@
 
     <!-- Body -->
     <string name="body_my_body_text">My Body</string>
+    <string name="body_params_default_text">Undefined</string>
     <string name="body_my_body_weight_text">&#160;kg</string>
     <string name="body_my_body_height_text">&#160;cm</string>
     <string name="body_my_progress_text">My progress</string>
@@ -50,5 +51,13 @@
     <string name="camera_button_text">Camera</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="save_button_text">Save</string>
+    
+    <!-- Input Dialog -->
+    <string name="body_input_dialog_title">Change your&#160;</string>
+    <string name="body_input_dialog_title_weight">weight</string>
+    <string name="body_input_dialog_title_height">height</string>
+    <string name="body_input_dialog_input_field_hint">New value</string>
+    <string name="body_input_dialog_cancel">Cancel</string>
+    <string name="body_input_dialog_save">Change</string>
 
 </resources>

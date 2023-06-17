@@ -6,10 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.superfit.domain.model.BodyParamsBody
 import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
 import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
+import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import com.example.superfit.domain.util.Resource
+import com.example.superfit.presentation.helper.BodyParamsDateHelper
 import com.example.superfit.presentation.helper.ImagesHelper
 import com.example.superfit.presentation.helper.PhotoDateMapper
 import com.example.superfit.presentation.view.model.Photo
@@ -22,11 +25,21 @@ import javax.inject.Inject
 @HiltViewModel
 class BodyViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
+    private val updateBodyParamsUseCase: UpdateBodyParamsUseCase,
     downloadPhotoUseCase: DownloadPhotoUseCase,
     getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
 
-    var state by mutableStateOf(BodyScreenState(1, 1))
+    companion object {
+        private const val DEFAULT_WEIGHT = 76
+        private const val DEFAULT_HEIGHT = 178
+    }
+
+    // TODO
+    var state by mutableStateOf(BodyScreenState())
+        private set
+
+    var inputDialogState by mutableStateOf(BodyInputDialogState())
         private set
 
     init {
@@ -95,11 +108,13 @@ class BodyViewModel @Inject constructor(
             }
 
             BodyScreenIntent.EditHeight -> {
-
+                if (inputDialogState.editWeight != true)
+                    inputDialogState = inputDialogState.copy(editHeight = true, text = "")
             }
 
             BodyScreenIntent.EditWeight -> {
-
+                if (inputDialogState.editHeight != true)
+                    inputDialogState = inputDialogState.copy(editWeight = true, text = "")
             }
 
             BodyScreenIntent.ShowImages -> {
@@ -107,11 +122,11 @@ class BodyViewModel @Inject constructor(
             }
 
             BodyScreenIntent.ShowStatistics -> {
-
+                // TODO
             }
 
             BodyScreenIntent.ShowTrainProgress -> {
-
+                // TODO
             }
 
             BodyScreenIntent.TakePicture -> {
@@ -158,6 +173,61 @@ class BodyViewModel @Inject constructor(
                         }
                     }
                 }
+            }
+        }
+    }
+
+    fun accept(event: BodyInputDialogIntent) {
+        when (event) {
+            is BodyInputDialogIntent.NewText -> {
+                inputDialogState = inputDialogState.copy(
+                    text = event.text.filter { it.isDigit() }
+                )
+            }
+
+            BodyInputDialogIntent.SaveChanges -> {
+                val number: Int
+                try {
+                    number = inputDialogState.text.toInt()
+                } catch (e: NumberFormatException) {
+                    return
+                }
+
+                val weight: Int
+                val height: Int
+                if (inputDialogState.editWeight == true) {
+                    weight = number
+                    height = state.height ?: DEFAULT_HEIGHT
+                } else {
+                    weight = state.weight ?: DEFAULT_WEIGHT
+                    height = number
+                }
+
+                viewModelScope.launch {
+                    val request = updateBodyParamsUseCase.execute(
+                        BodyParamsBody(weight, height, BodyParamsDateHelper.getDate())
+                    )
+
+                    when (request) {
+                        is Resource.Success -> {
+                            withContext(Dispatchers.Main) {
+                                state = state.copy(weight = weight, height = height)
+                            }
+                        }
+
+                        else -> {}
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        inputDialogState =
+                            inputDialogState.copy(editHeight = null, editWeight = null, text = "")
+                    }
+                }
+            }
+
+            BodyInputDialogIntent.CloseDialog -> {
+                inputDialogState =
+                    inputDialogState.copy(editHeight = null, editWeight = null, text = "")
             }
         }
     }
