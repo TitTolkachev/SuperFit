@@ -132,11 +132,13 @@ fun MyBodyCard(
                         Text(
                             modifier = Modifier
                                 .padding(start = 8.dp),
-                            text = weight + LocalContext.current.getString(R.string.main_my_body_weight),
+                            text = weight,
                             fontSize = 14.sp,
                             color = Color.White,
                             fontFamily = montserratFamily,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -147,11 +149,13 @@ fun MyBodyCard(
                         Text(
                             modifier = Modifier
                                 .padding(start = 8.dp),
-                            text = height + LocalContext.current.getString(R.string.main_my_body_height),
+                            text = height,
                             fontSize = 14.sp,
                             color = Color.White,
                             fontFamily = montserratFamily,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }

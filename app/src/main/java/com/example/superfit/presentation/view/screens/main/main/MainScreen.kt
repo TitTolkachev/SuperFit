@@ -39,6 +39,10 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
 
     val state = viewModel.state
 
+    LaunchedEffect(key1 = true) {
+        viewModel.accept(MainScreenIntent.Update)
+    }
+
     LaunchedEffect(key1 = state.showAllExercises) {
         if (state.showAllExercises == true) {
             navController.navigate(Screen.Exercises.route)
@@ -115,10 +119,10 @@ fun MainScreenContent(
         item {
             MyBodyText()
             MyBodyCard(
-                weight = (state.bodyWeight
-                    ?: LocalContext.current.getString(R.string.main_default_body_value)).toString(),
-                height = (state.bodyHeight
-                    ?: LocalContext.current.getString(R.string.main_default_body_value)).toString()
+                weight = (state.bodyWeight?.let { it.toString() + LocalContext.current.getString(R.string.main_my_body_weight) }
+                    ?: LocalContext.current.getString(R.string.main_default_body_value)),
+                height = (state.bodyHeight?.let { it.toString() + LocalContext.current.getString(R.string.main_my_body_height) }
+                    ?: LocalContext.current.getString(R.string.main_default_body_value))
             ) {
                 sendEvent(MainScreenIntent.ShowBodyScreen)
             }

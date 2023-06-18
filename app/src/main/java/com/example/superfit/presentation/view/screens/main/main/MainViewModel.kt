@@ -10,15 +10,20 @@ import com.example.superfit.domain.model.Token
 import com.example.superfit.domain.usecase.local.SaveCredentialsToLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.SaveEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.SaveTokenToLocalStorageUseCase
+import com.example.superfit.domain.usecase.remote.GetHistoryUseCase
+import com.example.superfit.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     saveEntranceInfoUseCase: SaveEntranceInfoUseCase,
     private val saveTokenToLocalStorageUseCase: SaveTokenToLocalStorageUseCase,
-    private val saveCredentialsToLocalStorageUseCase: SaveCredentialsToLocalStorageUseCase
+    private val saveCredentialsToLocalStorageUseCase: SaveCredentialsToLocalStorageUseCase,
+    private val getHistoryUseCase: GetHistoryUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(MainScreenState())
@@ -26,16 +31,33 @@ class MainViewModel @Inject constructor(
 
     init {
         saveEntranceInfoUseCase.execute(true)
-
-        //TODO()
-        state = state.copy(
-            bodyWeight = 120,
-            bodyHeight = 200
-        )
     }
 
     fun accept(event: MainScreenIntent) {
         when (event) {
+            is MainScreenIntent.Update -> {
+
+                // Body Params
+                viewModelScope.launch {
+                    when (val bodyHistoryRequest = getHistoryUseCase.execute()) {
+                        is Resource.Success -> {
+                            val currentBodyParams =
+                                bodyHistoryRequest.data?.maxByOrNull { it.date }
+                            if (currentBodyParams != null) {
+                                withContext(Dispatchers.Main) {
+                                    state = state.copy(
+                                        bodyWeight = currentBodyParams.weight,
+                                        bodyHeight = currentBodyParams.height
+                                    )
+                                }
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+
             is MainScreenIntent.ShowExerciseScreen -> {
                 state = state.copy(showExercise = event.exercise)
             }

@@ -7,6 +7,7 @@ import com.example.superfit.presentation.view.model.Exercises
 @Immutable
 sealed class MainScreenIntent {
     data class ShowExerciseScreen(val exercise: Exercises) : MainScreenIntent()
+    object Update : MainScreenIntent()
     object ShowAllExercisesScreen : MainScreenIntent()
     object ShowBodyScreen : MainScreenIntent()
     object SignOut : MainScreenIntent()

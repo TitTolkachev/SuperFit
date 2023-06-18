@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.superfit.domain.model.BodyParamsBody
 import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
+import com.example.superfit.domain.usecase.remote.GetHistoryUseCase
 import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
@@ -26,6 +27,7 @@ import javax.inject.Inject
 class BodyViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val updateBodyParamsUseCase: UpdateBodyParamsUseCase,
+    getHistoryUseCase: GetHistoryUseCase,
     downloadPhotoUseCase: DownloadPhotoUseCase,
     getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
@@ -35,7 +37,6 @@ class BodyViewModel @Inject constructor(
         private const val DEFAULT_HEIGHT = 178
     }
 
-    // TODO
     var state by mutableStateOf(BodyScreenState())
         private set
 
@@ -44,6 +45,25 @@ class BodyViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+
+            // Body Params
+            when (val bodyHistoryRequest = getHistoryUseCase.execute()) {
+                is Resource.Success -> {
+                    val currentBodyParams = bodyHistoryRequest.data?.maxByOrNull { it.date }
+                    if (currentBodyParams != null) {
+                        withContext(Dispatchers.Main) {
+                            state = state.copy(
+                                weight = currentBodyParams.weight,
+                                height = currentBodyParams.height
+                            )
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+
+            // Photos
             when (val photosRequest = getPhotosUseCase.execute()) {
                 is Resource.Success -> {
                     val photos = photosRequest.data!!
