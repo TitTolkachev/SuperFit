@@ -27,7 +27,7 @@ object Network {
         val client = OkHttpClient.Builder().apply {
             connectTimeout(5, TimeUnit.SECONDS)
             readTimeout(10, TimeUnit.SECONDS)
-            retryOnConnectionFailure(false)
+            retryOnConnectionFailure(true)
             val logLevel = HttpLoggingInterceptor.Level.BODY
             addInterceptor(HttpLoggingInterceptor().setLevel(logLevel))
             addInterceptor(MainInterceptor(useCases.getTokenFromLocalStorageUseCase))

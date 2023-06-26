@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
-object BodyParamsDateHelper {
+object DateHelper {
 
     fun getDate(): String {
         val formatter =

@@ -69,35 +69,34 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
     }
 
     LaunchedEffect(key1 = state.showExercise) {
-//        TODO
-//        when (state.showExercise) {
-//            Exercises.PUSH_UPS -> {
-//                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenIntent.Navigated)
-//            }
-//
-//            Exercises.PLANK -> {
-//                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenIntent.Navigated)
-//            }
-//
-//            Exercises.SQUATS -> {
-//                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenIntent.Navigated)
-//            }
-//
-//            Exercises.CRUNCH -> {
-//                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenIntent.Navigated)
-//            }
-//
-//            Exercises.RUNNING -> {
-//                navController.navigate(Screen.SignIn.route)
-//                viewModel.accept(MainScreenIntent.Navigated)
-//            }
-//
-//            else -> {}
-//        }
+        when (state.showExercise) {
+            Exercises.PUSH_UPS -> {
+                navController.navigate(Screen.PushUps.route)
+                viewModel.accept(MainScreenIntent.Navigated)
+            }
+
+            Exercises.PLANK -> {
+                navController.navigate(Screen.Plank.route)
+                viewModel.accept(MainScreenIntent.Navigated)
+            }
+
+            Exercises.SQUATS -> {
+                navController.navigate(Screen.Squats.route)
+                viewModel.accept(MainScreenIntent.Navigated)
+            }
+
+            Exercises.CRUNCH -> {
+                navController.navigate(Screen.Crunch.route)
+                viewModel.accept(MainScreenIntent.Navigated)
+            }
+
+            Exercises.RUNNING -> {
+                navController.navigate(Screen.Running.route)
+                viewModel.accept(MainScreenIntent.Navigated)
+            }
+
+            else -> {}
+        }
     }
 
     MainScreenContent(state) { event: MainScreenIntent -> viewModel.accept(event) }

@@ -18,4 +18,6 @@ sealed class Screen (val route: String) {
     object PushUps: Screen(route = "push_ups_screen")
     object Running: Screen(route = "running_screen")
     object Squats: Screen(route = "squats_screen")
+    object Success: Screen(route = "success_screen")
+    object UnSuccess: Screen(route = "un_success_screen")
 }

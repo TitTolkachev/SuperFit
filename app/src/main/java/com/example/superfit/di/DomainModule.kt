@@ -6,6 +6,7 @@ import com.example.superfit.domain.repository.local.TokenRepository
 import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
+import com.example.superfit.domain.repository.remote.TrainingRepository
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
@@ -17,8 +18,10 @@ import com.example.superfit.domain.usecase.remote.DownloadPhotoUseCase
 import com.example.superfit.domain.usecase.remote.GetHistoryUseCase
 import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.GetProfileUseCase
+import com.example.superfit.domain.usecase.remote.GetTrainingUseCase
 import com.example.superfit.domain.usecase.remote.RefreshAccessTokenUseCase
 import com.example.superfit.domain.usecase.remote.RegisterUseCase
+import com.example.superfit.domain.usecase.remote.SaveTrainingUseCase
 import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import dagger.Module
@@ -82,6 +85,16 @@ class DomainModule {
     @Provides
     fun provideUploadImageUseCase(repository: ProfileRepository): UploadImageUseCase {
         return UploadImageUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetTrainingUseCase(repository: TrainingRepository): GetTrainingUseCase {
+        return GetTrainingUseCase(repository)
+    }
+
+    @Provides
+    fun provideSaveTrainingUseCase(repository: TrainingRepository): SaveTrainingUseCase {
+        return SaveTrainingUseCase(repository)
     }
 
 

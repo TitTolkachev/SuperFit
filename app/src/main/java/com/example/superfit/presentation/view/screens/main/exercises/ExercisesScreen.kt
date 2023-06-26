@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.R
+import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.model.Exercises
 import com.example.superfit.presentation.view.screens.main.exercises.components.ExercisesText
 import com.example.superfit.presentation.view.screens.main.main.components.ExerciseCard
 import com.example.superfit.presentation.view.screens.main.main.components.Poster
@@ -43,11 +45,35 @@ fun ExercisesScreen(navController: NavController, viewModel: ExercisesViewModel 
         }
     }
 
-    LaunchedEffect(key1 = viewModel.state.showExercise) {
-//        TODO
-//        if (viewModel.state.showExercise != null) {
-//            navController.navigate()
-//        }
+    LaunchedEffect(key1 = state.showExercise) {
+        when (state.showExercise) {
+            Exercises.PUSH_UPS -> {
+                navController.navigate(Screen.PushUps.route)
+                viewModel.accept(ExercisesScreenIntent.Navigated)
+            }
+
+            Exercises.PLANK -> {
+                navController.navigate(Screen.Plank.route)
+                viewModel.accept(ExercisesScreenIntent.Navigated)
+            }
+
+            Exercises.SQUATS -> {
+                navController.navigate(Screen.Squats.route)
+                viewModel.accept(ExercisesScreenIntent.Navigated)
+            }
+
+            Exercises.CRUNCH -> {
+                navController.navigate(Screen.Crunch.route)
+                viewModel.accept(ExercisesScreenIntent.Navigated)
+            }
+
+            Exercises.RUNNING -> {
+                navController.navigate(Screen.Running.route)
+                viewModel.accept(ExercisesScreenIntent.Navigated)
+            }
+
+            else -> {}
+        }
     }
 
     ExercisesScreenContent(state) { event: ExercisesScreenIntent -> viewModel.accept(event) }

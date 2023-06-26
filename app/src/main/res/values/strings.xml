@@ -35,6 +35,13 @@
     <string name="exercises_running_title">Running</string>
     <string name="exercises_running_text">It develops endurance, strengthens the legs and the cardiovascular system.</string>
 
+    <string name="exercises_finish_button_text">Finish</string>
+    <string name="exercises_go_home_button_text">Go home</string>
+    <string name="exercises_times_left_text">TIMES LEFT</string>
+    <string name="exercises_seconds_left_text">SECONDS LEFT</string>
+    <string name="exercises_need_to_do_text">NEED TO DO</string>
+    <string name="exercises_meters_passed_text">METERS PASSED</string>
+
     <!-- Body -->
     <string name="body_my_body_text">My Body</string>
     <string name="body_params_default_text">Undefined</string>

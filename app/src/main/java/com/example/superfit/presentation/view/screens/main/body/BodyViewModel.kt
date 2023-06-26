@@ -13,7 +13,7 @@ import com.example.superfit.domain.usecase.remote.GetPhotosUseCase
 import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
 import com.example.superfit.domain.util.Resource
-import com.example.superfit.presentation.helper.BodyParamsDateHelper
+import com.example.superfit.presentation.helper.DateHelper
 import com.example.superfit.presentation.helper.ImagesHelper
 import com.example.superfit.presentation.helper.PhotoDateMapper
 import com.example.superfit.presentation.view.model.Photo
@@ -225,7 +225,7 @@ class BodyViewModel @Inject constructor(
 
                 viewModelScope.launch {
                     val request = updateBodyParamsUseCase.execute(
-                        BodyParamsBody(weight, height, BodyParamsDateHelper.getDate())
+                        BodyParamsBody(weight, height, DateHelper.getDate())
                     )
 
                     when (request) {

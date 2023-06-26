@@ -11,6 +11,12 @@ import androidx.navigation.navigation
 import com.example.superfit.presentation.navigation.MAIN_GRAPH_ROUTE
 import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.view.screens.exercises.crunch.CrunchScreen
+import com.example.superfit.presentation.view.screens.exercises.plank.PlankScreen
+import com.example.superfit.presentation.view.screens.exercises.pushups.PushUpsScreen
+import com.example.superfit.presentation.view.screens.exercises.running.RunningScreen
+import com.example.superfit.presentation.view.screens.exercises.squats.SquatsScreen
+import com.example.superfit.presentation.view.screens.exercises.success.SuccessScreen
+import com.example.superfit.presentation.view.screens.exercises.unsuccess.UnSuccessScreen
 import com.example.superfit.presentation.view.screens.main.body.BodyScreen
 import com.example.superfit.presentation.view.screens.main.exercises.ExercisesScreen
 import com.example.superfit.presentation.view.screens.main.image.ImageScreen
@@ -67,22 +73,33 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = Screen.Plank.route,
         ) {
-            //CrunchScreen(navController)
+            PlankScreen(navController)
         }
         composable(
             route = Screen.PushUps.route,
         ) {
-            //CrunchScreen(navController)
+            PushUpsScreen(navController)
         }
         composable(
             route = Screen.Running.route,
         ) {
-            //CrunchScreen(navController)
+            RunningScreen(navController)
         }
         composable(
             route = Screen.Squats.route,
         ) {
-            //CrunchScreen(navController)
+            SquatsScreen(navController)
+        }
+
+        composable(
+            route = Screen.Success.route,
+        ) {
+            SuccessScreen(navController)
+        }
+        composable(
+            route = Screen.UnSuccess.route,
+        ) {
+            UnSuccessScreen(navController)
         }
     }
 }
