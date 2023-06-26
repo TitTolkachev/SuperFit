@@ -10,6 +10,6 @@ sealed class CrunchScreenIntent {
 
 @Immutable
 data class CrunchScreenState(
-    val repeatsCount: Int? = null,
+    val repeatsCount: Float? = null,
     val navigateToSuccessScreen: Boolean? = null
 )

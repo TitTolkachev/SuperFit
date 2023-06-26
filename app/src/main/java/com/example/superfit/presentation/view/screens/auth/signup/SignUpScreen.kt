@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -95,28 +95,28 @@ fun SingUpScreenContent(
         ) {
             AuthEditText(
                 isEmail = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_user_name),
+                placeholderText = stringResource(R.string.auth_user_name),
                 text = { state.usernameValue }) { text ->
                 sendEvent(SignUpScreenIntent.NewUsernameText(text))
             }
 
             AuthEditText(
                 isEmail = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_email),
+                placeholderText = stringResource(R.string.auth_email),
                 text = { state.emailValue }) { text ->
                 sendEvent(SignUpScreenIntent.NewEmailText(text))
             }
 
             AuthEditText(
                 isPassword = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_code),
+                placeholderText = stringResource(R.string.auth_code),
                 text = { state.codeValue }) { text ->
                 sendEvent(SignUpScreenIntent.NewPasswordText(text))
             }
 
             AuthEditText(
                 isPassword = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_repeat_code),
+                placeholderText = stringResource(R.string.auth_repeat_code),
                 text = { state.repeatCodeValue }) { text ->
                 sendEvent(SignUpScreenIntent.NewRepeatPasswordText(text))
             }
@@ -152,7 +152,7 @@ private fun ToSignInButton(
                 .padding(end = 4.dp)
         )
         Text(
-            text = LocalContext.current.getString(R.string.auth_sign_in),
+            text = stringResource(R.string.auth_sign_in),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,
@@ -173,7 +173,7 @@ private fun SignUpButton(
         onClick = onClick
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.auth_sign_up),
+            text = stringResource(R.string.auth_sign_up),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,

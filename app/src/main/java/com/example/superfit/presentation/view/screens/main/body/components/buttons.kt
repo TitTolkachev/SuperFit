@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -90,7 +90,7 @@ fun SeeAllButton(onClick: () -> Unit) {
             .offset(y = 12.dp), onClick = onClick
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.body_see_all_text),
+            text = stringResource(R.string.body_see_all_text),
             fontSize = 12.sp,
             color = WhiteC6,
             fontFamily = montserratFamily,

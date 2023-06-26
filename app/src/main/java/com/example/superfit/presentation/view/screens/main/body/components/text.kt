@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,7 +22,7 @@ import com.example.superfit.presentation.theme.montserratFamily
 @Composable
 fun MyBodyText() {
     Text(
-        text = LocalContext.current.getString(R.string.body_my_body_text),
+        text = stringResource(R.string.body_my_body_text),
         modifier = Modifier
             .padding(start = 16.dp, top = 48.dp),
         fontSize = 24.sp,
@@ -38,7 +37,7 @@ fun MyBodyText() {
 @Composable
 fun MyWeightText(value: Int?) {
     Text(
-        text = value?.let { it.toString() + LocalContext.current.getString(R.string.body_my_body_weight_text) }
+        text = value?.let { it.toString() + stringResource(R.string.body_my_body_weight_text) }
             ?: stringResource(id = R.string.body_params_default_text),
         fontSize = 36.sp,
         textAlign = TextAlign.Start,
@@ -53,7 +52,7 @@ fun MyWeightText(value: Int?) {
 @Composable
 fun MyHeightText(value: Int?) {
     Text(
-        text = value?.let { it.toString() + LocalContext.current.getString(R.string.body_my_body_height_text) }
+        text = value?.let { it.toString() + stringResource(R.string.body_my_body_height_text) }
             ?: stringResource(id = R.string.body_params_default_text),
         fontSize = 36.sp,
         textAlign = TextAlign.Start,
@@ -68,7 +67,7 @@ fun MyHeightText(value: Int?) {
 @Composable
 fun EditButtonText() {
     Text(
-        text = LocalContext.current.getString(R.string.body_edit_text),
+        text = stringResource(R.string.body_edit_text),
         fontSize = 12.sp,
         textAlign = TextAlign.Start,
         color = WhiteC6,
@@ -81,7 +80,7 @@ fun EditButtonText() {
 @Composable
 fun MyProgressText() {
     Text(
-        text = LocalContext.current.getString(R.string.body_my_progress_text),
+        text = stringResource(R.string.body_my_progress_text),
         modifier = Modifier
             .padding(start = 16.dp, top = 48.dp),
         fontSize = 24.sp,
@@ -114,7 +113,7 @@ fun ImageDateText(text: String) {
 @Composable
 fun TrainProgressText() {
     Text(
-        text = LocalContext.current.getString(R.string.body_train_progress_text),
+        text = stringResource(R.string.body_train_progress_text),
         fontSize = 24.sp,
         textAlign = TextAlign.Start,
         color = Color.White,
@@ -127,7 +126,7 @@ fun TrainProgressText() {
 @Composable
 fun StatisticsText() {
     Text(
-        text = LocalContext.current.getString(R.string.body_statistics_text),
+        text = stringResource(R.string.body_statistics_text),
         fontSize = 24.sp,
         textAlign = TextAlign.Start,
         color = Color.White,

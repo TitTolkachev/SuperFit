@@ -22,8 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -62,7 +62,7 @@ fun Poster() {
         }
 
         Text(
-            text = LocalContext.current.getString(R.string.app_name),
+            text = stringResource(R.string.app_name),
             modifier = Modifier
                 .fillMaxWidth(),
             fontSize = 36.sp,
@@ -178,7 +178,10 @@ fun ExerciseCard(
             .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = { onClick(exercise.exercise) }),
     ) {
-        Row(Modifier.background(DarkBackground).fillMaxSize()) {
+        Row(
+            Modifier
+                .background(DarkBackground)
+                .fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .weight(0.5f)
@@ -211,7 +214,7 @@ fun ExerciseCard(
                 Text(
                     modifier = Modifier
                         .padding(start = 16.dp, top = 8.dp, end = 16.dp),
-                    text = LocalContext.current.getString(exercise.title),
+                    text = stringResource(exercise.title),
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = montserratFamily,
@@ -220,7 +223,7 @@ fun ExerciseCard(
                 Text(
                     modifier = Modifier
                         .padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 8.dp),
-                    text = LocalContext.current.getString(exercise.text),
+                    text = stringResource(exercise.text),
                     fontSize = 12.sp,
                     color = WhiteC6,
                     lineHeight = 15.sp,

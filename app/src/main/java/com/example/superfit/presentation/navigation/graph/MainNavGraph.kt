@@ -92,9 +92,13 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
         composable(
-            route = Screen.Success.route,
+            route = Screen.Success.route + "/{title}",
+            arguments = listOf(navArgument("title") {
+                type = NavType.StringType
+            })
         ) {
-            SuccessScreen(navController)
+            val title = it.arguments?.getString("title") ?: ""
+            SuccessScreen(navController, title)
         }
         composable(
             route = Screen.UnSuccess.route,

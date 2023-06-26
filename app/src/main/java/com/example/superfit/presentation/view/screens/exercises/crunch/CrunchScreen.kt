@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -23,11 +23,12 @@ fun CrunchScreen(navController: NavController, viewModel: CrunchViewModel = hilt
 
     val state = viewModel.state
 
+    val title = stringResource(id = R.string.exercises_crunch_title)
     LaunchedEffect(key1 = state.navigateToSuccessScreen) {
         if (state.navigateToSuccessScreen == true) {
             viewModel.accept(CrunchScreenIntent.Navigated)
             navController.popBackStack()
-            navController.navigate(Screen.Success.route)
+            navController.navigate(Screen.Success.route + "/$title")
         }
     }
 
@@ -48,8 +49,12 @@ fun CrunchScreenContent(
             modifier = Modifier.padding(top = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ExerciseTitle(LocalContext.current.getString(R.string.exercises_crunch_title))
-            ExerciseProgressCenter(state.repeatsCount)
+            ExerciseTitle(stringResource(R.string.exercises_crunch_title))
+            ExerciseProgressCenter(
+                state.repeatsCount,
+                state.repeatsCount,
+                stringResource(R.string.exercises_need_to_do_text)
+            )
         }
         ExerciseFinishButton {
             sendEvent(CrunchScreenIntent.Finish)

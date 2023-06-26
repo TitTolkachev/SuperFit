@@ -11,7 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -118,10 +118,10 @@ fun MainScreenContent(
         item {
             MyBodyText()
             MyBodyCard(
-                weight = (state.bodyWeight?.let { it.toString() + LocalContext.current.getString(R.string.main_my_body_weight) }
-                    ?: LocalContext.current.getString(R.string.main_default_body_value)),
-                height = (state.bodyHeight?.let { it.toString() + LocalContext.current.getString(R.string.main_my_body_height) }
-                    ?: LocalContext.current.getString(R.string.main_default_body_value))
+                weight = (state.bodyWeight?.let { it.toString() + stringResource(R.string.main_my_body_weight) }
+                    ?: stringResource(R.string.main_default_body_value)),
+                height = (state.bodyHeight?.let { it.toString() + stringResource(R.string.main_my_body_height) }
+                    ?: stringResource(R.string.main_default_body_value))
             ) {
                 sendEvent(MainScreenIntent.ShowBodyScreen)
             }

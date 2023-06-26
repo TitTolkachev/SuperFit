@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -56,7 +56,7 @@ fun SignInFirstPage(state: SignInScreenState, sendEvent: (SignInScreenIntent) ->
         Column {
             AuthEditText(
                 isEmail = true,
-                placeholderText = LocalContext.current.getString(R.string.auth_email),
+                placeholderText = stringResource(R.string.auth_email),
                 paddingValues = PaddingValues(start = 54.dp, end = 50.dp, bottom = 12.dp),
                 text = { state.userName }) { text ->
                 sendEvent(SignInScreenIntent.NewUserNameText(text))
@@ -146,7 +146,7 @@ private fun SignInButton(
         onClick = onClick
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.auth_sign_in),
+            text = stringResource(R.string.auth_sign_in),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,
@@ -169,7 +169,7 @@ private fun ToSignUpButton(
         onClick = onClick
     ) {
         Text(
-            text = LocalContext.current.getString(R.string.auth_sign_up),
+            text = stringResource(R.string.auth_sign_up),
             color = Color.White,
             fontSize = 24.sp,
             fontFamily = montserratFamily,

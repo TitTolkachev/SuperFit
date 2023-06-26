@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,7 +32,7 @@ fun ExerciseTitle(
 @Composable
 fun ExerciseFinishButtonText() {
     Text(
-        text = LocalContext.current.getString(R.string.exercises_finish_button_text),
+        text = stringResource(R.string.exercises_finish_button_text),
         color = Color.White,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
@@ -46,7 +46,7 @@ fun ExerciseFinishButtonText() {
 @Composable
 fun ExerciseGoHomeButtonText() {
     Text(
-        text = LocalContext.current.getString(R.string.exercises_go_home_button_text),
+        text = stringResource(R.string.exercises_go_home_button_text),
         color = Color.White,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
