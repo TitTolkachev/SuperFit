@@ -3,7 +3,7 @@ package com.example.superfit.presentation.view.model
 import com.example.superfit.R
 
 enum class Exercises {
-    PUSH_UPS,
+    PUSH_UP,
     PLANK,
     SQUATS,
     CRUNCH,
@@ -12,7 +12,7 @@ enum class Exercises {
 
 val EXERCISES = listOf(
     Exercise(
-        Exercises.PUSH_UPS,
+        Exercises.PUSH_UP,
         R.drawable.exercise_push_ups_image,
         R.string.exercises_push_ups_title,
         R.string.exercises_push_ups_text

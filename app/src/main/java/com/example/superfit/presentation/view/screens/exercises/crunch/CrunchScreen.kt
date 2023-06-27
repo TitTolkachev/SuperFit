@@ -51,7 +51,7 @@ fun CrunchScreenContent(
         ) {
             ExerciseTitle(stringResource(R.string.exercises_crunch_title))
             ExerciseProgressCenter(
-                state.repeatsCount,
+                null,
                 state.repeatsCount,
                 stringResource(R.string.exercises_need_to_do_text)
             )

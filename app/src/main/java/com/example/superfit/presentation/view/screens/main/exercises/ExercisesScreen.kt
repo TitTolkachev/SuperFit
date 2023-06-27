@@ -47,7 +47,7 @@ fun ExercisesScreen(navController: NavController, viewModel: ExercisesViewModel 
 
     LaunchedEffect(key1 = state.showExercise) {
         when (state.showExercise) {
-            Exercises.PUSH_UPS -> {
+            Exercises.PUSH_UP -> {
                 navController.navigate(Screen.PushUps.route)
                 viewModel.accept(ExercisesScreenIntent.Navigated)
             }

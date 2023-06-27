@@ -70,7 +70,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
 
     LaunchedEffect(key1 = state.showExercise) {
         when (state.showExercise) {
-            Exercises.PUSH_UPS -> {
+            Exercises.PUSH_UP -> {
                 navController.navigate(Screen.PushUps.route)
                 viewModel.accept(MainScreenIntent.Navigated)
             }
@@ -149,7 +149,7 @@ private fun LastExercises(
     sendEvent: (MainScreenIntent) -> Unit
 ) {
     if (lastExercises.isNullOrEmpty()) {
-        ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
+        ExerciseCard(EXERCISES[Exercises.PUSH_UP.ordinal]) { exercise ->
             sendEvent(
                 MainScreenIntent.ShowExerciseScreen(exercise)
             )
@@ -160,7 +160,7 @@ private fun LastExercises(
             )
         }
     } else if (lastExercises.size == 1) {
-        if (lastExercises[0].exercise == Exercises.PUSH_UPS) {
+        if (lastExercises[0].exercise == Exercises.PUSH_UP) {
             ExerciseCard(lastExercises[0]) { exercise ->
                 sendEvent(
                     MainScreenIntent.ShowExerciseScreen(exercise)
@@ -177,7 +177,7 @@ private fun LastExercises(
                     MainScreenIntent.ShowExerciseScreen(exercise)
                 )
             }
-            ExerciseCard(EXERCISES[Exercises.PUSH_UPS.ordinal]) { exercise ->
+            ExerciseCard(EXERCISES[Exercises.PUSH_UP.ordinal]) { exercise ->
                 sendEvent(
                     MainScreenIntent.ShowExerciseScreen(exercise)
                 )

@@ -37,8 +37,8 @@ class CrunchViewModel @Inject constructor(
 
                     withContext(Dispatchers.Main) {
                         state = data?.let {
-                            state.copy(repeatsCount = it.repeatCount + 5f)
-                        } ?: state.copy(repeatsCount = 10f)
+                            state.copy(repeatsCount = it.repeatCount + 5)
+                        } ?: state.copy(repeatsCount = 10)
                     }
                 }
 
@@ -55,7 +55,7 @@ class CrunchViewModel @Inject constructor(
                         Training(
                             date = DateHelper.getDate(),
                             exercise = Exercises.CRUNCH.name,
-                            state.repeatsCount?.toInt() ?: 10
+                            state.repeatsCount ?: 10
                         )
                     )
                     state = state.copy(navigateToSuccessScreen = true)

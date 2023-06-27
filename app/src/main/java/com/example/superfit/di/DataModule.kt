@@ -20,6 +20,7 @@ import com.example.superfit.data.remote.requests.profile.ProfileApi
 import com.example.superfit.data.remote.requests.profile.ProfileRepositoryImpl
 import com.example.superfit.data.remote.requests.training.TrainingApi
 import com.example.superfit.data.remote.requests.training.TrainingRepositoryImpl
+import com.example.superfit.data.sensors.SensorsRepositoryImpl
 import com.example.superfit.domain.repository.local.CredentialsRepository
 import com.example.superfit.domain.repository.local.FirstEnterRepository
 import com.example.superfit.domain.repository.local.TokenRepository
@@ -27,6 +28,7 @@ import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.repository.remote.TrainingRepository
+import com.example.superfit.domain.repository.sensors.SensorsRepository
 import com.example.superfit.domain.usecase.collection.NetworkAuthUseCases
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
@@ -137,6 +139,16 @@ class DataModule {
         return FirstEnterRepositoryImpl(storage = storage)
     }
 
+
+    // ---------------
+    // ---------------
+    // Sensors
+
+    @Provides
+    @Singleton
+    fun provideSensorsRepository(@ApplicationContext context: Context): SensorsRepository {
+        return SensorsRepositoryImpl(context = context)
+    }
 
     // ---------------
     // ---------------

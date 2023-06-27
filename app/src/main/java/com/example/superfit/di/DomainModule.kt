@@ -7,6 +7,7 @@ import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.repository.remote.ProfileRepository
 import com.example.superfit.domain.repository.remote.TrainingRepository
+import com.example.superfit.domain.repository.sensors.SensorsRepository
 import com.example.superfit.domain.usecase.local.GetCredentialsFromLocalStorageUseCase
 import com.example.superfit.domain.usecase.local.GetEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.GetTokenFromLocalStorageUseCase
@@ -24,6 +25,9 @@ import com.example.superfit.domain.usecase.remote.RegisterUseCase
 import com.example.superfit.domain.usecase.remote.SaveTrainingUseCase
 import com.example.superfit.domain.usecase.remote.UpdateBodyParamsUseCase
 import com.example.superfit.domain.usecase.remote.UploadImageUseCase
+import com.example.superfit.domain.usecase.sensors.ObserveSensorsUseCase
+import com.example.superfit.domain.usecase.sensors.SubscribeSensorsUseCase
+import com.example.superfit.domain.usecase.sensors.UnsubscribeSensorsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -130,5 +134,25 @@ class DomainModule {
     @Provides
     fun provideGetEntranceInfoUseCase(repository: FirstEnterRepository): GetEntranceInfoUseCase {
         return GetEntranceInfoUseCase(repository)
+    }
+
+
+    // ---------------
+    // ---------------
+    // Sensors
+
+    @Provides
+    fun provideSubscribeSensorsUseCase(repository: SensorsRepository): SubscribeSensorsUseCase {
+        return SubscribeSensorsUseCase(repository)
+    }
+
+    @Provides
+    fun provideUnsubscribeSensorsUseCase(repository: SensorsRepository): UnsubscribeSensorsUseCase {
+        return UnsubscribeSensorsUseCase(repository)
+    }
+
+    @Provides
+    fun provideObserveSensorsUseCase(repository: SensorsRepository): ObserveSensorsUseCase {
+        return ObserveSensorsUseCase(repository)
     }
 }

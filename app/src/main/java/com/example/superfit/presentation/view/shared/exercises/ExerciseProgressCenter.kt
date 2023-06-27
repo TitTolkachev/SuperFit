@@ -21,8 +21,8 @@ fun ExerciseProgressCenter() {
 
 @Composable
 fun ExerciseProgressCenter(
-    repeatsTotal: Float?,
-    repeatsLeft: Float?,
+    progress: Float?,
+    repeatsLeft: Int?,
     repeatsLeftText: String?
 ) {
     Box(contentAlignment = Alignment.Center) {
@@ -34,13 +34,13 @@ fun ExerciseProgressCenter(
                     modifier = Modifier.padding(start = 122.dp, end = 117.dp)
                 )
             else {
-                ExerciseRepeatsCountText(repeatsLeft?.toInt()?.toString() ?: "")
+                ExerciseRepeatsCountText(repeatsLeft?.toString() ?: "")
                 ExerciseRepeatsLeftText(repeatsLeftText)
             }
         }
 
-        if (repeatsLeft != null && repeatsTotal != null && repeatsLeftText != null) {
-            CircularProgressAnimated(repeatsLeft / repeatsTotal)
+        if (progress != null) {
+            CircularProgressAnimated(progress)
         } else
             CircularProgressAnimated(1f)
     }
