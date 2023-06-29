@@ -101,9 +101,16 @@ fun NavGraphBuilder.mainNavGraph(
             SuccessScreen(navController, title)
         }
         composable(
-            route = Screen.UnSuccess.route,
+            route = Screen.UnSuccess.route + "/{title}/{repeats}",
+            arguments = listOf(navArgument("title") {
+                type = NavType.StringType
+            }, navArgument("repeats") {
+                type = NavType.IntType
+            })
         ) {
-            UnSuccessScreen(navController)
+            val title = it.arguments?.getString("title") ?: ""
+            val repeats = it.arguments?.getInt("repeats") ?: 0
+            UnSuccessScreen(navController, title, repeats)
         }
     }
 }

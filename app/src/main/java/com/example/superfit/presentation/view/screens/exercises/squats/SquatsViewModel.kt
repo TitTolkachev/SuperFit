@@ -38,7 +38,7 @@ class SquatsViewModel @Inject constructor(
                 is Resource.Success -> {
 
                     val data = request.data
-                        ?.filter { it.exercise == Exercises.SQUATS.name }
+                        ?.filter { it.exercise == Exercises.RUNNING.name }
                         ?.maxByOrNull { it.repeatCount }
 
                     withContext(Dispatchers.Main) {
@@ -59,7 +59,7 @@ class SquatsViewModel @Inject constructor(
                     saveTrainingUseCase.execute(
                         Training(
                             date = DateHelper.getDate(),
-                            exercise = Exercises.SQUATS.name,
+                            exercise = Exercises.RUNNING.name,
                             state.totalRepeatsCount ?: 10
                         )
                     )

@@ -42,6 +42,8 @@
     <string name="exercises_need_to_do_text">NEED TO DO</string>
     <string name="exercises_meters_passed_text">METERS PASSED</string>
 
+    <string name="exercises_un_success_text">&#160;times are missing. You can do it better!</string>
+
     <!-- Body -->
     <string name="body_my_body_text">My Body</string>
     <string name="body_params_default_text">Undefined</string>
@@ -58,7 +60,7 @@
     <string name="camera_button_text">Camera</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="save_button_text">Save</string>
-    
+
     <!-- Input Dialog -->
     <string name="body_input_dialog_title">Change your&#160;</string>
     <string name="body_input_dialog_title_weight">weight</string>
