@@ -15,6 +15,7 @@ import com.example.superfit.domain.util.Resource
 import com.example.superfit.presentation.helper.DateHelper
 import com.example.superfit.presentation.view.model.Exercises
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,11 +23,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RunningViewModel @Inject constructor(
+    private val unsubscribeSensorsUseCase: UnsubscribeSensorsUseCase,
+    private val saveTrainingUseCase: SaveTrainingUseCase,
     getTrainingUseCase: GetTrainingUseCase,
-    saveTrainingUseCase: SaveTrainingUseCase,
     subscribeSensorsUseCase: SubscribeSensorsUseCase,
     observeSensorsUseCase: ObserveSensorsUseCase,
-    private val unsubscribeSensorsUseCase: UnsubscribeSensorsUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(RunningScreenState())
@@ -38,16 +39,16 @@ class RunningViewModel @Inject constructor(
                 is Resource.Success -> {
 
                     val data = request.data
-                        ?.filter { it.exercise == Exercises.SQUATS.name }
+                        ?.filter { it.exercise == Exercises.RUNNING.name }
                         ?.maxByOrNull { it.repeatCount }
 
                     withContext(Dispatchers.Main) {
-                        state = data?.let {
+                        state = if (data != null && data.repeatCount >= 1000) {
                             state.copy(
-                                totalRepeatsCount = it.repeatCount + 100,
+                                totalRepeatsCount = ((data.repeatCount + 100) / 100) * 100,
                                 repeatsCount = 0
                             )
-                        } ?: state.copy(totalRepeatsCount = 1000, repeatsCount = 0)
+                        } else state.copy(totalRepeatsCount = 1000, repeatsCount = 0)
                     }
                 }
 
@@ -59,7 +60,7 @@ class RunningViewModel @Inject constructor(
                     saveTrainingUseCase.execute(
                         Training(
                             date = DateHelper.getDate(),
-                            exercise = Exercises.SQUATS.name,
+                            exercise = Exercises.RUNNING.name,
                             state.totalRepeatsCount ?: 1000
                         )
                     )
@@ -82,10 +83,25 @@ class RunningViewModel @Inject constructor(
     fun accept(event: RunningScreenIntent) {
         state = when (event) {
             is RunningScreenIntent.Finish -> {
+
+
                 if (state.repeatsCount != null && state.totalRepeatsCount != null && state.repeatsCount!! >= state.totalRepeatsCount!!)
                     state.copy(navigateToSuccessScreen = true)
-                else
+                else {
+                    if (state.repeatsCount != null && state.repeatsCount!! > 0) {
+                        // TODO (Проверить работает ли)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            saveTrainingUseCase.execute(
+                                Training(
+                                    date = DateHelper.getDate(),
+                                    exercise = Exercises.RUNNING.name,
+                                    state.repeatsCount ?: 1000
+                                )
+                            )
+                        }
+                    }
                     state.copy(navigateToUnSuccessScreen = true)
+                }
             }
 
             is RunningScreenIntent.Navigated -> {
