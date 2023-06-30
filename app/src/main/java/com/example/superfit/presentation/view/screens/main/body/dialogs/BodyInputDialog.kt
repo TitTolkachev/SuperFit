@@ -110,7 +110,12 @@ fun BodyInputDialog(
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             textColor = Color.White,
-                            containerColor = Color.Transparent
+                            containerColor = Color.Transparent,
+                            cursorColor = LightPurple,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent,
+                            errorIndicatorColor = Color.Transparent,
                         )
                     )
 

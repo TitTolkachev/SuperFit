@@ -11,7 +11,9 @@ import com.example.superfit.domain.usecase.local.SaveCredentialsToLocalStorageUs
 import com.example.superfit.domain.usecase.local.SaveEntranceInfoUseCase
 import com.example.superfit.domain.usecase.local.SaveTokenToLocalStorageUseCase
 import com.example.superfit.domain.usecase.remote.GetHistoryUseCase
+import com.example.superfit.domain.usecase.remote.GetTrainingUseCase
 import com.example.superfit.domain.util.Resource
+import com.example.superfit.presentation.view.model.EXERCISES
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +25,8 @@ class MainViewModel @Inject constructor(
     saveEntranceInfoUseCase: SaveEntranceInfoUseCase,
     private val saveTokenToLocalStorageUseCase: SaveTokenToLocalStorageUseCase,
     private val saveCredentialsToLocalStorageUseCase: SaveCredentialsToLocalStorageUseCase,
-    private val getHistoryUseCase: GetHistoryUseCase
+    private val getHistoryUseCase: GetHistoryUseCase,
+    private val getTrainingUseCase: GetTrainingUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(MainScreenState())
@@ -48,6 +51,30 @@ class MainViewModel @Inject constructor(
                                     state = state.copy(
                                         bodyWeight = currentBodyParams.weight,
                                         bodyHeight = currentBodyParams.height
+                                    )
+                                }
+                            }
+                        }
+
+                        else -> {}
+                    }
+                    when (val trainingRequest = getTrainingUseCase.execute()) {
+                        is Resource.Success -> {
+                            val currentBodyParams =
+                                trainingRequest.data?.maxByOrNull { it.date }
+                            if (currentBodyParams != null) {
+                                val exercises = trainingRequest.data
+                                    .sortedByDescending { it.date }
+                                    .distinctBy { ex -> ex.exercise }
+                                    .take(2)
+                                    .map {
+                                        EXERCISES.first { ex ->
+                                            ex.exercise.name == it.exercise
+                                        }
+                                    }
+                                withContext(Dispatchers.Main) {
+                                    state = state.copy(
+                                        lastExercises = exercises
                                     )
                                 }
                             }
