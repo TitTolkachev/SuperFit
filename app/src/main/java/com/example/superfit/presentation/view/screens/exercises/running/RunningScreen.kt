@@ -68,7 +68,7 @@ fun RunningScreenContent(
                 if (state.totalRepeatsCount != null && state.repeatsCount != null)
                     (state.totalRepeatsCount - state.repeatsCount)
                 else null,
-                stringResource(R.string.exercises_meters_passed_text)
+                stringResource(R.string.exercises_meters_left_text)
             )
         }
         ExerciseFinishButton {

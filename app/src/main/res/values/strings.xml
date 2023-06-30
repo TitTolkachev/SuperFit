@@ -40,9 +40,15 @@
     <string name="exercises_times_left_text">TIMES LEFT</string>
     <string name="exercises_seconds_left_text">SECONDS LEFT</string>
     <string name="exercises_need_to_do_text">NEED TO DO</string>
-    <string name="exercises_meters_passed_text">METERS PASSED</string>
+    <string name="exercises_meters_left_text">METERS LEFT</string>
 
     <string name="exercises_un_success_text">&#160;times are missing. You can do it better!</string>
+
+    <!-- Exercise Start Dialog -->
+    <string name="exercise_start_dialog_title">Start the training?</string>
+    <string name="exercise_start_dialog_text">You need to repeat the exercise %1$d times. Are you ready?</string>
+    <string name="exercise_start_dialog_cancel_button">Later</string>
+    <string name="exercise_start_dialog_start_button">Go!</string>
 
     <!-- Body -->
     <string name="body_my_body_text">My Body</string>

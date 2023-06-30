@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val StatusBarColor = Color(0x32000000)
 val DarkBackground = Color(0xFF282828)
 val SemiTransparentWhite = Color(0x7AFFFFFF)
+val Transparent30White = Color(0xB2FFFFFF)
 val Gray42 = Color(0xFF424242)
 val Gray66 = Color(0xFF666666)
 val GrayF2 = Color(0xFFF2F2F2)
