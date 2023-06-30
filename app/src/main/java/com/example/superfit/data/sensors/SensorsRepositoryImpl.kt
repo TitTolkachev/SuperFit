@@ -22,15 +22,17 @@ class SensorsRepositoryImpl(context: Context) : SensorsRepository {
     override val progressState: StateFlow<Int> = _progressState
 
     // Values for squats and push-ups
-    private var valueY = 0f
-    private var valueZ = 0f
-    private var movementDown = false
-    private var movementUp = false
+    private var isLowestPointDetected = false
+    private var isHighestPointDetected = false
+    private var isMovingUp = false
+
+    private val squatsAccelerationModule = 3f
+    private val pushUpsAccelerationModule = 1f
 
     private var progress = 0
 
     // Steps for running
-    private var previousTotalSteps = 0f
+    private var stepsSum = 0f
 
     private var exercise: Exercises? = null
 
@@ -38,7 +40,7 @@ class SensorsRepositoryImpl(context: Context) : SensorsRepository {
 
         this.exercise = exercise
         progress = 0
-        previousTotalSteps = 0f
+        stepsSum = 0f
         MainScope().launch(Dispatchers.IO) {
             _progressState.emit(0)
         }
@@ -55,7 +57,7 @@ class SensorsRepositoryImpl(context: Context) : SensorsRepository {
             val sensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
             sensor?.let {
                 sensorManager.registerListener(
-                    stepCountListener, it, SensorManager.SENSOR_DELAY_NORMAL
+                    stepsListener, it, SensorManager.SENSOR_DELAY_NORMAL
                 )
             }
         }
@@ -63,61 +65,55 @@ class SensorsRepositoryImpl(context: Context) : SensorsRepository {
 
     override fun unsubscribe() {
         sensorManager.unregisterListener(movementListener)
-        sensorManager.unregisterListener(stepCountListener)
+        sensorManager.unregisterListener(stepsListener)
     }
 
     private val movementListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
-            valueY = event.values[1]
-            valueZ = event.values[2]
+            val y = event.values[1]
+            val z = event.values[2]
 
             if (exercise == Exercises.SQUATS) {
-                if (valueY < -1f) {
-                    movementDown = true
-                }
+                if (y < -squatsAccelerationModule)
+                    isLowestPointDetected = true
 
-                if (valueY > 1f) {
-                    movementUp = true
-                }
+                if (y > squatsAccelerationModule)
+                    isHighestPointDetected = true
             }
 
             if (exercise == Exercises.PUSH_UP) {
-                if (valueZ < -1f) {
-                    movementDown = true
-                }
+                if (z < -pushUpsAccelerationModule)
+                    isLowestPointDetected = true
 
-                if (valueZ > 1f) {
-                    movementUp = true
-                }
+                if (z > pushUpsAccelerationModule)
+                    isHighestPointDetected = true
             }
 
-
-            if (movementDown && movementUp) {
-
-                progress++
-                MainScope().launch(Dispatchers.IO) {
-                    _progressState.emit(progress)
+            if (isLowestPointDetected && isHighestPointDetected) {
+                if (isMovingUp) {
+                    progress++
+                    MainScope().launch(Dispatchers.IO) {
+                        _progressState.emit(progress)
+                    }
+                    Log.e("SENSOR REPEATS", progress.toString())
                 }
-                Log.e("SENSOR REPEATS", progress.toString())
-
-                movementDown = false
-                movementUp = false
+                isMovingUp = !isMovingUp
+                isLowestPointDetected = false
+                isHighestPointDetected = false
             }
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
     }
 
-    private val stepCountListener = object : SensorEventListener {
+    private val stepsListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             val totalSteps = event.values[0]
-            if (previousTotalSteps == 0f) previousTotalSteps = totalSteps
-
-            val currentSteps = totalSteps.toInt() - previousTotalSteps
-            previousTotalSteps = totalSteps
-
+            if (stepsSum == 0f) stepsSum = totalSteps
+            val currentSteps = totalSteps.toInt() - stepsSum
+            stepsSum = totalSteps
             MainScope().launch(Dispatchers.IO) {
-                _progressState.emit(previousTotalSteps.toInt())
+                _progressState.emit(stepsSum.toInt())
             }
             Log.e("SENSOR STEPS", currentSteps.toString())
         }

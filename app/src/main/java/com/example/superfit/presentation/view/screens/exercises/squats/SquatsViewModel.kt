@@ -82,6 +82,7 @@ class SquatsViewModel @Inject constructor(
     fun accept(event: SquatsScreenIntent) {
         state = when (event) {
             is SquatsScreenIntent.NavigateBack -> {
+                unsubscribeSensorsUseCase.execute()
                 state.copy(navigateBack = true)
             }
 

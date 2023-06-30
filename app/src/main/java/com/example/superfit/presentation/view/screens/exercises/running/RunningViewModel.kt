@@ -84,12 +84,11 @@ class RunningViewModel @Inject constructor(
         state = when (event) {
             is RunningScreenIntent.Finish -> {
 
-
+                unsubscribeSensorsUseCase.execute()
                 if (state.repeatsCount != null && state.totalRepeatsCount != null && state.repeatsCount!! >= state.totalRepeatsCount!!)
                     state.copy(navigateToSuccessScreen = true)
                 else {
                     if (state.repeatsCount != null && state.repeatsCount!! > 0) {
-                        // TODO (Проверить работает ли)
                         CoroutineScope(Dispatchers.IO).launch {
                             saveTrainingUseCase.execute(
                                 Training(
