@@ -75,4 +75,11 @@
     <string name="body_input_dialog_cancel">Cancel</string>
     <string name="body_input_dialog_save">Change</string>
 
+    <!-- Train Progress -->
+    <string name="progress_meters">&#160;meters</string>
+    <string name="progress_times">&#160;times</string>
+    <string name="progress_seconds">&#160;seconds</string>
+    <string name="progress_progress">Progress:&#160;</string>
+    <string name="progress_last_train">Last train:&#160;</string>
+
 </resources>

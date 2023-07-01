@@ -20,4 +20,6 @@ sealed class Screen (val route: String) {
     object Squats: Screen(route = "squats_screen")
     object Success: Screen(route = "success_screen")
     object UnSuccess: Screen(route = "un_success_screen")
+    object Progress: Screen(route = "progress_screen")
+    object Statistics: Screen(route = "statistics_screen")
 }

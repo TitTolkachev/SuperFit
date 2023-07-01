@@ -35,6 +35,20 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
     val state = viewModel.state
     val inputDialogState = viewModel.inputDialogState
 
+    LaunchedEffect(key1 = state.showStatistics) {
+        if (state.showStatistics == true) {
+            navController.navigate(Screen.Statistics.route)
+            viewModel.accept(BodyScreenIntent.Navigated)
+        }
+    }
+
+    LaunchedEffect(key1 = state.showTrainProgress) {
+        if (state.showTrainProgress == true) {
+            navController.navigate(Screen.Progress.route)
+            viewModel.accept(BodyScreenIntent.Navigated)
+        }
+    }
+
     LaunchedEffect(key1 = state.showImage) {
         if (state.showImage != null) {
             navController.navigate(Screen.Image.route + "/${state.showImage.id}/${state.showImage.date}")

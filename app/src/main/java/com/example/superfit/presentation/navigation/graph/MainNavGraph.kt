@@ -22,6 +22,7 @@ import com.example.superfit.presentation.view.screens.main.exercises.ExercisesSc
 import com.example.superfit.presentation.view.screens.main.image.ImageScreen
 import com.example.superfit.presentation.view.screens.main.imagelist.ImageListScreen
 import com.example.superfit.presentation.view.screens.main.main.MainScreen
+import com.example.superfit.presentation.view.screens.main.progress.ProgressScreen
 
 @RequiresApi(Build.VERSION_CODES.P)
 fun NavGraphBuilder.mainNavGraph(
@@ -111,6 +112,18 @@ fun NavGraphBuilder.mainNavGraph(
             val title = it.arguments?.getString("title") ?: ""
             val repeats = it.arguments?.getInt("repeats") ?: 0
             UnSuccessScreen(navController, title, repeats)
+        }
+
+        composable(
+            route = Screen.Progress.route,
+        ) {
+            ProgressScreen(navController)
+        }
+        composable(
+            route = Screen.Statistics.route,
+        ) {
+            // TODO
+//            SquatsScreen(navController)
         }
     }
 }

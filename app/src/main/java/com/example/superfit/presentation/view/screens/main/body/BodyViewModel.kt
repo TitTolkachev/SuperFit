@@ -142,11 +142,11 @@ class BodyViewModel @Inject constructor(
             }
 
             BodyScreenIntent.ShowStatistics -> {
-                // TODO
+                state = state.copy(showStatistics = true)
             }
 
             BodyScreenIntent.ShowTrainProgress -> {
-                // TODO
+                state = state.copy(showTrainProgress = true)
             }
 
             BodyScreenIntent.TakePicture -> {
