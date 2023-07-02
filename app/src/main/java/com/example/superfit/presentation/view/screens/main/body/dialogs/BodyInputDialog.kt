@@ -45,7 +45,7 @@ fun BodyInputDialog(
     onSaveChanges: () -> Unit,
     onCloseDialog: () -> Unit,
 ) {
-    Dialog(onDismissRequest = {}) {
+    Dialog(onDismissRequest = onCloseDialog) {
         Surface(
             shape = RoundedCornerShape(12.dp),
             color = Gray42

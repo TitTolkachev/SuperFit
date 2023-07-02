@@ -34,12 +34,14 @@ import com.example.superfit.presentation.navigation.Screen
 import com.example.superfit.presentation.theme.montserratFamily
 import com.example.superfit.presentation.view.shared.auth.AuthBrandText
 import com.example.superfit.presentation.view.shared.auth.AuthEditText
+import com.example.superfit.presentation.view.shared.errordialog.ErrorDialog
 
 @ExperimentalMaterial3Api
 @Composable
 fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hiltViewModel()) {
 
     val state = viewModel.state
+    val errorDialogState = viewModel.errorDialogState
 
     LaunchedEffect(key1 = state.showMainScreen) {
         if (state.showMainScreen == true) {
@@ -59,6 +61,10 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                 }
             }
         }
+    }
+
+    if (errorDialogState.text != null) {
+        ErrorDialog(errorDialogState) {viewModel.accept(SignUpScreenIntent.ErrorDialogShowed)}
     }
 
     SingUpScreenContent(state) { event: SignUpScreenIntent -> viewModel.accept(event) }

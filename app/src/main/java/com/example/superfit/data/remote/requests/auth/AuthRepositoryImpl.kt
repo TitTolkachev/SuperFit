@@ -5,7 +5,9 @@ import com.example.superfit.domain.model.RegisterRequestBody
 import com.example.superfit.domain.model.RegisterResponseBody
 import com.example.superfit.domain.repository.remote.AuthRepository
 import com.example.superfit.domain.util.Resource
+import org.json.JSONObject
 import javax.inject.Inject
+
 
 class AuthRepositoryImpl @Inject constructor(private val api: AuthApi) : AuthRepository {
 
@@ -20,8 +22,10 @@ class AuthRepositoryImpl @Inject constructor(private val api: AuthApi) : AuthRep
 
             if (data.isSuccessful)
                 Resource.Success(RegisterResponseBody(data.body()?.message ?: ""))
-            else
-                Resource.NetworkError(data.message())
+            else {
+                val error = JSONObject(data.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
+            }
         } catch (e: Exception) {
             Resource.Exception(e)
         }

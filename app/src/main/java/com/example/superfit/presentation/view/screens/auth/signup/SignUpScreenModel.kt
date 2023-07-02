@@ -12,6 +12,7 @@ sealed class SignUpScreenIntent {
     data class NewPasswordText(val newText: String) : SignUpScreenIntent()
     data class NewRepeatPasswordText(val newText: String) : SignUpScreenIntent()
     object NavigateToSignIn : SignUpScreenIntent()
+    object ErrorDialogShowed : SignUpScreenIntent()
 }
 
 @Immutable
@@ -20,7 +21,6 @@ data class SignUpScreenState(
     val emailValue: String = "",
     val codeValue: String = "",
     val repeatCodeValue: String = "",
-    val isLoading: Boolean? = null,
     val showMainScreen: Boolean? = null,
     val showSignInScreen: Boolean? = null
 )

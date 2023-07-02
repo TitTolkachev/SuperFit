@@ -82,4 +82,9 @@
     <string name="progress_progress">Progress:&#160;</string>
     <string name="progress_last_train">Last train:&#160;</string>
 
+    <!-- Error Dialog -->
+    <string name="error_dialog_button_text">OK</string>
+    <string name="error_dialog_validation_error_text">Validation Error!</string>
+    <string name="error_dialog_unexpected_error_text">Unexpected Error!</string>
+    
 </resources>
