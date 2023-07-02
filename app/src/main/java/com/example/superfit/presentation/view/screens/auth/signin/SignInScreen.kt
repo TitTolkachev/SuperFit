@@ -5,11 +5,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.superfit.presentation.navigation.Screen
+import com.example.superfit.presentation.view.shared.errordialog.ErrorDialog
 
 @Composable
 fun SignInScreen(navController: NavController, viewModel: SignInViewModel = hiltViewModel()) {
 
     val state = viewModel.state
+    val errorDialogState = viewModel.errorDialogState
 
     LaunchedEffect(key1 = state.showMainScreen) {
         if (state.showMainScreen == true) {
@@ -29,6 +31,13 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = hilt
                 }
             }
         }
+    }
+
+    LaunchedEffect(key1 = true){
+        viewModel.accept(SignInScreenIntent.ErrorDialogShowed)
+    }
+    if (errorDialogState.text != null) {
+        ErrorDialog(errorDialogState) { viewModel.accept(SignInScreenIntent.ErrorDialogShowed) }
     }
 
     SignInScreenContent(state) { event: SignInScreenIntent -> viewModel.accept(event) }

@@ -18,6 +18,7 @@ sealed class BodyScreenIntent {
     data class SaveImage(val image: Bitmap) : BodyScreenIntent()
     data class ShowImage(val image: Photo) : BodyScreenIntent()
     data class ImageSelected(val image: Uri?) : BodyScreenIntent()
+    object ErrorDialogShowed : BodyScreenIntent()
 }
 
 @Immutable

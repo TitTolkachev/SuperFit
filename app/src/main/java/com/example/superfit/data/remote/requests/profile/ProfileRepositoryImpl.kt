@@ -11,6 +11,7 @@ import com.example.superfit.domain.util.Resource
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
@@ -23,7 +24,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
             if (request.isSuccessful) {
                 Resource.Success(ProfileResponseBody(request.body()?.login ?: ""))
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -39,7 +41,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
             if (request.isSuccessful) {
                 Resource.Success(request.body()?.message)
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -55,7 +58,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
                 Resource.Success(
                     request.body()?.map { BodyParamsBody(it.weight, it.height, it.date) })
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -71,7 +75,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
                 Resource.Success(
                     request.body()?.map { PhotoInfoBody(it.id, it.uploaded) })
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -89,7 +94,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
                     PhotoInfoBody(request.body()?.id ?: "", request.body()?.uploaded ?: 0)
                 )
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -109,7 +115,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
                 )
                 Resource.Success(bitmap)
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -124,7 +131,8 @@ class ProfileRepositoryImpl @Inject constructor(private val api: ProfileApi) : P
             if (request.isSuccessful) {
                 Resource.Success(request.body()?.message)
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {

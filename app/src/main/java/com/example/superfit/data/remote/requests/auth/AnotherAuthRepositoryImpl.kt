@@ -7,6 +7,7 @@ import com.example.superfit.domain.model.LoginResponseBody
 import com.example.superfit.domain.model.RefreshResponseBody
 import com.example.superfit.domain.repository.remote.AnotherAuthRepository
 import com.example.superfit.domain.util.Resource
+import org.json.JSONObject
 import javax.inject.Inject
 
 class AnotherAuthRepositoryImpl @Inject constructor(private val api: AnotherAuthApi) : AnotherAuthRepository {
@@ -24,8 +25,10 @@ class AnotherAuthRepositoryImpl @Inject constructor(private val api: AnotherAuth
                         data?.expired ?: 0
                     )
                 )
-            } else
-                Resource.NetworkError(request.message())
+            } else {
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
+            }
         } catch (e: Exception) {
             Resource.Exception(e)
         }
@@ -37,8 +40,10 @@ class AnotherAuthRepositoryImpl @Inject constructor(private val api: AnotherAuth
             if (request.isSuccessful) {
                 val data = request.body()
                 Resource.Success(RefreshResponseBody(data?.access_token ?: "", data?.expired ?: 0))
-            } else
-                Resource.NetworkError(request.message())
+            } else{
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
+            }
         } catch (e: Exception) {
             Resource.Exception(e)
         }

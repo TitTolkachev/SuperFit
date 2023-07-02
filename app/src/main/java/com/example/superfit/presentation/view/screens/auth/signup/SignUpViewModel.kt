@@ -79,11 +79,15 @@ class SignUpViewModel @Inject constructor(
             }
 
             is SignUpScreenIntent.NewPasswordText -> {
-                state = state.copy(codeValue = event.newText)
+                state = state.copy(codeValue = event.newText
+                    .filter { "123456789".contains(it) }
+                    .take(4))
             }
 
             is SignUpScreenIntent.NewRepeatPasswordText -> {
-                state = state.copy(repeatCodeValue = event.newText)
+                state = state.copy(repeatCodeValue = event.newText
+                    .filter { "123456789".contains(it) }
+                    .take(4))
             }
 
             is SignUpScreenIntent.NavigateToSignIn -> {

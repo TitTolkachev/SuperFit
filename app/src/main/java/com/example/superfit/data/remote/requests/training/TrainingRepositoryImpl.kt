@@ -4,6 +4,7 @@ import com.example.superfit.data.remote.dto.TrainingDto
 import com.example.superfit.domain.model.Training
 import com.example.superfit.domain.repository.remote.TrainingRepository
 import com.example.superfit.domain.util.Resource
+import org.json.JSONObject
 import javax.inject.Inject
 
 class TrainingRepositoryImpl @Inject constructor(private val api: TrainingApi) :
@@ -18,7 +19,8 @@ class TrainingRepositoryImpl @Inject constructor(private val api: TrainingApi) :
                 Resource.Success(
                     request.body()?.map { Training(it.date, it.exercise, it.repeatCount) })
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {
@@ -43,7 +45,8 @@ class TrainingRepositoryImpl @Inject constructor(private val api: TrainingApi) :
                     Training(data.date, data.exercise, data.repeatCount)
                 )
             } else {
-                Resource.NetworkError(request.message())
+                val error = JSONObject(request.errorBody()!!.string())
+                Resource.NetworkError(error.getString("message"))
             }
 
         } catch (e: Exception) {

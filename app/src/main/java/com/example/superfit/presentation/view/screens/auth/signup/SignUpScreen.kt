@@ -63,6 +63,9 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         }
     }
 
+    LaunchedEffect(key1 = true){
+        viewModel.accept(SignUpScreenIntent.ErrorDialogShowed)
+    }
     if (errorDialogState.text != null) {
         ErrorDialog(errorDialogState) {viewModel.accept(SignUpScreenIntent.ErrorDialogShowed)}
     }

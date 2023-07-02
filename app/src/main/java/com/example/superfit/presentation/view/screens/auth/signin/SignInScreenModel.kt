@@ -9,13 +9,13 @@ sealed class SignInScreenIntent {
     object SignUp : SignInScreenIntent()
     data class ButtonClicked(val value: Int) : SignInScreenIntent()
     data class NewUserNameText(val newText: String) : SignInScreenIntent()
+    object ErrorDialogShowed : SignInScreenIntent()
 }
 
 @Immutable
 data class SignInScreenState(
     val userName: String = "",
     val currentPage: Int = 1,
-    val isLoading: Boolean? = null,
     val showMainScreen: Boolean? = null,
     val showSignUpScreen: Boolean? = null,
 

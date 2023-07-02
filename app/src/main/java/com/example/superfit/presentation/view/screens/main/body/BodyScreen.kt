@@ -27,6 +27,7 @@ import com.example.superfit.presentation.view.screens.main.body.components.Stati
 import com.example.superfit.presentation.view.screens.main.body.components.TrainProgressButton
 import com.example.superfit.presentation.view.screens.main.body.dialogs.BodyInputDialog
 import com.example.superfit.presentation.view.screens.main.body.dialogs.NewImageDialog
+import com.example.superfit.presentation.view.shared.errordialog.ErrorDialog
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -34,6 +35,7 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
 
     val state = viewModel.state
     val inputDialogState = viewModel.inputDialogState
+    val errorDialogState = viewModel.errorDialogState
 
     LaunchedEffect(key1 = state.showStatistics) {
         if (state.showStatistics == true) {
@@ -63,10 +65,23 @@ fun BodyScreen(navController: NavController, viewModel: BodyViewModel = hiltView
         }
     }
 
+    LaunchedEffect(key1 = true){
+        viewModel.accept(BodyScreenIntent.ErrorDialogShowed)
+    }
+    if (errorDialogState.text != null) {
+        ErrorDialog(errorDialogState) {viewModel.accept(BodyScreenIntent.ErrorDialogShowed)}
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.accept(BodyScreenIntent.CloseDialog)
+    }
     if (state.takePicture == true) {
         NewImageDialog(state) { event -> viewModel.accept(event) }
     }
 
+    LaunchedEffect(key1 = true) {
+        viewModel.accept(BodyInputDialogIntent.CloseDialog)
+    }
     if (inputDialogState.editWeight == true || inputDialogState.editHeight == true) {
         BodyInputDialog(
             state = inputDialogState,

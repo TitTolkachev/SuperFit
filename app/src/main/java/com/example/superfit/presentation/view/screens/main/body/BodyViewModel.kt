@@ -17,6 +17,7 @@ import com.example.superfit.presentation.helper.DateHelper
 import com.example.superfit.presentation.helper.ImagesHelper
 import com.example.superfit.presentation.helper.PhotoDateMapper
 import com.example.superfit.presentation.view.model.Photo
+import com.example.superfit.presentation.view.shared.errordialog.ErrorDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +42,9 @@ class BodyViewModel @Inject constructor(
         private set
 
     var inputDialogState by mutableStateOf(BodyInputDialogState())
+        private set
+
+    var errorDialogState by mutableStateOf(ErrorDialogState())
         private set
 
     init {
@@ -193,6 +197,10 @@ class BodyViewModel @Inject constructor(
                         }
                     }
                 }
+            }
+
+            is BodyScreenIntent.ErrorDialogShowed -> {
+                errorDialogState = errorDialogState.copy(text = null)
             }
         }
     }
