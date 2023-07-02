@@ -39,19 +39,19 @@ class ProgressViewModel @Inject constructor(
                     withContext(Dispatchers.Main) {
                         val exercises = mutableListOf<ExerciseProgress>()
                         pushUps?.let {
-                            exercises.add(mapTrainingToExerciseForDrawing(pushUps))
+                            exercises.add(mapTrainingToExerciseForDrawing(pushUps, Exercises.PUSH_UP))
                         }
                         plank?.let {
-                            exercises.add(mapTrainingToExerciseForDrawing(plank))
+                            exercises.add(mapTrainingToExerciseForDrawing(plank, Exercises.PLANK))
                         }
                         crunch?.let {
-                            exercises.add(mapTrainingToExerciseForDrawing(crunch))
+                            exercises.add(mapTrainingToExerciseForDrawing(crunch, Exercises.CRUNCH))
                         }
                         squats?.let {
-                            exercises.add(mapTrainingToExerciseForDrawing(squats))
+                            exercises.add(mapTrainingToExerciseForDrawing(squats, Exercises.SQUATS))
                         }
                         running?.let {
-                            exercises.add(mapTrainingToExerciseForDrawing(running))
+                            exercises.add(mapTrainingToExerciseForDrawing(running, Exercises.RUNNING))
                         }
                         state = state.copy(exercises = exercises)
                     }
@@ -74,21 +74,15 @@ class ProgressViewModel @Inject constructor(
         }
     }
 
-    private fun mapTrainingToExerciseForDrawing(listTraining: List<Training>): ExerciseProgress {
+    private fun mapTrainingToExerciseForDrawing(
+        listTraining: List<Training>,
+        type: Exercises
+    ): ExerciseProgress {
 
-        val type = when (listTraining.first().exercise) {
-            Exercises.PUSH_UP.name -> Exercises.PUSH_UP
-
-            Exercises.PLANK.name -> Exercises.PLANK
-
-            Exercises.CRUNCH.name -> Exercises.CRUNCH
-
-            Exercises.SQUATS.name -> Exercises.SQUATS
-
-            Exercises.RUNNING.name -> Exercises.RUNNING
-
-            else -> Exercises.PUSH_UP
-        }
+        if (listTraining.isEmpty())
+            return ExerciseProgress(
+                type = type
+            )
 
         val progress = if (listTraining.size == 2) {
             val first = listTraining.first().repeatCount
