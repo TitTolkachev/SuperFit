@@ -9,6 +9,7 @@ import javax.inject.Inject
 class RegisterUseCase @Inject constructor(private val repository: AuthRepository) {
 
     suspend fun execute(body: RegisterRequestBody): Resource<RegisterResponseBody> {
+
         return repository.register(body)
     }
 }

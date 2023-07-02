@@ -86,5 +86,15 @@
     <string name="error_dialog_button_text">OK</string>
     <string name="error_dialog_validation_error_text">Validation Error!</string>
     <string name="error_dialog_unexpected_error_text">Unexpected Error!</string>
-    
+
+    <!-- Validation Error Text -->
+    <string name="EMPTY_USER_NAME">Field UserName can\'t be empty</string>
+    <string name="EMPTY_EMAIL">Field Email can\'t be empty</string>
+    <string name="EMPTY_CODE">Field Code can\'t be empty</string>
+    <string name="EMPTY_REPEAT_CODE">Field RepeatCode can\'t be empty</string>
+    <string name="INVALID_EMAIL">Invalid email</string>
+    <string name="INCORRECT_REPEAT_CODE">Incorrect RepeatCode</string>
+    <string name="TOO_LONG_CODE">Code should be of length 4</string>
+    <string name="INVALID_CHAR_IN_CODE">Only numbers 1–9 can be used in Code</string>
+
 </resources>

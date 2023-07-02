@@ -21,6 +21,7 @@ import androidx.compose.ui.window.Dialog
 import com.example.superfit.R
 import com.example.superfit.presentation.theme.Gray42
 import com.example.superfit.presentation.view.model.ErrorType
+import com.example.superfit.presentation.view.model.ValidationError
 
 @Composable
 fun ErrorDialog(
@@ -62,9 +63,20 @@ fun ErrorDialog(
 
                         else -> {}
                     }
+                    val text = when (state.validation) {
+                        ValidationError.EMPTY_USER_NAME -> stringResource(id = R.string.EMPTY_USER_NAME)
+                        ValidationError.EMPTY_EMAIL -> stringResource(id = R.string.EMPTY_EMAIL)
+                        ValidationError.EMPTY_CODE -> stringResource(id = R.string.EMPTY_CODE)
+                        ValidationError.EMPTY_REPEAT_CODE -> stringResource(id = R.string.EMPTY_REPEAT_CODE)
+                        ValidationError.INVALID_EMAIL -> stringResource(id = R.string.INVALID_EMAIL)
+                        ValidationError.INCORRECT_REPEAT_CODE -> stringResource(id = R.string.INCORRECT_REPEAT_CODE)
+                        ValidationError.TOO_LONG_CODE -> stringResource(id = R.string.TOO_LONG_CODE)
+                        ValidationError.INVALID_CHAR_IN_CODE -> stringResource(id = R.string.INVALID_CHAR_IN_CODE)
+                        else -> state.text
+                    }
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = state.text,
+                        text = text,
                         color = Color.White,
                     )
                     Spacer(modifier = Modifier.height(16.dp))
