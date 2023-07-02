@@ -72,6 +72,9 @@ fun ErrorDialog(
                         ValidationError.INCORRECT_REPEAT_CODE -> stringResource(id = R.string.INCORRECT_REPEAT_CODE)
                         ValidationError.TOO_LONG_CODE -> stringResource(id = R.string.TOO_LONG_CODE)
                         ValidationError.INVALID_CHAR_IN_CODE -> stringResource(id = R.string.INVALID_CHAR_IN_CODE)
+                        ValidationError.EMPTY_BODY_FIELD -> stringResource(id = R.string.EMPTY_BODY_FIELD)
+                        ValidationError.INVALID_INPUT_BODY_FIELD -> stringResource(id = R.string.INVALID_INPUT_BODY_FIELD)
+                        ValidationError.OUT_OF_BOUNDS_BODY_FIELD -> stringResource(id = R.string.OUT_OF_BOUNDS_BODY_FIELD)
                         else -> state.text
                     }
                     Spacer(modifier = Modifier.height(6.dp))

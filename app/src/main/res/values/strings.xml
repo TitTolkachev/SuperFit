@@ -96,5 +96,8 @@
     <string name="INCORRECT_REPEAT_CODE">Incorrect RepeatCode</string>
     <string name="TOO_LONG_CODE">Code should be of length 4</string>
     <string name="INVALID_CHAR_IN_CODE">Only numbers 1–9 can be used in Code</string>
+    <string name="EMPTY_BODY_FIELD">Enter body parameters, field can\'t be empty</string>
+    <string name="INVALID_INPUT_BODY_FIELD">Enter valid body params values</string>
+    <string name="OUT_OF_BOUNDS_BODY_FIELD">Out of bounds. Body params values should be between 10 and 300</string>
 
 </resources>

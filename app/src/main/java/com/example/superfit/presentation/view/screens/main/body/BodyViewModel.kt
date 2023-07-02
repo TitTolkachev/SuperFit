@@ -16,7 +16,9 @@ import com.example.superfit.domain.util.Resource
 import com.example.superfit.presentation.helper.DateHelper
 import com.example.superfit.presentation.helper.ImagesHelper
 import com.example.superfit.presentation.helper.PhotoDateMapper
+import com.example.superfit.presentation.view.model.ErrorType
 import com.example.superfit.presentation.view.model.Photo
+import com.example.superfit.presentation.view.model.ValidationError
 import com.example.superfit.presentation.view.shared.errordialog.ErrorDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +66,19 @@ class BodyViewModel @Inject constructor(
                     }
                 }
 
-                else -> {}
+                is Resource.NetworkError -> {
+                    errorDialogState = errorDialogState.copy(
+                        text = bodyHistoryRequest.message,
+                        errorType = ErrorType.NETWORK
+                    )
+                }
+
+                is Resource.Exception -> {
+                    errorDialogState = errorDialogState.copy(
+                        text = bodyHistoryRequest.message,
+                        errorType = ErrorType.UNEXPECTED
+                    )
+                }
             }
 
             // Photos
@@ -115,7 +129,19 @@ class BodyViewModel @Inject constructor(
                     }
                 }
 
-                else -> {}
+                is Resource.NetworkError -> {
+                    errorDialogState = errorDialogState.copy(
+                        text = photosRequest.message,
+                        errorType = ErrorType.NETWORK
+                    )
+                }
+
+                is Resource.Exception -> {
+                    errorDialogState = errorDialogState.copy(
+                        text = photosRequest.message,
+                        errorType = ErrorType.UNEXPECTED
+                    )
+                }
             }
         }
     }
@@ -189,7 +215,19 @@ class BodyViewModel @Inject constructor(
                                 }
                             }
 
-                            else -> {}
+                            is Resource.NetworkError -> {
+                                errorDialogState = errorDialogState.copy(
+                                    text = request.message,
+                                    errorType = ErrorType.NETWORK
+                                )
+                            }
+
+                            is Resource.Exception -> {
+                                errorDialogState = errorDialogState.copy(
+                                    text = request.message,
+                                    errorType = ErrorType.UNEXPECTED
+                                )
+                            }
                         }
 
                         withContext(Dispatchers.Main) {
@@ -215,9 +253,30 @@ class BodyViewModel @Inject constructor(
 
             BodyInputDialogIntent.SaveChanges -> {
                 val number: Int
+                if (inputDialogState.text.isBlank()) {
+                    errorDialogState = errorDialogState.copy(
+                        text = "",
+                        errorType = ErrorType.VALIDATION,
+                        validation = ValidationError.EMPTY_BODY_FIELD
+                    )
+                    return
+                }
                 try {
                     number = inputDialogState.text.toInt()
                 } catch (e: NumberFormatException) {
+                    errorDialogState = errorDialogState.copy(
+                        text = "",
+                        errorType = ErrorType.VALIDATION,
+                        validation = ValidationError.INVALID_INPUT_BODY_FIELD
+                    )
+                    return
+                }
+                if (number < 10 || number > 300) {
+                    errorDialogState = errorDialogState.copy(
+                        text = "",
+                        errorType = ErrorType.VALIDATION,
+                        validation = ValidationError.OUT_OF_BOUNDS_BODY_FIELD
+                    )
                     return
                 }
 
@@ -232,18 +291,28 @@ class BodyViewModel @Inject constructor(
                 }
 
                 viewModelScope.launch {
-                    val request = updateBodyParamsUseCase.execute(
+                    when (val request = updateBodyParamsUseCase.execute(
                         BodyParamsBody(weight, height, DateHelper.getDate())
-                    )
-
-                    when (request) {
+                    )) {
                         is Resource.Success -> {
                             withContext(Dispatchers.Main) {
                                 state = state.copy(weight = weight, height = height)
                             }
                         }
 
-                        else -> {}
+                        is Resource.NetworkError -> {
+                            errorDialogState = errorDialogState.copy(
+                                text = request.message,
+                                errorType = ErrorType.NETWORK
+                            )
+                        }
+
+                        is Resource.Exception -> {
+                            errorDialogState = errorDialogState.copy(
+                                text = request.message,
+                                errorType = ErrorType.UNEXPECTED
+                            )
+                        }
                     }
 
                     withContext(Dispatchers.Main) {
