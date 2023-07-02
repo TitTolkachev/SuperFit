@@ -61,12 +61,8 @@ fun ProgressScreenContent(
         val displayManager =
             LocalContext.current.getSystemService(DISPLAY_SERVICE) as DisplayManager
         val displaySize = getDisplaySize(windowManager, displayManager)
-        val onePercentOfDisplayHeightInPixels = with(LocalDensity.current) {
-            displaySize.first / 100f
-        }
-        val onePercentOfDisplayWidthInPixels = with(LocalDensity.current) {
-            displaySize.second / 100f
-        }
+        val onePercentOfDisplayHeightInPixels = displaySize.first / 100f
+        val onePercentOfDisplayWidthInPixels = displaySize.second / 100f
 
         // Draw Lines for Exercises
         Box(modifier = Modifier
@@ -82,7 +78,15 @@ fun ProgressScreenContent(
 
         // Draw Text for Exercises
         state.exercises.forEach {
-            DrawExercise(it)
+            DrawExercise(
+                it,
+                with(LocalDensity.current) {
+                    (displaySize.first / 100f).toDp()
+                },
+                with(LocalDensity.current) {
+                    (displaySize.second / 100f).toDp()
+                }
+            )
         }
 
         // Top Button

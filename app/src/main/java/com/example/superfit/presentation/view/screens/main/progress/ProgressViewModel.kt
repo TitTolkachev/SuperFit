@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.superfit.R
 import com.example.superfit.domain.model.Training
 import com.example.superfit.domain.usecase.remote.GetTrainingUseCase
 import com.example.superfit.domain.util.Resource
@@ -77,47 +76,30 @@ class ProgressViewModel @Inject constructor(
 
     private fun mapTrainingToExerciseForDrawing(listTraining: List<Training>): ExerciseProgress {
 
-        var title = 0
-        var lastTrainText = 0
-        when (listTraining.first().exercise) {
-            Exercises.PUSH_UP.name -> {
-                title = R.string.exercises_push_ups_title
-                lastTrainText = R.string.progress_times
-            }
+        val type = when (listTraining.first().exercise) {
+            Exercises.PUSH_UP.name -> Exercises.PUSH_UP
 
-            Exercises.PLANK.name -> {
-                title = R.string.exercises_plank_title
-                lastTrainText = R.string.progress_seconds
-            }
+            Exercises.PLANK.name -> Exercises.PLANK
 
-            Exercises.CRUNCH.name -> {
-                title = R.string.exercises_crunch_title
-                lastTrainText = R.string.progress_times
-            }
+            Exercises.CRUNCH.name -> Exercises.CRUNCH
 
-            Exercises.SQUATS.name -> {
-                title = R.string.exercises_squats_title
-                lastTrainText = R.string.progress_times
-            }
+            Exercises.SQUATS.name -> Exercises.SQUATS
 
-            Exercises.RUNNING.name -> {
-                title = R.string.exercises_running_title
-                lastTrainText = R.string.progress_meters
-            }
+            Exercises.RUNNING.name -> Exercises.RUNNING
 
-            else -> {}
+            else -> Exercises.PUSH_UP
         }
 
         val progress = if (listTraining.size == 2) {
             val first = listTraining.first().repeatCount
             val second = listTraining[1].repeatCount
-            (second * 100) / first
+            if (second == 0) 10000
+            else (first * 100) / second - 100
         } else null
 
         return ExerciseProgress(
-            title = title,
+            type = type,
             lastTrainRepeats = listTraining.first().repeatCount,
-            lastTrainText = lastTrainText,
             progress = progress
         )
     }
