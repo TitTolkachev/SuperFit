@@ -53,7 +53,9 @@ class BodyViewModel @Inject constructor(
         viewModelScope.launch {
 
             // Body Params
-            when (val bodyHistoryRequest = getHistoryUseCase.execute()) {
+            val bodyHistoryRequest = getHistoryUseCase
+                .execute()
+            when (bodyHistoryRequest) {
                 is Resource.Success -> {
                     val currentBodyParams = bodyHistoryRequest.data?.maxByOrNull { it.date }
                     if (currentBodyParams != null) {
@@ -82,7 +84,9 @@ class BodyViewModel @Inject constructor(
             }
 
             // Photos
-            when (val photosRequest = getPhotosUseCase.execute()) {
+            val photosRequest = getPhotosUseCase
+                .execute()
+            when (photosRequest) {
                 is Resource.Success -> {
                     val photos = photosRequest.data!!
                     var first: Photo? = null
@@ -105,7 +109,8 @@ class BodyViewModel @Inject constructor(
                         }
                     }
                     if (photos.size > 1) {
-                        val firstPhotoRequest = photos.firstOrNull()
+                        val firstPhotoRequest = photos
+                            .firstOrNull()
                             ?.let { downloadPhotoUseCase.execute(it.id) }
                         when (firstPhotoRequest) {
                             is Resource.Success -> {
@@ -199,19 +204,25 @@ class BodyViewModel @Inject constructor(
                 if (state.imageUri != null && state.imageUri != Uri.EMPTY) {
                     val bitmap = ImagesHelper.getResizedBitmap(event.image) ?: return
                     viewModelScope.launch {
-                        when (val request = uploadImageUseCase.execute(bitmap)) {
+                        val request = uploadImageUseCase
+                            .execute(bitmap)
+                        when (request) {
                             is Resource.Success -> {
                                 withContext(Dispatchers.Main) {
                                     val id = request.data?.id ?: ""
-                                    val date = PhotoDateMapper.mapUploadedDateToString(
-                                        request.data?.uploaded ?: 0
-                                    )
+                                    val date = PhotoDateMapper
+                                        .mapUploadedDateToString(
+                                            request.data?.uploaded ?: 0
+                                        )
+
+                                    val resPhoto = Photo(id, date, bitmap)
+
                                     state = if (state.firstPhoto == null)
-                                        state.copy(firstPhoto = Photo(id, date, bitmap))
+                                        state.copy(firstPhoto = resPhoto)
                                     else if (state.lastPhoto == null)
-                                        state.copy(lastPhoto = Photo(id, date, bitmap))
+                                        state.copy(lastPhoto = resPhoto)
                                     else
-                                        state.copy(lastPhoto = Photo(id, date, bitmap))
+                                        state.copy(lastPhoto = resPhoto)
                                 }
                             }
 
@@ -231,7 +242,10 @@ class BodyViewModel @Inject constructor(
                         }
 
                         withContext(Dispatchers.Main) {
-                            state = state.copy(takePicture = null, imageUri = null)
+                            state = state.copy(
+                                takePicture = null,
+                                imageUri = null
+                            )
                         }
                     }
                 }
@@ -270,6 +284,8 @@ class BodyViewModel @Inject constructor(
                         validation = ValidationError.INVALID_INPUT_BODY_FIELD
                     )
                     return
+                } catch (_: Exception) {
+                    return
                 }
                 if (number < 10 || number > 300) {
                     errorDialogState = errorDialogState.copy(
@@ -291,12 +307,20 @@ class BodyViewModel @Inject constructor(
                 }
 
                 viewModelScope.launch {
-                    when (val request = updateBodyParamsUseCase.execute(
-                        BodyParamsBody(weight, height, DateHelper.getDate())
-                    )) {
+                    val requestParams = BodyParamsBody(
+                        weight = weight,
+                        height = height,
+                        date = DateHelper.getDate()
+                    )
+                    val request = updateBodyParamsUseCase
+                        .execute(requestParams)
+                    when (request) {
                         is Resource.Success -> {
                             withContext(Dispatchers.Main) {
-                                state = state.copy(weight = weight, height = height)
+                                state = state.copy(
+                                    weight = weight,
+                                    height = height
+                                )
                             }
                         }
 
@@ -317,14 +341,22 @@ class BodyViewModel @Inject constructor(
 
                     withContext(Dispatchers.Main) {
                         inputDialogState =
-                            inputDialogState.copy(editHeight = null, editWeight = null, text = "")
+                            inputDialogState.copy(
+                                editHeight = null,
+                                editWeight = null,
+                                text = ""
+                            )
                     }
                 }
             }
 
             BodyInputDialogIntent.CloseDialog -> {
                 inputDialogState =
-                    inputDialogState.copy(editHeight = null, editWeight = null, text = "")
+                    inputDialogState.copy(
+                        editHeight = null,
+                        editWeight = null,
+                        text = ""
+                    )
             }
         }
     }
